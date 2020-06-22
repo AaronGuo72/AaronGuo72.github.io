@@ -47,7 +47,7 @@
 <meta property="og:image" content="http://yoursite.com/images/CSAPP_8/19.png">
 <meta property="og:image" content="http://yoursite.com/images/CSAPP_8/20.png">
 <meta property="article:published_time" content="2020-05-27T08:02:53.000Z">
-<meta property="article:modified_time" content="2020-05-27T08:26:01.824Z">
+<meta property="article:modified_time" content="2020-06-22T07:37:15.859Z">
 <meta property="article:author" content="AaronGuo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/CSAPP_8/14.png">
@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">2</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">3</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -203,17 +203,27 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-05-27 16:02:53 / Modified: 16:26:01" itemprop="dateCreated datePublished" datetime="2020-05-27T16:02:53+08:00">2020-05-27</time>
+              <time title="Created: 2020-05-27 16:02:53" itemprop="dateCreated datePublished" datetime="2020-05-27T16:02:53+08:00">2020-05-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-22 15:37:15" itemprop="dateModified" datetime="2020-06-22T15:37:15+08:00">2020-06-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
                 </span>
             </span>
 
@@ -256,10 +266,10 @@
 </ol>
 <h2 id="8-2-1-Exception-Handling"><a href="#8-2-1-Exception-Handling" class="headerlink" title="8.2.1 Exception Handling"></a>8.2.1 Exception Handling</h2><p>现在我们来看看硬件和软件之间是如何协作来实现Exception的。<br>系统中每一个类型的Exception都由一个Exception Number（唯一，非负整数）来标识。其中一部分number是<strong>由处理器的设计者指定</strong>的，这类Exceptions与程序当前执行的指令相关（除0、违规读写内存、断点、数字运算溢出）；另一部分<strong>由内核的设计者指定</strong>，这类Exceptions与程序当前执行的指令无关（system call、或来自I/0的信号）。</p>
 <ol>
-<li><p>开机<strong>启动操作系统阶段</strong><br>操作系统会分配一块空间给exception table，并将其初始化，完成后这张表的第k个条目就是<strong>用于处理编号为k的excetpion</strong>的<strong>句柄地址</strong>。</p>
+<li><p>开机<strong>启动操作系统阶段</strong><br> 操作系统会分配一块空间给exception table，并将其初始化，完成后这张表的第k个条目就是<strong>用于处理编号为k的excetpion</strong>的<strong>句柄地址</strong>。</p>
 <p><img src="/images/CSAPP_8/2.png" alt=""></p>
 </li>
-<li><p>在<strong>操作系统运行阶段</strong>（系统开始跑其他程序了）<br>当处理器捕捉到一个事件时，它会自动判断这个事件属于哪类异常，然后把它与这类异常的标号k绑定。接着拿着这个k去查exception table，找到对应的处理异常k的句柄并调用。</p>
+<li><p>在<strong>操作系统运行阶段</strong>（系统开始跑其他程序了）<br> 当处理器捕捉到一个事件时，它会自动判断这个事件属于哪类异常，然后把它与这类异常的标号k绑定。接着拿着这个k去查exception table，找到对应的处理异常k的句柄并调用。</p>
 <blockquote>
 <p>Exception table的首地址存储在一个特别的寄存器中：exception table base register</p>
 </blockquote>
@@ -440,9 +450,9 @@
 <h1 id="8-5-Signals"><a href="#8-5-Signals" class="headerlink" title="8.5 Signals"></a>8.5 Signals</h1><p>Signal是一种软件层的exception control flow，它的作用是通知某进程，系统中有某与其相关的事件发生，这种机制使得内核或某进程可以主动中断其他进程。</p>
 <p><strong>传输signals分为两步</strong></p>
 <ol>
-<li><p>发送<br>一般碰到如下两个情况时，内核会发送signals（实质是改变目标进程状态参数的形式），<br>· 内核检测到了一些系统事件时（比如除0，中止某进程）<br>· 某个进程调用了kill方法，明确要求内核发送信号给某进程。（进程可对自己调用kill，注意此处的kill并不是linux中的中止进程指令）</p>
+<li><p>发送<br> 一般碰到如下两个情况时，内核会发送signals（实质是改变目标进程状态参数的形式），<br> · 内核检测到了一些系统事件时（比如除0，中止某进程）<br> · 某个进程调用了kill方法，明确要求内核发送信号给某进程。（进程可对自己调用kill，注意此处的kill并不是linux中的中止进程指令）</p>
 </li>
-<li><p>接收<br>接收端进程对signal做出反应。它可以无视或中止这个signal，也可以通过调用用户层的signal handler函数来<strong>catch</strong>这个signal。</p>
+<li><p>接收<br> 接收端进程对signal做出反应。它可以无视或中止这个signal，也可以通过调用用户层的signal handler函数来<strong>catch</strong>这个signal。</p>
 <p><img src="/images/CSAPP_8/18.png" alt=""></p>
 </li>
 </ol>
@@ -617,7 +627,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
