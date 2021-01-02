@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-01-02 12:50:43 / Modified: 14:03:05" itemprop="dateCreated datePublished" datetime="2021-01-02T12:50:43+08:00">2021-01-02</time>
+              <time title="Created: 2021-01-02 12:50:43 / Modified: 14:06:08" itemprop="dateCreated datePublished" datetime="2021-01-02T12:50:43+08:00">2021-01-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,28 +206,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="1-单调队列"><a href="#1-单调队列" class="headerlink" title="1. 单调队列"></a>1. 单调队列</h1><p>应用：求滑动窗口中的最值。<br>比如4，5，2，1，-1，3，5<br>假设窗口大小为3，每次移动一位，输出每次移动后区间中的最小值。<br>如果用暴力做法，每次移动都要遍历整个窗口寻找，时间复杂度为：移动次数X3</p>
-<p> 在暴力做法的基础上，我们发现滑动窗口每移动一次，如果新加入的数比它左边的数小，则左边的数在之后的判定中就一定不会是最小值，可以跳过对它的判断来降低时间复杂度。<br>用双端队列来模拟这个过程，每次新加入的元素n与窗口中其他元素（如a, b, c）逐一比较，比如n比c小，就把c给pop掉，直到n的左侧没有元素比它更大了，就将n给push到队列尾部。</p>
-<p><img src="/images/datastructure_and_algorithm/数据结构与算法_队列/1.jpg" alt=""></p>
-<p>这样就<strong>保证我们的窗口队列在每次迭代完后都是单调的</strong>，每次移动窗口的最小值就是队列头的值。<br>我们可以用<strong>双端单调队列</strong>来完成这件事。要注意的是，因为涉及到删除元素，队列维护的元素必须是原数组的下标，否则难以判断窗口大小是否越界（如此例中&gt;3）。</p>
-<p><strong>模拟样例</strong></p>
-<p>原数组a|双端队列q|解释|<br>|—-|—-|—-|<br>|[(4), 5, 1, 1, 3]|[0]|单调队列要先填入一个初始0，因为原数组的第一个元素一开始必然是最小值。min=a[q[0]]=4|<br>|[(4, 5), 1, 1, 3]|[0, 1]|5比4大，4下次还可能是最小值。所以不需pop掉4，而是直接让5进队。min=a[q[0]]=4|<br>|[(4, 5, 1), 1, 3]|[2]|1小于4和5，只要1在窗口中，答案永远都不可能是4或5，所以队列中4和5的下标都被pop，只剩1的下标2。min=a[q[0]]=1|<br>|[4, (5, 1, 1), 3]|[3]|又进来一个1，相等时我们把原有的重复元素全部pop，队头元素被更新为3。min=a[q[0]]=1|<br>|[4, 5, (1, 1, 3)]|[3, 4]|3比1大，把3加入队列。min=a[q[0]]=1|</p>
-<p>每次操作要检查窗口大小，如果大了就要把队头pop掉。检查的方法很简单:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(q[q.<span class="built_in">size</span>()<span class="number">-1</span>]-q[<span class="number">0</span>]+<span class="number">1</span>&gt;=k)  pop q.front();</span><br></pre></td></tr></table></figure></p>
-<p><strong>模板</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">q.push_back(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//窗口是否过大</span></span><br><span class="line">        <span class="keyword">while</span>(q.<span class="built_in">size</span>()&amp;&amp;k&lt;=q.back()-q.front()+<span class="number">1</span>) q.pop_front();</span><br><span class="line">        <span class="comment">//使队列保持单调</span></span><br><span class="line">        <span class="keyword">while</span>(q.<span class="built_in">size</span>()&amp;&amp;a[q.back()]&gt;=q[i]) q.pop_back();</span><br><span class="line">        <span class="comment">//新元素入队</span></span><br><span class="line">        q.push_back(i);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>因为要使用pop_back()所以我们得用双端队列deque。</p>
-<h2 id="1-1-滑动窗口的最大值"><a href="#1-1-滑动窗口的最大值" class="headerlink" title="1.1 滑动窗口的最大值"></a>1.1 滑动窗口的最大值</h2><p>【题目】</p>
-<p>给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。</p>
-<p>返回滑动窗口中的最大值。</p>
-<p>示例 1：</p>
-<p>输入：nums = [1,3,-1,-3,5,3,6,7], k = 3<br>输出：[3,3,5,5,6,7]<br>解释：<br>滑动窗口的位置                最大值</p>
-<hr>
-<p>[1  3  -1] -3  5  3  6  7       3<br> 1 [3  -1  -3] 5  3  6  7       3<br> 1  3 [-1  -3  5] 3  6  7       5<br> 1  3  -1 [-3  5  3] 6  7       5<br> 1  3  -1  -3 [5  3  6] 7       6<br> 1  3  -1  -3  5 [3  6  7]      7</p>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/sliding-window-maximum" target="_blank" rel="noopener">https://leetcode-cn.com/problems/sliding-window-maximum</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<p>【ac代码】</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; q; <span class="comment">//注意该双端队列从q.front()进，从q.back()出</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">maxSlidingWindow</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> length = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;length; i++)&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//若下一个待进入窗口元素比队尾元素大，则队尾元素在之后的判定中不可能是最大值，令其出队</span></span><br><span class="line">            <span class="comment">//经过本行代码的筛选后，队列中所有元素都比新加入的元素大，且从左至右单调递减</span></span><br><span class="line">            <span class="keyword">while</span>(!q.empty() &amp;&amp; nums[i]&gt;=nums[q.back()]) q.pop_back();</span><br><span class="line">            </span><br><span class="line">            q.push_back(i); <span class="comment">//将新元素加入窗口</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(!q.empty() &amp;&amp; q.back()-q.front()+<span class="number">1</span>&gt;k) q.pop_front(); <span class="comment">//若当前窗口的大小超过k，则队头元素老化被弹出</span></span><br><span class="line">			</span><br><span class="line">            <span class="comment">//题目要求满k个元素才开始求最值因此限制i+1-k&gt;=0</span></span><br><span class="line">        	<span class="comment">//队列中的元素从左至右单调递减，因此队头元素一定是当前窗口的最大值</span></span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>-k&gt;=<span class="number">0</span>) re.push_back(nums[q.front()]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>求最小值同理，自己尝试写出。</p>
-
+          <p>队列相关的数据结构和算法。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/02/IT/datastructure_and_algorithm/%E3%80%8A%E9%98%9F%E5%88%97%E3%80%8B%E4%B8%93%E9%A2%98/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

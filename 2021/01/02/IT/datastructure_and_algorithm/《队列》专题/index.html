@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"aaronguo72.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":360,"display":"post","padding":18,"offset":0,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1. 单调队列应用：求滑动窗口中的最值。比如4，5，2，1，-1，3，5假设窗口大小为3，每次移动一位，输出每次移动后区间中的最小值。如果用暴力做法，每次移动都要遍历整个窗口寻找，时间复杂度为：移动次数X3  在暴力做法的基础上，我们发现滑动窗口每移动一次，如果新加入的数比它左边的数小，则左边的数在之后的判定中就一定不会是最小值，可以跳过对它的判断来降低时间复杂度。用双端队列来模拟这个过程，每次新">
+  <meta name="description" content="队列相关的数据结构和算法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《队列》专题">
 <meta property="og:url" content="https://aaronguo72.github.io/2021/01/02/IT/datastructure_and_algorithm/%E3%80%8A%E9%98%9F%E5%88%97%E3%80%8B%E4%B8%93%E9%A2%98/index.html">
 <meta property="og:site_name" content="Fun with Code">
-<meta property="og:description" content="1. 单调队列应用：求滑动窗口中的最值。比如4，5，2，1，-1，3，5假设窗口大小为3，每次移动一位，输出每次移动后区间中的最小值。如果用暴力做法，每次移动都要遍历整个窗口寻找，时间复杂度为：移动次数X3  在暴力做法的基础上，我们发现滑动窗口每移动一次，如果新加入的数比它左边的数小，则左边的数在之后的判定中就一定不会是最小值，可以跳过对它的判断来降低时间复杂度。用双端队列来模拟这个过程，每次新">
+<meta property="og:description" content="队列相关的数据结构和算法。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E9%98%9F%E5%88%97/1.jpg">
+<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E9%98%9F%E5%88%97/1.png">
 <meta property="article:published_time" content="2021-01-02T04:50:43.000Z">
-<meta property="article:modified_time" content="2021-01-02T06:03:05.885Z">
+<meta property="article:modified_time" content="2021-01-02T06:06:08.899Z">
 <meta property="article:author" content="AaronGuo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E9%98%9F%E5%88%97/1.jpg">
+<meta name="twitter:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E9%98%9F%E5%88%97/1.png">
 
 <link rel="canonical" href="https://aaronguo72.github.io/2021/01/02/IT/datastructure_and_algorithm/%E3%80%8A%E9%98%9F%E5%88%97%E3%80%8B%E4%B8%93%E9%A2%98/">
 
@@ -183,7 +183,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-01-02 12:50:43 / Modified: 14:03:05" itemprop="dateCreated datePublished" datetime="2021-01-02T12:50:43+08:00">2021-01-02</time>
+              <time title="Created: 2021-01-02 12:50:43 / Modified: 14:06:08" itemprop="dateCreated datePublished" datetime="2021-01-02T12:50:43+08:00">2021-01-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,9 +217,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-单调队列"><a href="#1-单调队列" class="headerlink" title="1. 单调队列"></a>1. 单调队列</h1><p>应用：求滑动窗口中的最值。<br>比如4，5，2，1，-1，3，5<br>假设窗口大小为3，每次移动一位，输出每次移动后区间中的最小值。<br>如果用暴力做法，每次移动都要遍历整个窗口寻找，时间复杂度为：移动次数X3</p>
+        <p>队列相关的数据结构和算法。</p>
+<a id="more"></a>
+<h1 id="1-单调队列"><a href="#1-单调队列" class="headerlink" title="1. 单调队列"></a>1. 单调队列</h1><p>应用：求滑动窗口中的最值。<br>比如4，5，2，1，-1，3，5<br>假设窗口大小为3，每次移动一位，输出每次移动后区间中的最小值。<br>如果用暴力做法，每次移动都要遍历整个窗口寻找，时间复杂度为：移动次数X3</p>
 <p> 在暴力做法的基础上，我们发现滑动窗口每移动一次，如果新加入的数比它左边的数小，则左边的数在之后的判定中就一定不会是最小值，可以跳过对它的判断来降低时间复杂度。<br>用双端队列来模拟这个过程，每次新加入的元素n与窗口中其他元素（如a, b, c）逐一比较，比如n比c小，就把c给pop掉，直到n的左侧没有元素比它更大了，就将n给push到队列尾部。</p>
-<p><img src="/images/datastructure_and_algorithm/数据结构与算法_队列/1.jpg" alt=""></p>
+<p><img src="/images/datastructure_and_algorithm/数据结构与算法_队列/1.png" alt=""></p>
 <p>这样就<strong>保证我们的窗口队列在每次迭代完后都是单调的</strong>，每次移动窗口的最小值就是队列头的值。<br>我们可以用<strong>双端单调队列</strong>来完成这件事。要注意的是，因为涉及到删除元素，队列维护的元素必须是原数组的下标，否则难以判断窗口大小是否越界（如此例中&gt;3）。</p>
 <p><strong>模拟样例</strong></p>
 <p>原数组a|双端队列q|解释|<br>|—-|—-|—-|<br>|[(4), 5, 1, 1, 3]|[0]|单调队列要先填入一个初始0，因为原数组的第一个元素一开始必然是最小值。min=a[q[0]]=4|<br>|[(4, 5), 1, 1, 3]|[0, 1]|5比4大，4下次还可能是最小值。所以不需pop掉4，而是直接让5进队。min=a[q[0]]=4|<br>|[(4, 5, 1), 1, 3]|[2]|1小于4和5，只要1在窗口中，答案永远都不可能是4或5，所以队列中4和5的下标都被pop，只剩1的下标2。min=a[q[0]]=1|<br>|[4, (5, 1, 1), 3]|[3]|又进来一个1，相等时我们把原有的重复元素全部pop，队头元素被更新为3。min=a[q[0]]=1|<br>|[4, 5, (1, 1, 3)]|[3, 4]|3比1大，把3加入队列。min=a[q[0]]=1|</p>
