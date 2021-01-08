@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://aaronguo72.github.io/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/29.png">
 <meta property="og:image" content="https://aaronguo72.github.io/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/30.png">
 <meta property="article:published_time" content="2020-12-07T06:00:34.000Z">
-<meta property="article:modified_time" content="2021-01-01T08:21:37.697Z">
+<meta property="article:modified_time" content="2021-01-08T13:15:32.241Z">
 <meta property="article:author" content="AaronGuo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://aaronguo72.github.io/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/9.png">
@@ -154,7 +154,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">20</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">21</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -217,7 +217,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-01 16:21:37" itemprop="dateModified" datetime="2021-01-01T16:21:37+08:00">2021-01-01</time>
+                <time title="Modified: 2021-01-08 21:15:32" itemprop="dateModified" datetime="2021-01-08T21:15:32+08:00">2021-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -570,7 +570,7 @@
 <p>实时系统一般会同时处理多个periodic事件。假设有m个periodic events，第i个事件的周期为$P_i$，且它需要花费$C_i$秒CPU资源去处理，那么当且仅当</p>
 <script type="math/tex; mode=display">
 \sum_{i=1}^m \frac{C_i}{P_i} \le 1</script><p>这个实时系统才是 <strong>schedulable</strong> 的，即能跑的动。如果超过了1，就说明所有periodic事件的负荷大于CPU的最大负荷了。</p>
-<p>公式中的$\frac{1}{P<em>i}$代表事件i每秒内发生多少次，则$\frac{C_i}{P_i}$代表每一秒内要消耗多少时间去处理事件i，$\sum</em>{i=1}^m \frac{C_i}{P_i}$就代表一秒内处理所有事件需要消耗的总时间，显然如果大于1就相当于1秒内要办的事消耗的时间大于1秒了。</p>
+<p>公式中的$\frac{1}{P_i}$代表事件i每秒内发生多少次，则 $\frac{C_i}{P_i}$ 代表每一秒内要消耗多少时间去处理事件i，$\sum_{i=1}^m \frac{C_i}{P_i}$就代表一秒内处理所有事件需要消耗的总时间，显然如果大于1就相当于1秒内要办的事消耗的时间大于1秒了。</p>
 <h2 id="2-4-5-Policy-Versus-Mechanism"><a href="#2-4-5-Policy-Versus-Mechanism" class="headerlink" title="2.4.5 Policy Versus Mechanism"></a>2.4.5 Policy Versus Mechanism</h2><p>其实只有程序（特指user processes）最懂自己应该使用哪种调度算法，可惜我们之前讨论的所有scheduler都不会接收用户的输入来调整自己的调度算法，所以很难达到最好的效果。</p>
 <p>解决这种问题的办法就是将 <strong>scheduling mechanism</strong> 和 <strong>scheduling policy</strong> 分开，即让scheduling algorithm的一部分参数可以由用户进程填写。这样一来假如kernel采用priority-scheduling调度所有进程，但是提供一个system call让进程可以为自己的子进程设置优先级，就实现了kernel决定mechanism，而具体的policy是可以由各个user processes来设置的。</p>
 <h2 id="2-4-6-Thread-Scheduling"><a href="#2-4-6-Thread-Scheduling" class="headerlink" title="2.4.6 Thread Scheduling"></a>2.4.6 Thread Scheduling</h2><p>如果计算机系统中支持线程，那么在user-level threads和kernel-level threads下的调度算法是完全不同的。</p>
@@ -699,7 +699,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

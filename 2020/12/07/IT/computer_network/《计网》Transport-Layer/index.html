@@ -71,7 +71,7 @@
 <meta property="og:image" content="https://aaronguo72.github.io/images/computer_network/network_TransportationLayer/42.png">
 <meta property="og:image" content="https://aaronguo72.github.io/images/computer_network/network_TransportationLayer/43.png">
 <meta property="article:published_time" content="2020-12-07T04:18:22.000Z">
-<meta property="article:modified_time" content="2021-01-01T08:48:53.990Z">
+<meta property="article:modified_time" content="2021-01-08T13:29:28.049Z">
 <meta property="article:author" content="AaronGuo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://aaronguo72.github.io/images/computer_network/network_TransportationLayer/8.png">
@@ -168,7 +168,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">20</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">21</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-01 16:48:53" itemprop="dateModified" datetime="2021-01-01T16:48:53+08:00">2021-01-01</time>
+                <time title="Modified: 2021-01-08 21:29:28" itemprop="dateModified" datetime="2021-01-08T21:29:28+08:00">2021-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -635,9 +635,9 @@ TimeoutInterval = EstimatedRTT + 4\cdot DevRTT</script><p>现实情况下，Time
 <li>路由器的buffer大小变为有限，这个变化的后果就是如果buffer已满，那么后续到达的packets都会被直接丢弃。</li>
 <li>假定每一个连接都是可靠的。即如果有segment被路由器丢弃的话，sender会在之后进行重传。</li>
 </ol>
-<p>假定sender端应用层下发数据的速率为 $\lambda<em>{in} \; bytes/sec$ ，因为存在重传机制，所以运输层发出的包除了上层发来的新数据包之外还有重传数据包，因此需要将它们区分开（因为一个从上层发到运输层，一个从运输层直接发出），所以再定义运输层将segment发送到网络中的速率为 $\lambda’</em>{in} \; bytes/sec$（一般被称为 <strong>offered load</strong>） ，</p>
+<p>假定sender端应用层下发数据的速率为 $\lambda_{in} \; bytes/sec$ ，因为存在重传机制，所以运输层发出的包除了上层发来的新数据包之外还有重传数据包，因此需要将它们区分开（因为一个从上层发到运输层，一个从运输层直接发出），所以再定义运输层将segment发送到网络中的速率为 $\lambda’_{in} \; bytes/sec$（一般被称为 <strong>offered load</strong>） ，</p>
 <p><img src="/images/computer_network/network_TransportationLayer/36.png" alt=""></p>
-<p>在Scenario 2中，整体网络传输的效率绝大部分取决于重传机制的实现方式。现在假定A能够看到router中的buffer情况，因此它在buffer满的时候就会停止传输，再假定它的发送速率不超过R/2，那么这种情况下不可能发生丢包，因此$\lambda<em>{in} = \lambda’</em>{in}$ ，如下图中的a。</p>
+<p>在Scenario 2中，整体网络传输的效率绝大部分取决于重传机制的实现方式。现在假定A能够看到router中的buffer情况，因此它在buffer满的时候就会停止传输，再假定它的发送速率不超过R/2，那么这种情况下不可能发生丢包，因此$\lambda_{in} = \lambda’_{in}$ ，如下图中的a。</p>
 <p>再假定A可以确切地知道哪个包是“真的”被丢弃了，而不是因为在链路中滞留过久timeout从而被认为是丢包，这样A就可以只重传那些确实被丢弃的包（把timeout设置的非常大就可以达到这样的效果），假定 $\lambda’_{in} = R/2$ ，这时链路的情况可能如下图b（总带宽为0.5R，平均来看0.333R bytes/sec的新数据，0.166R bytes/sec的重传数据）</p>
 <p><img src="/images/computer_network/network_TransportationLayer/37.png" alt=""></p>
 <p>这时我们看到了网络拥塞给整体性能带来的另外一个影响：路由交换设备的buffer可能会被塞满，这时后续到达的数据会被直接丢弃（即丢包可能发生了），因此sender必须使用重传机制来处理丢包的情况</p>
@@ -841,7 +841,7 @@ TimeoutInterval = EstimatedRTT + 4\cdot DevRTT</script><p>现实情况下，Time
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

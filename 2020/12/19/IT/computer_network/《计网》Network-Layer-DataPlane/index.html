@@ -61,7 +61,7 @@
 <meta property="og:image" content="https://aaronguo72.github.io/images/computer_network/network_Network_Layer_DataPlane/33.png">
 <meta property="og:image" content="https://aaronguo72.github.io/images/computer_network/network_Network_Layer_DataPlane/34.png">
 <meta property="article:published_time" content="2020-12-19T14:46:55.000Z">
-<meta property="article:modified_time" content="2021-01-01T08:53:21.035Z">
+<meta property="article:modified_time" content="2021-01-08T13:23:50.556Z">
 <meta property="article:author" content="AaronGuo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://aaronguo72.github.io/images/computer_network/network_Network_Layer_DataPlane/1.png">
@@ -158,7 +158,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">20</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">21</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-01 16:53:21" itemprop="dateModified" datetime="2021-01-01T16:53:21+08:00">2021-01-01</time>
+                <time title="Modified: 2021-01-08 21:23:50" itemprop="dateModified" datetime="2021-01-08T21:23:50+08:00">2021-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -353,8 +353,8 @@
 </blockquote>
 <h2 id="4-2-3-Output-Port-Processing"><a href="#4-2-3-Output-Port-Processing" class="headerlink" title="4.2.3 Output Port Processing"></a>4.2.3 Output Port Processing</h2><p>Output port的主要工作就是把【switching fabric发送到自己内存中的packets】发送到【自己对应连接的物理出口link上】。整个过程包括packet selecting，packet de-queueing以及执行必要的数据链路层以及物理层的功能。</p>
 <p><img src="/images/computer_network/network_Network_Layer_DataPlane/9.png" alt=""></p>
-<h2 id="4-2-4-Where-Does-Queuing-Occur"><a href="#4-2-4-Where-Does-Queuing-Occur" class="headerlink" title="4.2.4 Where Does Queuing Occur?"></a>4.2.4 Where Does Queuing Occur?</h2><p>假设路由器上共有N个input ports和N个output ports，每一条input和output port线路的带宽都为$ R<em>{line} $个packet每秒。再假定所有packets大小相等，路由器接收和发出packet的速率相等。最后定义switching fabric的转发速率为$ R</em>{switch} $ （即一个packet从input port移动到对应output port需要的时间）。</p>
-<p>这种情况下，若$ R<em>{switch} = N\cdot R</em>{line} $ （即switching的速度等于路由器N个input ports同时接收一个packet的速度，这意味着路由器N个input ports全打开的情况下可以无延迟地 <strong>不断地</strong> 同时把所有N个packets从input ports全部转移到对应的output ports），那么packet在input ports上排队所需要的时间几乎就可以忽略不记了，因为即使在最差情况——所有N个input ports都在接收packets且它们都发往同一个output port，路由器也能够在下N个packets到来之前处理完当前的N个packets。</p>
+<h2 id="4-2-4-Where-Does-Queuing-Occur"><a href="#4-2-4-Where-Does-Queuing-Occur" class="headerlink" title="4.2.4 Where Does Queuing Occur?"></a>4.2.4 Where Does Queuing Occur?</h2><p>假设路由器上共有N个input ports和N个output ports，每一条input和output port线路的带宽都为$R_{line}$个packet每秒。再假定所有packets大小相等，路由器接收和发出packet的速率相等。最后定义switching fabric的转发速率为$R_{switch}$ （即一个packet从input port移动到对应output port需要的时间）。</p>
+<p>这种情况下，若$R_{switch} = N \cdot R_{line}$（即switching的速度等于路由器N个input ports同时接收一个packet的速度，这意味着路由器N个input ports全打开的情况下可以无延迟地 <strong>不断地</strong> 同时把所有N个packets从input ports全部转移到对应的output ports），那么packet在input ports上排队所需要的时间几乎就可以忽略不记了，因为即使在最差情况——所有N个input ports都在接收packets且它们都发往同一个output port，路由器也能够在下N个packets到来之前处理完当前的N个packets。</p>
 <h3 id="4-2-4-1-Input-Queueing"><a href="#4-2-4-1-Input-Queueing" class="headerlink" title="4.2.4.1 Input Queueing"></a>4.2.4.1 Input Queueing</h3><p>但是如果switching fabric的速度没有快到能够在一瞬间处理N个packets呢？这种情况下在input ports中就也会产生packet queuing了。</p>
 <p>现在我们以crossbar switching fabric结构为例来讨论这种情况带来的问题，假定：</p>
 <ol>
@@ -367,7 +367,7 @@
 <p>HOL blocking的直接结果就是可能因为<strong>某一条</strong>input queue的拥挤（其他input queue可能还有很多空闲空间）而产生路由器整体上的丢包——即使包到达路由器的速率可能只有链路带宽的50%。</p>
 <p>HOL blocking具体的解决方法感兴趣的同学可以参照McKeown 1997年的论文。</p>
 <h3 id="4-2-4-2-Output-Queueing"><a href="#4-2-4-2-Output-Queueing" class="headerlink" title="4.2.4.2 Output Queueing"></a>4.2.4.2 Output Queueing</h3><p>现在我们来考虑下，路由器的output ports中会不会产生排队现象呢？</p>
-<p>假定$ R<em>{switch}=N\cdot R</em>{line} $  ，且所有packets都被发往同一个output port。这种情况下，如果路由器的N个input ports全部打开，那么一次switching就会有N个packets被传输到output port，又因为output port在一个packet transmission time内只能传输一个packet，因此，其余的N-1个packets必须要排队。紧接着，在这一个packet transmission time内switching fabric可能又运来了N个packets….，随着时间积累packets在output port中排起了长队，最后把buffer塞满，路由器开始丢包。</p>
+<p>假定$ R_{switch}=N\cdot R_{line} $  ，且所有packets都被发往同一个output port。这种情况下，如果路由器的N个input ports全部打开，那么一次switching就会有N个packets被传输到output port，又因为output port在一个packet transmission time内只能传输一个packet，因此，其余的N-1个packets必须要排队。紧接着，在这一个packet transmission time内switching fabric可能又运来了N个packets….，随着时间积累packets在output port中排起了长队，最后把buffer塞满，路由器开始丢包。</p>
 <p>从这个例子中可以看到，即使switching fabric的处理速度非常快，但如果很多个packets的output port相同的话，output port buffer很快会被塞满，然后路由器还是会产生丢包（即使路由器其他output port的空间还很充裕）。</p>
 <p>无论因为什么原因，当路由器中的buffer满了后又收到了新的packet，就要开始做出选择：1. 丢弃新来的packet（称为 <strong>drop-tail</strong>），2. 把一个或多个正在排队的packets丢弃，然后接收新来的packet。但其实在某些情况下，在buffer【快要满】的时候就提前“故意”丢个包（或者将datagram的ECN bit置1）来提示sender网络拥塞是一个比较好的选择，这一类先发制人的算法被统称为 <strong>active queue management(AQM) algorithms</strong>，其中最常被使用的是 <strong>Random Early Detection(RED) algorithm</strong> 。</p>
 <p>下面看看output port queuing的过程：</p>
@@ -688,7 +688,7 @@ B = \text{average RTT}\times C</script><p>比如平均RTT=250msec，链路带宽
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
