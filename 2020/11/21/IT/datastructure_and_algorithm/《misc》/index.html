@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_misc/1.jpg">
 <meta property="article:published_time" content="2020-11-21T12:00:20.000Z">
-<meta property="article:modified_time" content="2021-01-03T12:35:15.069Z">
+<meta property="article:modified_time" content="2021-01-13T14:13:28.839Z">
 <meta property="article:author" content="AaronGuo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_misc/1.jpg">
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-03 20:35:15" itemprop="dateModified" datetime="2021-01-03T20:35:15+08:00">2021-01-03</time>
+                <time title="Modified: 2021-01-13 22:13:28" itemprop="dateModified" datetime="2021-01-13T22:13:28+08:00">2021-01-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,6 +292,15 @@
 <p>对任意一个2的整数次幂n，其二进制的最高位为1，其余位为0；那么n-1的二进制最高位为0，其余位为1。因此如果n是2的整数次幂， n &amp; (n-1) ==0 恒成立。</p>
 <p>【ac代码】</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPowerOfTwo</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n&lt;=<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> !(n &amp; (n<span class="number">-1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="5-到数轴上其他点距离之和最小的点"><a href="#5-到数轴上其他点距离之和最小的点" class="headerlink" title="5. 到数轴上其他点距离之和最小的点"></a>5. 到数轴上其他点距离之和最小的点</h1><p>【题目】</p>
+<p>数轴上有许多点，找到一个位置x，使得x到所有点的距离之和最小，并求出这个距离。</p>
+<p><a href="https://www.acwing.com/problem/content/106/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/106/</a></p>
+<p>【解析】</p>
+<p>x到区间(a, b)两端点的距离之和为$|a-x|+|b-x|$，根据绝对值不等式</p>
+<script type="math/tex; mode=display">
+|a-x|+|b-x| \ge |(a-x)- (b-x)| = |b-a|</script><p>可以想象，如果x小于a或者大于b，都不可能使得它到a和b的距离之和最小。但是只要x取到a和b之间，上述不等式的等号就成立，即这时x到a和b的距离之和取到最小值 b-a。拓展到n个点的情况，只要把x放在所有点的中心位置（当n为偶数时放在中间两个点的中间，为奇数时放在最中间那个点上），这时它与所有其他点的距离之和即为最短。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> q[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++) <span class="built_in">cin</span>&gt;&gt;q[i];</span><br><span class="line">    </span><br><span class="line">    sort(q, q+n);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//当n为偶数时x取到中间两个点的中间，为奇数时x直接取到最中间那个点上</span></span><br><span class="line">    <span class="keyword">int</span> x = n%<span class="number">2</span>==<span class="number">0</span>?q[n/<span class="number">2</span>]+q[n/<span class="number">2</span><span class="number">-1</span>]&gt;&gt;<span class="number">1</span>:q[n/<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> re = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++) re += <span class="built_in">abs</span>(q[i]-x);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;re&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -392,7 +401,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-n-sum问题"><span class="nav-text">1. n sum问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-three-sum"><span class="nav-text">1.2 three sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-four-sum"><span class="nav-text">1.3 four sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-four-sum-Ⅱ"><span class="nav-text">1.4 four sum Ⅱ</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-用最少数量的箭引爆气球"><span class="nav-text">2. 用最少数量的箭引爆气球</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-无重叠区间"><span class="nav-text">3. 无重叠区间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-判断一个整数是否为2的整数次幂"><span class="nav-text">4. 判断一个整数是否为2的整数次幂</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-n-sum问题"><span class="nav-text">1. n sum问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-three-sum"><span class="nav-text">1.2 three sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-four-sum"><span class="nav-text">1.3 four sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-four-sum-Ⅱ"><span class="nav-text">1.4 four sum Ⅱ</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-用最少数量的箭引爆气球"><span class="nav-text">2. 用最少数量的箭引爆气球</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-无重叠区间"><span class="nav-text">3. 无重叠区间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-判断一个整数是否为2的整数次幂"><span class="nav-text">4. 判断一个整数是否为2的整数次幂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-到数轴上其他点距离之和最小的点"><span class="nav-text">5. 到数轴上其他点距离之和最小的点</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -524,6 +533,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
