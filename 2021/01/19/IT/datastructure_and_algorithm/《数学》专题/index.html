@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aaronguo72.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":360,"display":"post","padding":18,"offset":0,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="数学相关的算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《数学》专题">
+<meta property="og:url" content="https://aaronguo72.github.io/2021/01/19/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E5%AD%A6%E3%80%8B%E4%B8%93%E9%A2%98/index.html">
+<meta property="og:site_name" content="Fun with Code">
+<meta property="og:description" content="数学相关的算法。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-19T06:28:06.000Z">
+<meta property="article:modified_time" content="2021-01-19T06:42:30.120Z">
+<meta property="article:author" content="AaronGuo">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aaronguo72.github.io/2021/01/19/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E5%AD%A6%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>《数学》专题 | Fun with Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fun with Code</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://aaronguo72.github.io/2021/01/19/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E5%AD%A6%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AaronGuo">
+      <meta itemprop="description" content="Sponsored by Fun with Flag ;)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Code">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《数学》专题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-19 14:28:06 / Modified: 14:42:30" itemprop="dateCreated datePublished" datetime="2021-01-19T14:28:06+08:00">2021-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>数学相关的算法。</p>
+<a id="more"></a>
+<h1 id="1-进制转换"><a href="#1-进制转换" class="headerlink" title="1. 进制转换"></a>1. 进制转换</h1><h2 id="1-1-任意进制转十进制（TODO）"><a href="#1-1-任意进制转十进制（TODO）" class="headerlink" title="1.1 任意进制转十进制（TODO）"></a>1.1 任意进制转十进制（TODO）</h2><h2 id="1-2-十进制转任意进制-TODO"><a href="#1-2-十进制转任意进制-TODO" class="headerlink" title="1.2 十进制转任意进制(TODO)"></a>1.2 十进制转任意进制(TODO)</h2><h2 id="1-3-任意进制转任意进制"><a href="#1-3-任意进制转任意进制" class="headerlink" title="1.3 任意进制转任意进制"></a>1.3 任意进制转任意进制</h2><p>写一个程序，可以实现将一个数字由一个进制转换为另一个进制。</p>
+<p>这里有62个不同数位{0-9,A-Z,a-z}。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行输入一个整数，代表接下来的行数。</p>
+<p>接下来每一行都包含三个数字，首先是输入进制（十进制表示），然后是输出进制（十进制表示），最后是用输入进制表示的输入数字，数字之间用空格隔开。</p>
+<p>输入进制和输出进制都在2到62的范围之内。</p>
+<p>（在十进制下）A = 10，B = 11，…，Z = 35，a = 36，b = 37，…，z = 61 (0-9仍然表示0-9)。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每一组进制转换，程序的输出都由三行构成。</p>
+<p>第一行包含两个数字，首先是输入进制（十进制表示），然后是用输入进制表示的输入数字。</p>
+<p>第二行包含两个数字，首先是输出进制（十进制表示），然后是用输出进制表示的输入数字。</p>
+<p>第三行为空白行。</p>
+<p>同一行内数字用空格隔开。</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8</span></span><br><span class="line"><span class="symbol">62 </span><span class="number">2</span> abcdefghiz</span><br><span class="line"><span class="symbol">10 </span><span class="number">16</span> <span class="number">1234567890123456789012345678901234567890</span></span><br><span class="line"><span class="symbol">16 </span><span class="number">35</span> <span class="number">3</span>A0C92075C0DBF3B8ACBC5F96CE3F0AD2</span><br><span class="line"><span class="symbol">35 </span><span class="number">23</span> <span class="number">333</span>YMHOUE8JPLT7OX6K9FYCQ8A</span><br><span class="line"><span class="symbol">23 </span><span class="number">49</span> <span class="number">946</span>B9AA02MI37E3D3MMJ4G7BL2F05</span><br><span class="line"><span class="symbol">49 </span><span class="number">61</span> <span class="number">1</span>VbDkSIMJL3JjRgAdlUfcaWj</span><br><span class="line"><span class="symbol">61 </span><span class="number">5</span> dl9MDSWqwHjDnToKcsWE1S</span><br><span class="line"><span class="symbol">5 </span><span class="number">10</span> <span class="number">42104444441001414401221302402201233340311104212022133030</span></span><br></pre></td></tr></table></figure>
+<p><strong>输出样例：</strong></p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">62 </span>abcdefghiz</span><br><span class="line"><span class="symbol">2 </span><span class="number">11011100000100010111110010010110011111001001100011010010001</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">10 </span><span class="number">1234567890123456789012345678901234567890</span></span><br><span class="line"><span class="symbol">16 </span><span class="number">3</span>A0C92075C0DBF3B8ACBC5F96CE3F0AD2</span><br><span class="line"></span><br><span class="line"><span class="symbol">16 </span><span class="number">3</span>A0C92075C0DBF3B8ACBC5F96CE3F0AD2</span><br><span class="line"><span class="symbol">35 </span><span class="number">333</span>YMHOUE8JPLT7OX6K9FYCQ8A</span><br><span class="line"></span><br><span class="line"><span class="symbol">35 </span><span class="number">333</span>YMHOUE8JPLT7OX6K9FYCQ8A</span><br><span class="line"><span class="symbol">23 </span><span class="number">946</span>B9AA02MI37E3D3MMJ4G7BL2F05</span><br><span class="line"></span><br><span class="line"><span class="symbol">23 </span><span class="number">946</span>B9AA02MI37E3D3MMJ4G7BL2F05</span><br><span class="line"><span class="symbol">49 </span><span class="number">1</span>VbDkSIMJL3JjRgAdlUfcaWj</span><br><span class="line"></span><br><span class="line"><span class="symbol">49 </span><span class="number">1</span>VbDkSIMJL3JjRgAdlUfcaWj</span><br><span class="line"><span class="symbol">61 </span>dl9MDSWqwHjDnToKcsWE1S</span><br><span class="line"></span><br><span class="line"><span class="symbol">61 </span>dl9MDSWqwHjDnToKcsWE1S</span><br><span class="line"><span class="symbol">5 </span><span class="number">42104444441001414401221302402201233340311104212022133030</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">5 </span><span class="number">42104444441001414401221302402201233340311104212022133030</span></span><br><span class="line"><span class="symbol">10 </span><span class="number">1234567890123456789012345678901234567890</span></span><br></pre></td></tr></table></figure>
+<p>【ac代码】<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1100</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> fir(a,b,c) for (int a=b;a&lt;=c;a++)</span></span><br><span class="line"><span class="keyword">int</span> t[maxn],A[maxn],n,m,i,len,k;</span><br><span class="line"><span class="keyword">char</span> str1[maxn], str2[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    k=<span class="number">0</span>;</span><br><span class="line">    len = <span class="built_in">strlen</span>(str1);</span><br><span class="line">    <span class="keyword">for</span>(i=len; i&gt;=<span class="number">0</span>; i--) </span><br><span class="line">        t[len-i<span class="number">-1</span>] = str1[i] -(str1[i]&lt;<span class="number">58</span> ? <span class="number">48</span>: str1[i]&lt;<span class="number">97</span> ? <span class="number">55</span>: <span class="number">61</span>);<span class="comment">//开始转换成为十进制</span></span><br><span class="line">    <span class="keyword">while</span>(len)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i=len; i&gt;=<span class="number">1</span>; i--) </span><br><span class="line">        &#123;</span><br><span class="line">            t[i<span class="number">-1</span>] +=t[i]%m*n;<span class="comment">//开始计算,首先*n,为n进制,然后转移到m进制</span></span><br><span class="line">            t[i] /= m;<span class="comment">//当前数已经处理完了</span></span><br><span class="line">        &#125;</span><br><span class="line">        A[k++] = t[<span class="number">0</span>] % m;<span class="comment">//直接加到答案数组中</span></span><br><span class="line">        t[<span class="number">0</span>] /=m;<span class="comment">//当前数已经处理完了</span></span><br><span class="line">        <span class="keyword">while</span>(len&gt;<span class="number">0</span>&amp;&amp;!t[len<span class="number">-1</span>])  <span class="comment">//处理0的情况</span></span><br><span class="line">            len--;</span><br><span class="line">    &#125;</span><br><span class="line">    str2[k] =<span class="literal">NULL</span>;<span class="comment">//第k位,我们不需要,直接抛去,利用NULL这个特殊的字符串结束符,具体可以自行百度.</span></span><br><span class="line">    fir(i,<span class="number">0</span>,k<span class="number">-1</span>)</span><br><span class="line">        str2[k<span class="number">-1</span>-i] = A[i]+(A[i]&lt;<span class="number">10</span> ? <span class="number">48</span>: A[i]&lt;<span class="number">36</span> ? <span class="number">55</span>:<span class="number">61</span>);<span class="comment">//三目运算符,具体可以百度,这段代码的意思是,找这个数字对应的字母</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d\n"</span>,&amp;t);</span><br><span class="line">    <span class="keyword">while</span>(t--) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %s\n"</span>,&amp;n,&amp;m,str1);</span><br><span class="line">        solve();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d %s\n%d %s\n\n"</span>,n,str1,m,str2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：秦淮岸灯火阑珊</span><br><span class="line">链接：https:<span class="comment">//www.acwing.com/solution/content/859/</span></span><br><span class="line">来源：AcWing</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-大数运算"><a href="#2-大数运算" class="headerlink" title="2. 大数运算"></a>2. 大数运算</h1><p>大数运算的本质就是把每一位数字提取到数组中，然后在数组中模拟运算。考虑到进位的情况，数字应该被倒序存储到数组中，否则产生进位时要移动整个数组。</p>
+<h2 id="2-1-大数加法"><a href="#2-1-大数加法" class="headerlink" title="2.1 大数加法"></a>2.1 大数加法</h2><p>t的作用是把两数对应位上的数字相加，判断它是否大于10，如果true，则它变成1并参与下一轮运算。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*both a and b are in reversed order*/</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">add</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">0</span>;  <span class="comment">//accumulator</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.<span class="built_in">size</span>() || i &lt; b.<span class="built_in">size</span>(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; a.<span class="built_in">size</span>()) t += a[i];</span><br><span class="line">        <span class="keyword">if</span> (i &lt; b.<span class="built_in">size</span>()) t += b[i];</span><br><span class="line">        re.push_back(t % <span class="number">10</span>);       </span><br><span class="line">        t /= <span class="number">10</span>;      <span class="comment">//if t&gt;10, t/10 = 1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (t) re.push_back(<span class="number">1</span>);  <span class="comment">//t产生进位</span></span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-大数减法"><a href="#2-2-大数减法" class="headerlink" title="2.2 大数减法"></a>2.2 大数减法</h2><p>还是用t表示是否借位了。该模板默认a大于b，若可能出现a小于b，则把它们顺序调换一下传入，再添上负号即可。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*1. both a and b are in reversed order</span></span><br><span class="line"><span class="comment">  2. a is bigger than b</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">subtract</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">0</span>; <span class="comment">//accumulator</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.<span class="built_in">size</span>(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        t  = a[i]-t;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; b.<span class="built_in">size</span>()) t -= b[i];</span><br><span class="line">        re.push_back((t + <span class="number">10</span>) % <span class="number">10</span>);<span class="comment">//if t&lt;0, t+=10</span></span><br><span class="line">        <span class="keyword">if</span> (t &lt; <span class="number">0</span>) t = <span class="number">1</span>; <span class="comment">//如果t&lt;0, 下一次计算a[i]要被减去1（借位）</span></span><br><span class="line">        <span class="keyword">else</span> t = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*消除前导零/</span></span><br><span class="line"><span class="comment">    while (re.size() &gt; 1 &amp;&amp; re.back() == 0) re.pop_back();</span></span><br><span class="line"><span class="comment">   </span></span><br><span class="line"><span class="comment">    return re;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="2-3-大数乘法"><a href="#2-3-大数乘法" class="headerlink" title="2.3 大数乘法"></a>2.3 大数乘法</h2><p>大数与普通整型数相乘。<br>不像我们手算乘法，b逐位与arr逐位相乘，该方法是arr逐位与b整体相乘。其中t表示每次进位的数<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">mul</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;arr.<span class="built_in">size</span>()||t; i++) <span class="comment">//“||t”表示如果进位没处理完，则循环还要继续</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>( i&lt;arr.<span class="built_in">size</span>() )  t = arr[i] * b + t;</span><br><span class="line">        re.push_back(t % <span class="number">10</span>);</span><br><span class="line">        t /= <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-4-大数除法"><a href="#2-4-大数除法" class="headerlink" title="2.4 大数除法"></a>2.4 大数除法</h2><p>被除数的每一位与除数比较，如果除数较大，则把当前位的被除数与后一个合并，继续与除数比较。如果除数较小或者相等，则把这次的商存入结果数组，继续循环。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*r为余数，b为除数。</span></span><br><span class="line"><span class="comment">为了与其他模板统一，这里传入的arr也是in reverse order</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">div</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">int</span> b, <span class="keyword">int</span>&amp; r)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = arr.<span class="built_in">size</span>()<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        t = t * <span class="number">10</span> + arr[i];</span><br><span class="line">        re.push_back(t / b);</span><br><span class="line">        t %= b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*因为该方法是从结果的最高位push进arr的（这样就是正序了），</span></span><br><span class="line"><span class="comment">    为了与其他模板统一，将arr变为倒序。*/</span></span><br><span class="line">    reverse(arr.<span class="built_in">begin</span>(), arr.<span class="built_in">end</span>());  </span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="built_in">size</span>() &gt; <span class="number">1</span> &amp;&amp; arr.back() == <span class="number">0</span>) arr.pop_back();</span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="1-到数轴上其他点距离之和最小的点"><a href="#1-到数轴上其他点距离之和最小的点" class="headerlink" title="1. 到数轴上其他点距离之和最小的点"></a>1. 到数轴上其他点距离之和最小的点</h2><p>【题目】</p>
+<p>数轴上有许多点，找到一个位置x，使得x到所有点的距离之和最小，并求出这个距离。</p>
+<p><a href="https://www.acwing.com/problem/content/106/" target="_blank" rel="noopener">https://www.acwing.com/problem/content/106/</a></p>
+<p>【解析】</p>
+<p>x到区间(a, b)两端点的距离之和为$|a-x|+|b-x|$，根据绝对值不等式</p>
+<script type="math/tex; mode=display">
+|a-x|+|b-x| \ge |(a-x)- (b-x)| = |b-a|</script><p>可以想象，如果x小于a或者大于b，都不可能使得它到a和b的距离之和最小。但是只要x取到a和b之间，上述不等式的等号就成立，即这时x到a和b的距离之和取到最小值 b-a。拓展到n个点的情况，只要把x放在所有点的中心位置（当n为偶数时放在中间两个点的中间，为奇数时放在最中间那个点上），这时它与所有其他点的距离之和即为最短。</p>
+<p>简而言之，当数轴上点的总数为奇数时，x的位置就是数轴上最中间那个点的位置；当数轴上点的总数为偶数时，x的位置就在数轴上最中间那两个点的中间。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> q[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++) <span class="built_in">cin</span>&gt;&gt;q[i];</span><br><span class="line">    </span><br><span class="line">    sort(q, q+n);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//当n为偶数时x取到中间两个点的中间，为奇数时x直接取到最中间那个点上</span></span><br><span class="line">    <span class="keyword">int</span> x = n%<span class="number">2</span>==<span class="number">0</span>?q[n/<span class="number">2</span>]+q[n/<span class="number">2</span><span class="number">-1</span>]&gt;&gt;<span class="number">1</span>:q[n/<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> re = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++) re += <span class="built_in">abs</span>(q[i]-x);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;re&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>给作者打赏</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AaronGuo WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="AaronGuo Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/11/IT/datastructure_and_algorithm/%E3%80%8A%E5%B9%B6%E6%9F%A5%E9%9B%86%E3%80%8B%E4%B8%93%E9%A2%98/" rel="prev" title="《并查集》专题">
+      <i class="fa fa-chevron-left"></i> 《并查集》专题
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-进制转换"><span class="nav-text">1. 进制转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-任意进制转十进制（TODO）"><span class="nav-text">1.1 任意进制转十进制（TODO）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-十进制转任意进制-TODO"><span class="nav-text">1.2 十进制转任意进制(TODO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-任意进制转任意进制"><span class="nav-text">1.3 任意进制转任意进制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-大数运算"><span class="nav-text">2. 大数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-大数加法"><span class="nav-text">2.1 大数加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-大数减法"><span class="nav-text">2.2 大数减法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-大数乘法"><span class="nav-text">2.3 大数乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-大数除法"><span class="nav-text">2.4 大数除法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题"><span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-到数轴上其他点距离之和最小的点"><span class="nav-text">1. 到数轴上其他点距离之和最小的点</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AaronGuo</p>
+  <div class="site-description" itemprop="description">Sponsored by Fun with Flag ;)</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
