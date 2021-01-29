@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aaronguo72.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":360,"display":"post","padding":18,"offset":0,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="关于堆的算法。 堆是一颗完全二叉树，它具有这样的性质（以小根堆为例）：父节点的值永远小于等于其左右孩子，大根堆则反之, 这样的结构使得我们可以在O(1)的时间内找到数组的最值。因为它本身是完全二叉树，所以可以用一个一维数组来表示，按层序给每个节点标号（从1开始），则某节点x的左儿子&#x3D;2x，右儿子是2x+1.  堆有两个基础操作：up和down，所有其他的操作都可以用这俩拼出来。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《堆》专题">
+<meta property="og:url" content="https://aaronguo72.github.io/2021/01/29/IT/datastructure_and_algorithm/%E3%80%8A%E5%A0%86%E3%80%8B%E4%B8%93%E9%A2%98/index.html">
+<meta property="og:site_name" content="Fun with Code">
+<meta property="og:description" content="关于堆的算法。 堆是一颗完全二叉树，它具有这样的性质（以小根堆为例）：父节点的值永远小于等于其左右孩子，大根堆则反之, 这样的结构使得我们可以在O(1)的时间内找到数组的最值。因为它本身是完全二叉树，所以可以用一个一维数组来表示，按层序给每个节点标号（从1开始），则某节点x的左儿子&#x3D;2x，右儿子是2x+1.  堆有两个基础操作：up和down，所有其他的操作都可以用这俩拼出来。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%A0%86/1.png">
+<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%A0%86/2.png">
+<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%A0%86/3.png">
+<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%A0%86/4.png">
+<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%A0%86/5.png">
+<meta property="og:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%A0%86/6.png">
+<meta property="article:published_time" content="2021-01-29T00:32:46.000Z">
+<meta property="article:modified_time" content="2021-01-29T01:05:58.313Z">
+<meta property="article:author" content="AaronGuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaronguo72.github.io/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%A0%86/1.png">
+
+<link rel="canonical" href="https://aaronguo72.github.io/2021/01/29/IT/datastructure_and_algorithm/%E3%80%8A%E5%A0%86%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>《堆》专题 | Fun with Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fun with Code</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">25</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://aaronguo72.github.io/2021/01/29/IT/datastructure_and_algorithm/%E3%80%8A%E5%A0%86%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AaronGuo">
+      <meta itemprop="description" content="Sponsored by Fun with Flag ;)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Code">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《堆》专题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-29 08:32:46 / Modified: 09:05:58" itemprop="dateCreated datePublished" datetime="2021-01-29T08:32:46+08:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>关于堆的算法。</p>
+<p>堆是一颗完全二叉树，它具有这样的性质（以小根堆为例）：<strong>父节点的值永远小于等于其左右孩子</strong>，大根堆则反之, 这样的结构使得我们可以在<strong>O(1)的时间内找到数组的最值</strong>。<br>因为它本身是完全二叉树，所以可以用一个一维数组来表示，按层序给每个节点标号（<strong>从1开始</strong>），则某节点x的左儿子=2x，右儿子是2x+1.</p>
+<p> 堆有两个基础操作：up和down，所有其他的操作都可以用这俩拼出来。</p>
+<a id="more"></a>
+<h1 id="1-基本模板"><a href="#1-基本模板" class="headerlink" title="1. 基本模板"></a>1. 基本模板</h1><h2 id="1-1-down操作"><a href="#1-1-down操作" class="headerlink" title="1.1 down操作"></a>1.1 down操作</h2><p>down(x)，就是在节点x的左右子树（不包括x）均满足堆的定义的情况下，加入x节点，使得x<strong>及</strong>其左右子树均满足堆的定义。<br>假定一个完全二叉树（除了根其余部分都满足堆性质，节点编号从1开始）</p>
+<p><img src="/images/datastructure_and_algorithm/数据结构与算法_堆/1.png" alt=""></p>
+<p>在节点1的左右子树均满足堆的定义的前提下，执行down(1)，则一号节点5会与其左右子节点2、4比较，发现它们三个的最小值是2，为了使其满足堆的性质，交换2和5的位置。</p>
+<p><img src="/images/datastructure_and_algorithm/数据结构与算法_堆/2.png" alt=""></p>
+<p>交换后，5与其现在的左右子节点又不满足堆的性质了（5比3和4都大），所以又要以二号节点5为父节点，重复上述步骤，即down(2)。</p>
+<p><img src="/images/datastructure_and_algorithm/数据结构与算法_堆/3.png" alt=""></p>
+<p>这样我们就完成了down操作。<br> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="built_in">size</span>；<span class="comment">//当前节点数量</span></span><br><span class="line"><span class="keyword">int</span> h[]; <span class="comment">//用来表示堆的数组</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> x)</span> <span class="comment">//从标号为x的结点开始往下一路“堆化”</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">min</span> = x;<span class="comment">//准备寻找三个节点中的最小节点</span></span><br><span class="line">    <span class="comment">//如果x的左儿子存在，且小于x， 则将它标注为最小节点</span></span><br><span class="line">    <span class="keyword">if</span>(x*<span class="number">2</span> &lt;= <span class="built_in">size</span> &amp;&amp; h[x*<span class="number">2</span>]&lt;h[<span class="built_in">min</span>]) <span class="built_in">min</span> = x*<span class="number">2</span>;</span><br><span class="line">    <span class="comment">//如果x的右儿子存在，且小于x，则将他标注为最小节点</span></span><br><span class="line">    <span class="keyword">if</span>(x*<span class="number">2</span>+<span class="number">1</span>&lt;=<span class="built_in">size</span> &amp;&amp; h[x*<span class="number">2</span>+<span class="number">1</span>]&lt;h[<span class="built_in">min</span>]) <span class="built_in">min</span> = x*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(x!=<span class="built_in">min</span>) <span class="comment">//如果x不是最小的</span></span><br><span class="line">    &#123;</span><br><span class="line">        swap(h[x], h[<span class="built_in">min</span>]); <span class="comment">//就交换x和最小节点的位置</span></span><br><span class="line">        down(<span class="built_in">min</span>); <span class="comment">//因为x不是最小的，所以min所在位置必定是x的子节点，在它们交换后，min位置的元素变了，因此我们要以min为父节点继续检查它与其左右子树是否满足堆结构。</span></span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><br>有了down方法后，我们可以非常方便的将数组转化为堆。</p>
+<h2 id="1-2-快速将数组转化为堆"><a href="#1-2-快速将数组转化为堆" class="headerlink" title="1.2 快速将数组转化为堆"></a>1.2 快速将数组转化为堆</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span>; i; i -- ) down(i);</span><br></pre></td></tr></table></figure>
+<p>n为数组的size，<strong>在完全二叉树中，n/2代表非叶节点的个数</strong>，为啥从n/2开始往上down就能转化成堆呢？</p>
+<p><img src="/images/datastructure_and_algorithm/数据结构与算法_堆/4.png" alt=""></p>
+<p>从i=n/2开始每次 i— 并对该位置进行down(i)操作，可以保证每一步都满足down的前提（除了节点x，x的左右子树都满足堆的性质）, 随着i变为1（到达根节点），整个完全二叉树变成了一个小根堆。</p>
+<h2 id="1-3-up操作"><a href="#1-3-up操作" class="headerlink" title="1.3 up操作"></a>1.3 up操作</h2><p>up(x)是从下往上调整堆，操作如下：若标号为x的父节点比标号为x的节点大（大根堆则反之），则交换它们，然后x移动到它的父节点上。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(x/<span class="number">2</span> &amp;&amp; h[x/<span class="number">2</span>]&gt;h[x])<span class="comment">//若x有父节点，且其父节点的值比它大</span></span><br><span class="line">    &#123;</span><br><span class="line">        swap(h[x/<span class="number">2</span>], h[x]); <span class="comment">//将它与父节点交换</span></span><br><span class="line">        x /= <span class="number">2</span>;<span class="comment">//将x移动到它的父节点上</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>up操作是专门在往堆中加入新元素时使用的。</strong></p>
+<h2 id="1-4-插入元素"><a href="#1-4-插入元素" class="headerlink" title="1.4 插入元素"></a>1.4 插入元素</h2><p>如何往堆中插入一个元素且不破坏堆的结构呢？<br>把新元素先放到堆数组的末尾，再对它进行up操作即可。</p>
+<p><img src="/images/datastructure_and_algorithm/数据结构与算法_堆/5.png" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    h[++<span class="built_in">size</span>] = value;</span><br><span class="line">    up(<span class="built_in">size</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-5-弹出堆顶元素"><a href="#1-5-弹出堆顶元素" class="headerlink" title="1.5 弹出堆顶元素"></a>1.5 弹出堆顶元素</h2><p>交换堆顶和堆尾元素，然后size—即可，让当前位于堆尾的元素处于假死状态（标记），现在整个结构<strong>只有根节点不满足堆的性质了</strong>，这时只要对根节点执行down操作即可。</p>
+<p><img src="/images/datastructure_and_algorithm/数据结构与算法_堆/6.png" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    swap(h[<span class="number">1</span>], h[<span class="built_in">size</span>]);</span><br><span class="line">    <span class="built_in">size</span>--;</span><br><span class="line">    down(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Dijkstra需要用堆进行优化，碰到有大量取最值操作的问题也要用到堆，其他情况用堆排序就没什么必要了，不如用快排（虽然堆排的最坏情况比快排要好一些，但消耗额外空间）</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>给作者打赏</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AaronGuo WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="AaronGuo Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/23/IT/datastructure_and_algorithm/%E3%80%8A%E6%A0%88%E3%80%8B%E4%B8%93%E9%A2%98/" rel="prev" title="《栈》专题">
+      <i class="fa fa-chevron-left"></i> 《栈》专题
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-基本模板"><span class="nav-text">1. 基本模板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-down操作"><span class="nav-text">1.1 down操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-快速将数组转化为堆"><span class="nav-text">1.2 快速将数组转化为堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-up操作"><span class="nav-text">1.3 up操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-插入元素"><span class="nav-text">1.4 插入元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-弹出堆顶元素"><span class="nav-text">1.5 弹出堆顶元素</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AaronGuo</p>
+  <div class="site-description" itemprop="description">Sponsored by Fun with Flag ;)</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
