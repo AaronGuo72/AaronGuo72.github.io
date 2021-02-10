@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aaronguo72.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":360,"display":"post","padding":18,"offset":0,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Java Servlet是运行在HTTP服务器中的java程序，它可以处理浏览器客户端对该服务器发起的请求。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet">
+<meta property="og:url" content="https://aaronguo72.github.io/2021/02/10/IT/java/Servlet/index.html">
+<meta property="og:site_name" content="Fun with Code">
+<meta property="og:description" content="Java Servlet是运行在HTTP服务器中的java程序，它可以处理浏览器客户端对该服务器发起的请求。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://aaronguo72.github.io/images/java/servlet/1.jpg">
+<meta property="og:image" content="https://aaronguo72.github.io/images/java/servlet/2.jpg">
+<meta property="og:image" content="https://aaronguo72.github.io/images/java/servlet/3.jpg">
+<meta property="og:image" content="https://aaronguo72.github.io/images/java/servlet/4.jpg">
+<meta property="og:image" content="https://aaronguo72.github.io/images/java/servlet/5.jpg">
+<meta property="article:published_time" content="2021-02-10T01:05:34.000Z">
+<meta property="article:modified_time" content="2021-02-10T01:16:06.525Z">
+<meta property="article:author" content="AaronGuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaronguo72.github.io/images/java/servlet/1.jpg">
+
+<link rel="canonical" href="https://aaronguo72.github.io/2021/02/10/IT/java/Servlet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Servlet | Fun with Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fun with Code</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">27</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://aaronguo72.github.io/2021/02/10/IT/java/Servlet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AaronGuo">
+      <meta itemprop="description" content="Sponsored by Fun with Flag ;)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Code">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Servlet
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-02-10 09:05:34 / Modified: 09:16:06" itemprop="dateCreated datePublished" datetime="2021-02-10T09:05:34+08:00">2021-02-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Java Servlet是运行在HTTP服务器中的java程序，它可以处理浏览器客户端对该服务器发起的请求。</p>
+<a id="more"></a>
+<h1 id="1-Tomcat"><a href="#1-Tomcat" class="headerlink" title="1. Tomcat"></a>1. Tomcat</h1><p>直接在idea中创建javaee项目即可根据提示直接集成tomcat。Tomcat的特点是运行时占用的系统资源少，扩展性好，开源，一般用于开发或者调试，或者在中小型系统和并发访问用户不多的场景下使用。</p>
+<blockquote>
+<p>抽象类的作用是降低实现类的难度，如果没有抽象类做中间层，那么每次实现一个接口都要重写里面的所有方法。这一点在Servlet源码中有体现。</p>
+</blockquote>
+<h1 id="2-初步使用Servlet"><a href="#2-初步使用Servlet" class="headerlink" title="2. 初步使用Servlet"></a>2. 初步使用Servlet</h1><p>在写项目之前，先进行一些配置。比如每次更新文件内容后都要手动重启tomcat服务器才能生效，非常麻烦，可以进行如下设置：</p>
+<p><img src="/images/java/servlet/1.jpg" alt=""></p>
+<p>设置完成后，每次以debug的方式运行项目，就不用每次手动重启服务器了。</p>
+<p>【初步使用servlet】</p>
+<ol>
+<li><p>创建javaee项目，选择web application。</p>
+</li>
+<li><p>创建类（<strong>注意servlet类一般放在com.companyName.controller包下</strong>），实现HttpServlet接口，重写service方法</p>
+</li>
+<li><p>将servlet接口实现类信息注册到tomcat服务器</p>
+<p>在WEB-INF目录下，找到web.xml文件，向其中添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--将servlet接口实现类路径提交给tomcat--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span> var <span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> <span class="comment">&lt;!--用变量var存储servlet实现类路径--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span> com.google.controller.MyServlet <span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span> <span class="comment">&lt;!--声明servlet实现类路径--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样当tomcat创建MyServlet实例时，就会执行：<code>String var =  &quot;com.google.controller.MyServlet&quot;</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--这时可以通过：网站根目录/com/google/controller/MyServlet 访问到MyServlet这个资源，但是这样太麻烦了，因此给这个路径起个别名--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span> var <span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span> /alias <span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> <span class="comment">&lt;!--这时就可以通过：网站根目录/alias 来访问MyServlet这个资源了。注意别名开头必须有“/”--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>【上述步骤也直接可以通过注解直接完成，不用去xml文件中配置，如下图】</p>
+</li>
+</ol>
+<p><img src="/images/java/servlet/2.jpg" alt=""></p>
+<p>现在可以通过<a href="http://localhost:8080/javaeeTest_war_exploded/t02这个网址访问到该类中的资源了。注意t02左侧的目录为本项目的根目录，可以更改" target="_blank" rel="noopener">http://localhost:8080/javaeeTest_war_exploded/t02这个网址访问到该类中的资源了。注意t02左侧的目录为本项目的根目录，可以更改</a></p>
+<p><img src="/images/java/servlet/3.jpg" alt=""></p>
+<h1 id="3-Servlet生命周期"><a href="#3-Servlet生命周期" class="headerlink" title="3. Servlet生命周期"></a>3. Servlet生命周期</h1><p><img src="/images/java/servlet/4.jpg" alt=""></p>
+<p>图片来自网络，侵删。</p>
+<ol>
+<li><p>开发人员实现的Servlet接口实现类，它的实例由http服务器负责创建。默认情况下，http服务器第一次接收到对某一servlet对象的请求时，创建该对象实例。</p>
+<p>也可以手动配置当http服务器启动时直接就创建某servlet对象的实例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span> var <span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span> com.google.contoller.MyServlet <span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span> 1 <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span> <span class="comment">&lt;!--其中填写一个大于0的整数即让http服务器启动时就创建MyServlet对象的实例，有多个servlet实现类时，该数值大的优先启动--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>http服务器运行期间，对任一个servlet实现类只会实例化它的一个对象</p>
+</li>
+<li>http服务器关闭时，将所有servlet实例销毁</li>
+</ol>
+<p>其实init之后可以调用doGet或者doPost方法，分别处理get和post的数据，但service集成了这两个方法，更加方便。</p>
+<h1 id="4-HttpServlet的两个接口"><a href="#4-HttpServlet的两个接口" class="headerlink" title="4. HttpServlet的两个接口"></a>4. HttpServlet的两个接口</h1><p>当http服务器接收到请求报文时，会自动创建与之关联的HttpServletResponse对象和HttpServletRequest对象，并将它们以参数的形式传递给servlet实现类的service方法。service方法执行完毕后，在http服务器生成回复报文之前，这两个对象将被销毁。</p>
+<p>因此，HttpServletResponse对象和HttpServletRequest对象的声明周期就是【一次请求】。</p>
+<h2 id="4-1-HttpServletResponse"><a href="#4-1-HttpServletResponse" class="headerlink" title="4.1 HttpServletResponse"></a>4.1 HttpServletResponse</h2><p>这个接口负责将service方法的执行结果以二进制的形式写入到【HTTP应答报文】中。它可以设置应答报文中的contect-type属性值，来标识本报文携带的数据类型。</p>
+<h3 id="4-1-1-输出流"><a href="#4-1-1-输出流" class="headerlink" title="4.1.1 输出流"></a>4.1.1 输出流</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PrintWriter pw = response.getWriter(); <span class="comment">//字符输出流</span></span><br><span class="line">ServletOutputStream out = response.getOutputStream(); <span class="comment">//字节输出流</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 字符输出流有时会出现乱码，这时只要把客户端和服务端的编码格式统一即可。</span></span><br><span class="line"><span class="comment">* 利用response.setContentType("text/html;charset=UTF-8"); 可以同时设置客户端和服务端的编码格式，并且* 使得服务端向客户端写入的字符串中的html标签能够被解析</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">pw.write(<span class="number">97</span>); <span class="comment">//这会在网页上显示a，write方法默认会将数字转化为字符</span></span><br><span class="line">pw.print(<span class="number">97</span>); <span class="comment">//该方法会在网页上显示97，因此常用这个方法</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-1-2-重定向"><a href="#4-1-2-重定向" class="headerlink" title="4.1.2 重定向"></a>4.1.2 重定向</h3><p><code>response.sendRedirect(&quot;https://www.baidu.com&quot;);</code> 这句话相当于设置http回应报文中location字段的值，浏览器接收到http回应报文后就会立即跳转到location指定的url。（注意location字段是不显示的，而且浏览器接收到location字段不为空的响应报文（状态码302）后不会读取该报文中的内容，而是直接跳转到location指定的url）.</p>
+<blockquote>
+<p>重定向后默认用get方式发起请求</p>
+</blockquote>
+<h2 id="4-2-HttpServletRequest"><a href="#4-2-HttpServletRequest" class="headerlink" title="4.2 HttpServletRequest"></a>4.2 HttpServletRequest</h2><p>该接口负责读取HTTP请求报文的数据，读取其中的请求，将该请求转发给服务器。</p>
+<blockquote>
+<p>URI是URL的子串，它截取了URL中com之后的路径</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*获取请求报文头中所有请求参数*/</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    Enumeration paramNames = request.getParameterNames();</span><br><span class="line">    <span class="keyword">while</span>(paramNames.hasMoreElements())&#123;</span><br><span class="line">        String paramName = paramNames.nextElement().toString(); <span class="comment">//key</span></span><br><span class="line">        String value = request.getParameter(paramName);  <span class="comment">//value</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获取请求头和请求体中的参数信息都是使用该方法，区别在于当用户以get方式提交数据时，这些数据都存在请求头中，请求头的数据由tomcat负责解析，默认编码格式为utf-8；而当用户以post方式提交数据时，其中数据存在请求体中，请求体中的数据由request对象负责解析，其默认编码格式不支持中文，这时就会出现乱码，显式地设置编码格式即可解决：</p>
+<p><code>request.setCharacterEncoding(&quot;UTF-8&quot;);</code></p>
+<h1 id="5-前后端交互"><a href="#5-前后端交互" class="headerlink" title="5. 前后端交互"></a>5. 前后端交互</h1><ol>
+<li>在后端通过<code>request.setAttribute(&quot;key&quot;,&quot;value&quot;);</code>  将key和value存储到request作用域中</li>
+<li>在前端通过<code>&lt;%=request.getAttribute(&quot;key&quot;)%&gt;</code>  从request作用域中获取key的值</li>
+</ol>
+<h1 id="6-多个servlet相互关联"><a href="#6-多个servlet相互关联" class="headerlink" title="6. 多个servlet相互关联"></a>6. 多个servlet相互关联</h1><p>【请求转发】我去鞋店买衣服，鞋店没有衣服，老板去隔壁衣服店取了一件卖给我。<br>【重定向】我去鞋店买衣服，鞋店没有衣服，老板告诉我隔壁有家衣服店，我去隔壁衣服店买。</p>
+<p>请求转发的根本是【转发】，就是将传输到这个servlet中的response和request对象转发给另外一个servlet，因此在整个转发的过程中，所有servlet获取到的response和request对象信息都是相同的。而重定向本质上是服务器让浏览器去请求另外一个servlet对象，浏览器重新发起请求那就是全新的response和request对象了。</p>
+<p>另外<strong>请求转发只能定位到本项目中的资源</strong>，因为请求转发是服务器内部的转发，不能定位到外部资源比如www.baidu.com，但是重定向可以。</p>
+<h2 id="6-1-请求转发"><a href="#6-1-请求转发" class="headerlink" title="6.1 请求转发"></a>6.1 请求转发</h2><p>如下后台逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String username = request.getParameter(<span class="string">"username"</span>);</span><br><span class="line">        String password = request.getParameter(<span class="string">"password"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="string">"root"</span>.equals(username) &amp;&amp; <span class="string">"123"</span>.equals(password)) resp.getWriter().write(<span class="string">"success"</span>);</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            request.setAttribute(<span class="string">"msg"</span>,<span class="string">"密码或者用户名不正确"</span>); <span class="comment">//将消息传输给前端</span></span><br><span class="line">            request.getRequestDispatcher(<span class="string">"/login"</span>).forward(request,response); <span class="comment">//请求转发，在服务端跳转，url不发生改变。forward(req, resp)相当于把本servlet的req和resp转发到login这个servlet作为参数，因此某servlet的request作用域中的参数在它请求转发后的servlet中依然有效；而重定向不行，重定向到新的页面后，就是令一个request作用域了。</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当前端传来的username=”root”且password=”123”时，验证成功，在页面上显示success；而如果验证不成功，将验证失败的消息传输到前端，并且利用请求转发将页面定位到login.jsp（否则验证失败就会一直停留在空白页面），可以观察到，验证失败跳转到login.jsp后，url并没有发生改变，这就是请求转发的特性。</p>
+<h2 id="6-2-重定向"><a href="#6-2-重定向" class="headerlink" title="6.2 重定向"></a>6.2 重定向</h2><p>参照4.1.2</p>
+<h1 id="7-多个servlet之间共享数据的方案"><a href="#7-多个servlet之间共享数据的方案" class="headerlink" title="7. 多个servlet之间共享数据的方案"></a>7. 多个servlet之间共享数据的方案</h1><ol>
+<li>ServletContext接口</li>
+<li>Cookie类</li>
+<li>HttpSession接口</li>
+<li>HttpServletRequest接口</li>
+</ol>
+<h1 id="8-解决HTTP无状态特性的问题"><a href="#8-解决HTTP无状态特性的问题" class="headerlink" title="8. 解决HTTP无状态特性的问题"></a>8. 解决HTTP无状态特性的问题</h1><p>由于HTTP是无状态协议，这个问题如果不解决，那么网页就无法记录用户的行为，也无法存储用户的信息来对用户加以区分（比如会员和非会员）。Cookie和Session就是用来解决这个问题的。</p>
+<h2 id="8-1-Cookie"><a href="#8-1-Cookie" class="headerlink" title="8.1 Cookie"></a>8.1 Cookie</h2><p>当同一个浏览器/用户向某网站的多个servlet发起请求时，Cookie使得这些servlet之间可以共享该用户的信息数据。</p>
+<p>【原理】</p>
+<ol>
+<li><p>用户第一次访问某网站，假如它访问的是servlet01，那么servlet01在运行期间会创建一个cookie来存储当前用户的相关数据（例如用户刚刚注册的用户名密码，或者用户在网站中的行为数据），当该servlet运行完毕后，会将cookie信息打包在HTTP响应报文中发送给用户浏览器</p>
+</li>
+<li><p>浏览器收到HTTP响应报文以及其中的cookie，将该cookie保存（或更新）到自己本地。</p>
+</li>
+<li><p>过了两天，用户通过【同一个浏览器】又来访问【该】网站，这次它访问的是servlet02。（注意只要浏览器本地有被访网站的cookie，那么之后该浏览器向该网站发起的所有HTTP请求报文中都会自动携带该cookie）。网站服务器接收到请求后，读取其携带的cookie信息，直接帮用户登陆网站，【提升了用户体验】，【同时也降低了服务器的压力】，但是因为cookie保存在用户本地，因此安全性较差。</p>
+</li>
+</ol>
+<p>Cookie的形式是键值对，键值对之间用“=”连接，多个键值对通过“ ; ”隔开，<strong>Cookie存储的数据类型只能是String</strong>，而HttpSession可以是任意类型Object。</p>
+<blockquote>
+<p>cookie是网站和浏览器绑定的</p>
+</blockquote>
+<h3 id="8-1-1-创建Cookie并将其添加到浏览器"><a href="#8-1-1-创建Cookie并将其添加到浏览器" class="headerlink" title="8.1.1 创建Cookie并将其添加到浏览器"></a>8.1.1 创建Cookie并将其添加到浏览器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    	<span class="comment">//创建cookie</span></span><br><span class="line">        Cookie coo = <span class="keyword">new</span> Cookie(<span class="string">"key"</span>,<span class="string">"value"</span>);</span><br><span class="line"></span><br><span class="line">    	<span class="comment">//将cookie添加到浏览器</span></span><br><span class="line">        response.addCookie(coo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="8-1-2-获取Cookie"><a href="#8-1-2-获取Cookie" class="headerlink" title="8.1.2 获取Cookie"></a>8.1.2 获取Cookie</h3><p>只能一次获取所有Cookie，以数组的形式返回。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    response.setContentType(<span class="string">"text/html;charset=UTF-8"</span>);</span><br><span class="line">    </span><br><span class="line">    Cookie[] cookies = request.getCookies(); <span class="comment">//获取HTTP请求报文中携带的Cookies</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (Cookie c :</span><br><span class="line">         cookies) &#123;</span><br><span class="line">        response.getWriter().write(c.getName()+<span class="string">" : "</span>+c.getValue()+<span class="string">"&lt;/br&gt;"</span>); <span class="comment">//将每一个cookie打印到网页上</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，如果（比如在/login这个servlet中）加入了新的cookie，那么必须要重新访问一次/login才能将新的cookie存到浏览器中，因为必须重新访问才能调用到/login下的service函数。重新访问了/login，更新了本地浏览器的cookie后，如果把浏览器关了再开，就会发现cookie已经被清空，这是因为cookie的默认失效时间就是<strong>当浏览器关闭时失效</strong>。</p>
+<h3 id="8-1-3-设置Cookie的失效时间"><a href="#8-1-3-设置Cookie的失效时间" class="headerlink" title="8.1.3 设置Cookie的失效时间"></a>8.1.3 设置Cookie的失效时间</h3><p>通过改变Cookie的maxAge属性可以设置该Cookie的失效时间，它的默认值是-1，代表关闭浏览器时失效；正整数代表该cookie可以存活多少秒。</p>
+<p>0代表删除该Cookie，不过直接设置为0并不能删除cookie，能够删除的前提是该cookie的path和domain属性都设置了。</p>
+<h3 id="8-1-4-Cookie的path"><a href="#8-1-4-Cookie的path" class="headerlink" title="8.1.4 Cookie的path"></a>8.1.4 Cookie的path</h3><p>设置cookie的path就是设置可以访问cookie的路径。</p>
+<ol>
+<li>默认在当前项目中可以访问</li>
+<li><code>setPath(&quot;/path&quot;)</code> 指定可以访问该cookie的路径</li>
+<li><code>setPath(&quot;/&quot;)</code>允许当前服务器中所有资源访问cookie</li>
+<li><code>setPath(&quot;/path/resource&quot;)</code>指定可以访问cookie的某一资源</li>
+</ol>
+<p>总的来看，只有访问的项目路径中包含某一个cookie的path才能访问到该cookie。</p>
+<h2 id="8-2-Session"><a href="#8-2-Session" class="headerlink" title="8.2 Session"></a>8.2 Session</h2><p>与cookie相同，当同一个浏览器/用户向某网站的多个servlet发起请求时，Session也可以使得这些servlet之间可以共享该用户的信息数据。</p>
+<p>不同之处在于，一个Cookie对象只能存储一个键值对（且值只能是String），而一个session对象可以存储集合，这意味着session对象可以存储任意数量的键值对。</p>
+<p>且对于服务器来说，每一个客户端连接到它之后，它们之间都会形成一个session，每一个session会维持一段时间，在session有效期间服务器和客户端可以相互“有状态地”通信（比如客户端在一个页面上通过session登陆了，然后通过超链接跳转到另外一个属于该服务器 的页面，那么session信息可以传递到这个页面，所以该用户在这个页面上也是登陆状态）。session的实现依赖cookie，且<strong>客户端的session信息保存在服务器端</strong>，这个特点最明显的体现就是：客户端发出的HTTP请求携带的cookie到达服务端，服务端的service方法调用完毕后，会返回一个新的cookie给客户端（无论cookie中的信息有没有发生改变），客户端收到后新的cookie后会用它覆盖掉本地旧的cookie，也就是说，<strong>cookie的存活时间是一次请求</strong>。而session是将用户的数据保存在服务端，只要服务端不删除用户的session数据，它就会一直存活（一般会限时，tomcat默认为30分钟），如果存活时间没到，甚至服务器关闭了它也还存活（服务器关闭时将session数据写到本地硬盘上，下次开启时自动加载，可以手动设置）。</p>
+<blockquote>
+<p>因为session信息存储在服务器上，所以比cookie安全</p>
+</blockquote>
+<p>【session可以理解成用户在网站服务器中的私人储物柜，用户申请私人储物柜，服务器给它钥匙，用户下次带着钥匙来直接开自己的柜子无需申请，柜子里存放着用户的私人信息】</p>
+<h3 id="8-2-1-会话标识JSESSIONID"><a href="#8-2-1-会话标识JSESSIONID" class="headerlink" title="8.2.1 会话标识JSESSIONID"></a>8.2.1 会话标识JSESSIONID</h3><p>http服务器创建一个HttpSession对象时，会用JsessionId来唯一的标识它，并在当前service方法执行完毕后，将其作为cookie（key=”JSESSIONID”:value=”597d…”）通过HTTP应答报文返回给客户端。下一次该客户再连接该服务器时，服务器获取其请求报文中的cookie中的JsessionId，然后通过这个JsessionId去存储session的容器中寻找之前为该用户创建的session，找到后，用这个session中的信息接着上次的进度继续为用户提供服务，这样就用session标识了一个用户。</p>
+<p>也就是说，<strong>http服务器利用cookie将HttpSession与用户关联起来</strong>。</p>
+<h3 id="8-2-2-session操作实例"><a href="#8-2-2-session操作实例" class="headerlink" title="8.2.2 session操作实例"></a>8.2.2 session操作实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*添加session*/</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    HttpSession session = request.getSession(); <span class="comment">//如果当前用户在本http服务器中已存有session信息，那就获取该session；【否则，为当前用户创建新的session】。</span></span><br><span class="line">    HttpSession session = request.getSession(<span class="keyword">false</span>);<span class="comment">//如果当前用户在本http服务器中已存有session信息，那就获取该session；【否则，返回null】。</span></span><br><span class="line">    session.setAttribute(<span class="string">"key"</span>,Object); <span class="comment">//往当前用户的session空间中添加一条session</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*获取session*/</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    HttpSession session = request.getSession();</span><br><span class="line">    session.getAttribute(<span class="string">"key"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>真实项目中，为了防止用户恶意登陆（比如用户知道网站的资源路径，不登陆直接访问），一般用令牌机制，这个令牌（用户身份标识）一般就用session来充当。<code>request.getSession()</code>这种无参版本，一般只会出现在loginServlet中，即服务器未知session的用户只被允许访问该页面。其他所有servlet中全部使用request.getSession(false)，这样所有服务器未知session的用户的请求就会全部被拒绝。</p>
+<p>但是这种方案也有一些缺点：</p>
+<ol>
+<li>太多servlet都要做一个令牌验证，太麻烦</li>
+<li>无法保护静态资源文件</li>
+</ol>
+<p>这两个缺点都可以被Filter解决，对loginServlet之外的其他所有servlets加过滤器，过滤器中做令牌验证，以下为示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        </span><br><span class="line">        HttpServletRequest request = (HttpServletRequest) servletRequest;</span><br><span class="line">        <span class="comment">//1. 获取用户输入的uri，判断用户想要访问的资源类型</span></span><br><span class="line">        String uri = request.getRequestURI();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//2. 如果uri中包含login关键字，说明用户本次请求与登陆相关，应该放行</span></span><br><span class="line">        <span class="keyword">if</span>(uri.indexOf(<span class="string">"login"</span>)!=-<span class="number">1</span>)&#123;</span><br><span class="line">        	filterChain.doFilter(servletRequest, servletResponse);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//3. 程序走到这里，说明用户在请求与登陆不相关的资源，这时需要判断该用户session信息是否有效</span></span><br><span class="line">        HttpSession session = request.getSession(<span class="keyword">false</span>);<span class="comment">//获取访问请求携带的session信息</span></span><br><span class="line">	    </span><br><span class="line">        <span class="comment">//如果访问请求非法，即服务器中没有该用户session信息，跳转到登陆失败页面			</span></span><br><span class="line">        <span class="keyword">if</span>(session==<span class="keyword">null</span>)&#123;</span><br><span class="line">            request.getRequestDispatcher(<span class="string">"loginFail.html"</span>).forward(servletRequest,servletResponse);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//否则放行</span></span><br><span class="line">        filterChain.doFilter(servletRequest,servletResponse);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="8-2-3-session对象的销毁时机"><a href="#8-2-3-session对象的销毁时机" class="headerlink" title="8.2.3 session对象的销毁时机"></a>8.2.3 session对象的销毁时机</h3><p>用户浏览器中的JSESSIONID cookie缓存被清除时，它与http服务器中与之相关的session连接也就中断了。但是http服务器不可能去监测每个用户是否中断了连接（用户太多），不过它可以计算用户空闲时间（多长时间没有向服务器发起请求），因此可采用设置session的存活时间的办法，用户空闲一定时间后session自动销毁，以此腾出服务器空间资源。</p>
+<p>tomcat默认用户空闲30分钟销毁session，我们可以手动更改某个session的空闲存活时间</p>
+<p>设置多少秒后失效: <code>hs.setMaxInactiveInterval();</code></p>
+<p>立即失效: <code>hs.invalidate();</code></p>
+<p>也可以直接修改http服务器的默认参数</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">session-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">session-timeout</span>&gt;</span> time(minutes) <span class="tag">&lt;/<span class="name">session-timeout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="9-SevletContext"><a href="#9-SevletContext" class="headerlink" title="9. SevletContext"></a>9. SevletContext</h1><p>每一个java web应用都有且仅有一个SevletContext对象（一般也叫做全局作用域对象），也叫做application对象。当web服务器（容器）启动时，它会为其中的每一个web应用程序创建一个SevletContext对象，只要服务器不关闭，这个对象就会一直存在。ServletContext对象相当于一个map，比如一个servlet A把数据放到ServletContext对象中（以key-value的形式），然后另外一个Servlet B就可以获取ServletContext对象，然后通过其中存储的key找到对应的value。</p>
+<p>SevletContext对象有两个作用：1. 属于同一个网站的所有servlet可以通过ServletContext对象实现数据共享 2. 该对象中保存了一些当前应用的信息，比如获取当前服务器信息或者获取某个资源在服务器中的路径。</p>
+<p>SevletContext对象使用示例（注意，规范是将ServletContext对象命名为application）：</p>
+<p>通过request对象获取（获取ServletContext对象的方法很多，这是其一）</p>
+<p><code>ServletContext application = request.getServletContext();</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*往全局作用域中存数据*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet01</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        ServletContext application = request.getServletContext(); <span class="comment">//获取ServletContext对象</span></span><br><span class="line">        application.setAttribute(<span class="string">"key"</span>,value); <span class="comment">//向ServletContext中添加数据（此时将application当作map用即可）</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*从全局作用域中取数据*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet02</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        ServletContext application = request.getServletContext(); <span class="comment">//获取ServletContext对象</span></span><br><span class="line">        Object val = application.getAttribute(<span class="string">"key"</span>); <span class="comment">//获取ServletContext对象中"key"对应的value</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>因为全局容量是有限的，因此基层的程序员是没有权限往里面存数据的，只能取。</p>
+</blockquote>
+<h1 id="10-通过HttpServletRequest接口实现数据共享"><a href="#10-通过HttpServletRequest接口实现数据共享" class="headerlink" title="10. 通过HttpServletRequest接口实现数据共享"></a>10. 通过HttpServletRequest接口实现数据共享</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/01"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Servlet01</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        request.setAttribute(<span class="string">"key"</span>,<span class="string">"value"</span>); <span class="comment">//向request作用域（一个类似于map的数据结构）中插入数据</span></span><br><span class="line">        request.getRequestDispatcher(<span class="string">"/02"</span>).forward(request,response); <span class="comment">//将请求转发给Servlet02</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/02"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Servlet02</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String a = (String) request.getAttribute(<span class="string">"key"</span>); <span class="comment">//获取request中的数据</span></span><br><span class="line">        System.out.println(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="11-监听器接口"><a href="#11-监听器接口" class="headerlink" title="11. 监听器接口"></a>11. 监听器接口</h1><p>监听器接口不像其他servlet规范下的接口有一个承接的抽象类，程序员需要自己实现监听器接口。</p>
+<p>监听器接口的作用就是监控【作用域对象生命周期发生变化的时刻】以及【作用域对象共享数据变化的时刻】。</p>
+<p>作用域对象：该对象中存储的数据被服务端的多个servlet共享。Servlet规范下的几个作用于对象：</p>
+<ol>
+<li>ServletContext：全局作用域对象</li>
+<li>HttpSession：会话作用域对象</li>
+<li>HttpServletRequest：请求作用域对象</li>
+</ol>
+<p>注意cookie虽然也可以用作servlet之间的数据共享，但是因为它本身存储在客户端，因此不算做作用域对象。</p>
+<h2 id="11-1-监听器接口开发规范"><a href="#11-1-监听器接口开发规范" class="headerlink" title="11.1 监听器接口开发规范"></a>11.1 监听器接口开发规范</h2><p>有三步。（现在一般认为某个步骤的开发规范需要三步或者三步以上是严重影响效率的因素，一般都会被框架抽象出来，就像之前学的JDBC到后面会直接被框架代替）</p>
+<ol>
+<li>根据监听的实际情况，选择对应的监听器接口进行实现（选择三个作用域对象中的一个）</li>
+<li>重写监听器接口中的监听事件处理方法</li>
+<li>在web.xml文件中将监听器接口实现类注册到http服务器</li>
+</ol>
+<h2 id="11-2-使用示例"><a href="#11-2-使用示例" class="headerlink" title="11.2 使用示例"></a>11.2 使用示例</h2><p><strong>ServletContextListener接口</strong>可以监听全局作用域对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在服务器开启和关闭时会分别在控制台打印initiallized和destroyed</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServlet</span> <span class="keyword">implements</span> <span class="title">ServletContextListener</span></span>&#123; </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span><span class="params">(ServletContextEvent sce)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"initiallized"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span><span class="params">(ServletContextEvent sce)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"destroyed"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将该监听器对象注册到http服务器中</p>
+<p><img src="/images/java/servlet/5.jpg" alt=""></p>
+<p><strong>ServletContextAttributeListener接口</strong>监听全局作用域对象中共享数据变化的时刻</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServlet</span> <span class="keyword">implements</span> <span class="title">ServletContextAttributeListener</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeAdded</span><span class="params">(ServletContextAttributeEvent event)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeRemoved</span><span class="params">(ServletContextAttributeEvent event)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeReplaced</span><span class="params">(ServletContextAttributeEvent event)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样要将其注册到http服务器中</p>
+<p>可以通过如下代码让全局作用域中的数据发生变化来观察实验现象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        ServletContext application = request.getServletContext();</span><br><span class="line">        application.setAttribute(<span class="string">"key"</span>,<span class="number">1</span>); <span class="comment">//添加一条共享数据</span></span><br><span class="line">        application.setAttribute(<span class="string">"key"</span>,<span class="number">2</span>); <span class="comment">//更新一条共享数据</span></span><br><span class="line">        application.removeAttribute(<span class="string">"key"</span>); <span class="comment">//移除一条共享数据</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="11-3-使用监听器接口提高程序运行速度"><a href="#11-3-使用监听器接口提高程序运行速度" class="headerlink" title="11. 3 使用监听器接口提高程序运行速度"></a>11. 3 使用监听器接口提高程序运行速度</h2><p>Dao层中，最消耗时间的是建立JDBC connection的过程，如果我们每一次访问数据库都要建立一次connection就太慢了。</p>
+<p>ServletContextListener接口刚好可以监听服务器开启和关闭，如果我们将connection在服务器开始时创建，关闭时销毁，就可以节省大量的时间。</p>
+<p>【实例】</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">implements</span> <span class="title">ServletContextListener</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span><span class="params">(ServletContextEvent sce)</span> </span>&#123; <span class="comment">//服务器启动时，创建好数据库连接</span></span><br><span class="line">        JdbcUtil util = <span class="keyword">new</span> JdbcUtil(); <span class="comment">//自定的JdbcUtil对象，可以通过它获取与数据库连接</span></span><br><span class="line">        Map map = <span class="keyword">new</span> HashMap&lt;&gt;(); <span class="comment">//用于存放多个connections</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//假如创建20个Connections</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            Connection con = util.getConnection(); <span class="comment">//getConnection方法会创建一个新的Connection并返回</span></span><br><span class="line">            map.put(con, <span class="keyword">false</span>); <span class="comment">//将新建的Connection放到map中存储，key为Connection本身，value代表该连接是否正在被使用</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//因为本方法调用结束后map这个变量就会丢失，因此我们要把map保存到全局作用域中存储</span></span><br><span class="line">        ServletContext application = sce.getServletContext(); <span class="comment">//又是一种获取ServletContext的方法</span></span><br><span class="line">        application.setAttribute(<span class="string">"Connections"</span>,map);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span><span class="params">(ServletContextEvent sce)</span> </span>&#123; <span class="comment">//服务器关闭时，关闭所有数据库连接</span></span><br><span class="line">        ServletContext application = sce.getServletContext();</span><br><span class="line">        Map map = (Map) application.getAttribute(<span class="string">"Connections"</span>);</span><br><span class="line">        Iterator it =  map.keySet().iterator(); <span class="comment">//将map中的所有key转化为set，并获取该set的迭代器</span></span><br><span class="line">        <span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">            Connection con = (Connection) it.next(); <span class="comment">//遍历map中所有的connections</span></span><br><span class="line">            <span class="keyword">if</span>(con!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"Connection destroyed"</span>);</span><br><span class="line">                con.close(); <span class="comment">//逐个关闭connection</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，把原来的getConnection方法重载一下即可，使得该方法每次可以从全局作用域中获取Connection而非新建一个，如<code>public Connection getConnection(HttpServletRequest request)</code>。 然后再把closeConnection方法重载一下，让它不是直接关闭连接，而是在全局作用域的Connection map中找到想要关闭的Connection，将其在map中的value置为false，代表该连接现在处于空闲状态。</p>
+<h1 id="12-过滤器接口"><a href="#12-过滤器接口" class="headerlink" title="12. 过滤器接口"></a>12. 过滤器接口</h1><p>Filter接口对发给HTTP服务器的请求进行拦截，然后可以进行如下两种操作：</p>
+<ol>
+<li>检查该请求的合法性，如果通过才将其进一步执行。</li>
+<li>对当前请求进行增强辅助操作（比如我要去国外读书，走的时候碰到一个朋友，他给了我200块钱让我路上买点好吃的，他对我去国外这个请求做了增强辅助）</li>
+</ol>
+<h2 id="12-1-过滤器接口开发规范"><a href="#12-1-过滤器接口开发规范" class="headerlink" title="12.1 过滤器接口开发规范"></a>12.1 过滤器接口开发规范</h2><p>三步。</p>
+<ol>
+<li>创建类实现Filter接口</li>
+<li>重写doFilter方法</li>
+<li>将过滤器注册到服务器</li>
+</ol>
+<h2 id="12-2-Filter对客户端向HTTP服务器发起的请求进行过滤"><a href="#12-2-Filter对客户端向HTTP服务器发起的请求进行过滤" class="headerlink" title="12.2 Filter对客户端向HTTP服务器发起的请求进行过滤"></a>12.2 Filter对客户端向HTTP服务器发起的请求进行过滤</h2><p>实现过滤器的servlet按照规范一般放在com.google.filter包下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 拦截传入servlet的request和response对象，以形参servletRequest和servletResponse的形式</span></span><br><span class="line"><span class="comment">     * 传入到doFilter方法中。Filter结束，如果请求合法，则通过filterChain将拦截到的request</span></span><br><span class="line"><span class="comment">     * 和response【归还】给HTTP服务器，由服务器继续调用资源文件。如果请求不合法，则Filter代替</span></span><br><span class="line"><span class="comment">     * HTTP服务器拒绝本次请求(利用截取到的servletResponse对象)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        String parameter = servletRequest.getParameter(<span class="string">"var"</span>);</span><br><span class="line">        <span class="keyword">if</span>(parameter...)&#123; <span class="comment">//如果paramter合法</span></span><br><span class="line">            filterChain.doFilter(servletRequest, servletResponse);</span><br><span class="line">        &#125; <span class="keyword">else</span>&#123; <span class="comment">//如果parameter不合法。</span></span><br><span class="line">            servletResponse.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">            servletResponse.getWriter().print(<span class="string">"&lt;h1&gt;Not valid, request rejected.&lt;/h1&gt;"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将该过滤器注册到HTTP服务器，在web.xml下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">"4.0"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>MyServlet<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span>&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.example.webApplication.MyServlet<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>MyServlet<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/文件<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> <span class="comment">&lt;!--这里指定资源文件，对该文件发起的请求都要先经过Filter--&gt;</span></span><br><span class="line">       【如果要指定一个文件夹】：<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/文件夹/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">       【如果要指定某类文件，比如jpg】：<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.jpg<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">       【指定网站中所有文件】：<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">       </span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="12-3-Filter对客户端向HTTP服务器发起的请求进行辅助增强"><a href="#12-3-Filter对客户端向HTTP服务器发起的请求进行辅助增强" class="headerlink" title="12.3 Filter对客户端向HTTP服务器发起的请求进行辅助增强"></a>12.3 Filter对客户端向HTTP服务器发起的请求进行辅助增强</h2><p>比如用户以post方式提交数据时，我们在服务端必须<code>request.setCharacterEncoding(&quot;UTF-8&quot;)</code>将请求体中的编码格式转为UTF-8，否则读中文会乱码，以前我们必须在每一个servlet中加上这句话，现在可以用Filter来一劳永逸。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        servletRequest.setCharacterEncoding(<span class="string">"utf-8"</span>); <span class="comment">//辅助增强</span></span><br><span class="line">        filterChain.doFilter(servletRequest,servletResponse);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>然后将其注册到HTTP服务器，注意要【将其生效范围应用到所有servlet】</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">"4.0"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>FilterTest<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span>&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.example.webApplication.FilterTest<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>FilterTest<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> <span class="comment">&lt;!--将Filter范围应用到所有资源文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>给作者打赏</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AaronGuo WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="AaronGuo Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/30/misc/git/" rel="prev" title="git">
+      <i class="fa fa-chevron-left"></i> git
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Tomcat"><span class="nav-text">1. Tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-初步使用Servlet"><span class="nav-text">2. 初步使用Servlet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Servlet生命周期"><span class="nav-text">3. Servlet生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-HttpServlet的两个接口"><span class="nav-text">4. HttpServlet的两个接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-HttpServletResponse"><span class="nav-text">4.1 HttpServletResponse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-输出流"><span class="nav-text">4.1.1 输出流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-重定向"><span class="nav-text">4.1.2 重定向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-HttpServletRequest"><span class="nav-text">4.2 HttpServletRequest</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-前后端交互"><span class="nav-text">5. 前后端交互</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-多个servlet相互关联"><span class="nav-text">6. 多个servlet相互关联</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-请求转发"><span class="nav-text">6.1 请求转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-重定向"><span class="nav-text">6.2 重定向</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-多个servlet之间共享数据的方案"><span class="nav-text">7. 多个servlet之间共享数据的方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-解决HTTP无状态特性的问题"><span class="nav-text">8. 解决HTTP无状态特性的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-Cookie"><span class="nav-text">8.1 Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-1-创建Cookie并将其添加到浏览器"><span class="nav-text">8.1.1 创建Cookie并将其添加到浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-2-获取Cookie"><span class="nav-text">8.1.2 获取Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-3-设置Cookie的失效时间"><span class="nav-text">8.1.3 设置Cookie的失效时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-4-Cookie的path"><span class="nav-text">8.1.4 Cookie的path</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-Session"><span class="nav-text">8.2 Session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-1-会话标识JSESSIONID"><span class="nav-text">8.2.1 会话标识JSESSIONID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-2-session操作实例"><span class="nav-text">8.2.2 session操作实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-3-session对象的销毁时机"><span class="nav-text">8.2.3 session对象的销毁时机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-SevletContext"><span class="nav-text">9. SevletContext</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-通过HttpServletRequest接口实现数据共享"><span class="nav-text">10. 通过HttpServletRequest接口实现数据共享</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-监听器接口"><span class="nav-text">11. 监听器接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#11-1-监听器接口开发规范"><span class="nav-text">11.1 监听器接口开发规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-2-使用示例"><span class="nav-text">11.2 使用示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-3-使用监听器接口提高程序运行速度"><span class="nav-text">11. 3 使用监听器接口提高程序运行速度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-过滤器接口"><span class="nav-text">12. 过滤器接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#12-1-过滤器接口开发规范"><span class="nav-text">12.1 过滤器接口开发规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-2-Filter对客户端向HTTP服务器发起的请求进行过滤"><span class="nav-text">12.2 Filter对客户端向HTTP服务器发起的请求进行过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-3-Filter对客户端向HTTP服务器发起的请求进行辅助增强"><span class="nav-text">12.3 Filter对客户端向HTTP服务器发起的请求进行辅助增强</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AaronGuo</p>
+  <div class="site-description" itemprop="description">Sponsored by Fun with Flag ;)</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
