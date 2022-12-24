@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JavaScript使网页可以呈现动态效果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript">
+<meta property="og:url" content="http://example.com/2021/02/23/IT/front_end/JavaScript/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:description" content="JavaScript使网页可以呈现动态效果。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-23T03:53:43.000Z">
+<meta property="article:modified_time" content="2021-02-23T06:00:34.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/02/23/IT/front_end/JavaScript/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/02/23/IT/front_end/JavaScript/","path":"2021/02/23/IT/front_end/JavaScript/","title":"JavaScript"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E4%B8%80%E4%BA%9B%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9"><span class="nav-text">1. 一些要注意的点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-DOM"><span class="nav-text">2. DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-document%E5%AF%B9%E8%B1%A1"><span class="nav-text">2.1 document对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%AF%B9DOM%E5%AF%B9%E8%B1%A1%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-text">2.2 对DOM对象进行操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-JS%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6"><span class="nav-text">3. JS监听事件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%B0%86%E6%A0%87%E7%AD%BE%E4%B8%8E%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A"><span class="nav-text">4. 将标签与监听事件绑定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-JS%E5%87%BD%E6%95%B0"><span class="nav-text">5. JS函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-arguments"><span class="nav-text">5.1 arguments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-JS%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="nav-text">5.2 JS函数重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-function%E7%B1%BB%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="nav-text">5.3 function类型对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">5.4 构造函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Object%E7%B1%BB%E5%9E%8B"><span class="nav-text">6. Object类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-JSON"><span class="nav-text">7. JSON</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E5%B0%86java%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2%E4%B8%BAJSON%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">7.1 将java对象转换为JSON字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-JS%E5%B0%86JSON%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%8C%96%E4%B8%BAJSON%E5%AF%B9%E8%B1%A1"><span class="nav-text">7.2 JS将JSON字符串转化为JSON对象</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/23/IT/front_end/JavaScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-02-23 11:53:43 / Modified: 14:00:34" itemprop="dateCreated datePublished" datetime="2021-02-23T11:53:43+08:00">2021-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JavaScript使网页可以呈现动态效果。</p>
+<span id="more"></span>
+
+<p>要使用独立的JS文件，必须在要使用该js的html中做一个import的动作。比如我们创建好了myJS.js，在某html文件中import它：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;myJS.js&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="1-一些要注意的点"><a href="#1-一些要注意的点" class="headerlink" title="1. 一些要注意的点"></a>1. 一些要注意的点</h1><ol>
+<li><p>js中字符和字符串统称为string类型，且单双引号均可。</p>
+</li>
+<li><p>js中整数和小数统称为number类型</p>
+</li>
+<li><p>js中所有变量在赋值之前的值都是<strong>undefined</strong>，可以把它理解成一个空箱子，我们可以往里面放东西。</p>
+<p>如果主动把某个变量赋值为<strong>null</strong>，它就变成了一块石头，即指向了不存在的内存地址，我们不能往里存数据，也不能从里面取数据。</p>
+<p>如果某个变量的值为**NaN(not a number)**，代表该数字非法。</p>
+<p>如果某个变量的值为<strong>Infinity</strong>，表示该变量无穷大</p>
+<blockquote>
+<p>值为null的变量在javascript中类型为Object，值为undefined的变量类型为undefined，值为NaN的变量类型依然为number，值为Infinity的变量类型为number</p>
+</blockquote>
+</li>
+<li><p>局部块内未加var或者let声明的变量为全局变量（要注意的是，只有当局部块中该代码执行后才能用该变量）</p>
+</li>
+</ol>
+<h1 id="2-DOM"><a href="#2-DOM" class="headerlink" title="2. DOM"></a>2. DOM</h1><p>Document Object Model。</p>
+<p>Js无法直接操作html标签，但是可以通过操作DOM对象间接的操作html标签，这种关系就像java无法直接操作数据表文件，但是可以通过操作数据库对象来间接的操作数据表文件。</p>
+<p>浏览器从web服务器请求到的html页面是被拆分成标签，以二进制流的形式传输过来的，浏览器每接收到一个标签，就会为这个标签生成一个对应的DOM对象（即一个html标签对应一个DOM对象），直到接收完完整的html页面，浏览器这边接收到的所有DOM对象会以树型结构缓存（因为标签之间存在包含关系，所以用树形结构存储），<strong>只要浏览器不关闭这个html页面，这个html页面的所有DOM对象就会一直存在浏览器缓存中</strong>，一旦关闭，该页面所有DOM对象立即被销毁。</p>
+<blockquote>
+<p>浏览器按照html源码文件从上到下顺序解析</p>
+</blockquote>
+<h2 id="2-1-document对象"><a href="#2-1-document对象" class="headerlink" title="2.1 document对象"></a>2.1 document对象</h2><p>浏览器缓存了某个html页面的DOM树后，会生成<strong>一个</strong>document对象来管理这颗树，它可以定位这颗树上的任意一个DOM节点。当本html页面关闭时，document对象也会随着DOM节点被销毁而销毁。</p>
+<p>通过document获取DOM对象的三种方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(); <span class="comment">//通过id获取</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementsByName</span>(); <span class="comment">//通过name获取</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&quot;p&quot;</span>); <span class="comment">//通过标签类型获取，比如&lt;p&gt; &lt;/p&gt;标签</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-2-对DOM对象进行操作"><a href="#2-2-对DOM对象进行操作" class="headerlink" title="2.2 对DOM对象进行操作"></a>2.2 对DOM对象进行操作</h2><p>【获取DOM对象的value】</p>
+<p><code>var val = document.getElementById(&quot;one&quot;).value;</code></p>
+<p>【改变样式】</p>
+<p><code>document.getElementById(&quot;one&quot;).style.backgroundColor = &#39;yellow&#39;</code></p>
+<p><code>document.getElementById(&quot;one&quot;).style.resize = &quot;both&quot;;</code></p>
+<p>【改变状态属性】</p>
+<p><code>document.getElementById(&quot;one&quot;).checked = true;</code></p>
+<p>【改变文字显示内容】</p>
+<p>注意文字显示内容是指双目标签之间的内容，比如<code>&lt;p&gt; text &lt;/p&gt;</code></p>
+<p><code>document.getElementById(&quot;one&quot;).innerText</code> &#x3D; ‘new_text’</p>
+<p>或者<code>document.getElementById(&quot;one&quot;).innerHTML = &#39;new_text&#39;</code></p>
+<p>区别在于innerText只能接收字符串，innerHTML可以接收字符串和html标签</p>
+<p>【调用内置方法】</p>
+<p>让光标聚焦到id&#x3D;11的标签上：<code>document.getElementById(&quot;11&quot;).focus();</code> </p>
+<h1 id="3-JS监听事件"><a href="#3-JS监听事件" class="headerlink" title="3. JS监听事件"></a>3. JS监听事件</h1><p>用户在何时以何种方式对标签进行了操作，如果满足监听事件触发条件，就会触发并调用对应函数。</p>
+<ol>
+<li>onclick：用户用鼠标单击标签</li>
+<li>onmouseover：用户鼠标指针进入标签范围</li>
+<li>onmouseout：用户鼠标指针离开标签范围</li>
+<li>onfocus：光标聚焦到该标签（一般都是text类的标签）</li>
+<li>onblur：光标从该标签失去聚焦</li>
+<li>onkeydown, onkeyup, onkeypress：用户按下键盘按键</li>
+<li>onload：某网页将服务器发送的所有dom对象加载完毕后触发。该方法很重要，实例看下一小节</li>
+</ol>
+<h1 id="4-将标签与监听事件绑定"><a href="#4-将标签与监听事件绑定" class="headerlink" title="4. 将标签与监听事件绑定"></a>4. 将标签与监听事件绑定</h1><p>有时一个监听事件要对应同一类型的多个标签，那么每一个标签上都要重复写比如onclick(…)这段语句，很麻烦且不方便维护，下面来解决这个问题。</p>
+<p>在JS中可以直接给单个dom对象绑定监听事件，格式为：<code>domObject.监听事件 = 处理函数名</code> （<strong>注意函数名后不能有括号</strong>）</p>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Myfunc</span>(<span class="params"></span>)&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">var</span> domObject = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">domObject.<span class="property">onclick</span> = <span class="title class_">MyFunc</span>;  <span class="comment">//这里函数名一定不能带括号</span></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//上面两句合起来就相当于下面这句，区别只在于上面两句是javascript代码下面是html标签。</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">id</span>=<span class="string">&quot;1&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;MyFunc()&quot;</span>&gt;</span> //注意次MyFunc()必须带括号</span></span><br><span class="line"><span class="language-xml">    </span></span><br><span class="line"><span class="language-xml">//不过既然可以将在html标签上干的活转为javascript，那从灵活，代码复用，可拓展性来看，大多数情况下肯定选择用javascript来干</span></span><br><span class="line"><span class="language-xml"></span></span><br></pre></td></tr></table></figure>
+
+<p>JS中可以获取一组DOM对象（getElement<strong>s</strong>）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>();</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementsByName</span>();</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>();</span><br></pre></td></tr></table></figure>
+
+
+
+<p>因此我们可以在JS中获取一组对象，然后遍历其中所有对象的过程中一一给它们绑定监听事件，这样就不用我们在html标签中一个个写<code>onclick=&quot;MyFunc()&quot;</code>了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Blue</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;one&quot;</span>).<span class="property">style</span>.<span class="property">backgroundColor</span> = <span class="string">&quot;blue&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Red</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;one&quot;</span>).<span class="property">style</span>.<span class="property">backgroundColor</span> = <span class="string">&quot;red&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取所有input标签DOM对象，给它们绑定监听事件</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> domArr = <span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&quot;input&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;domArr.<span class="property">length</span>;i++)&#123;</span><br><span class="line">        domArr[i].<span class="property">onmouseover</span> = <span class="title class_">Blue</span>;</span><br><span class="line">        domArr[i].<span class="property">onmouseout</span> = <span class="title class_">Red</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意Main方法应该在onload时调用，可以将其加在body标签中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;body onload=<span class="string">&quot;test()&quot;</span>&gt; <span class="comment">//将test方法与onload事件绑定，网页加载完毕立刻调用test()方法。</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;myJS.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;one&quot;</span> <span class="attr">style</span>=<span class="string">&quot;background-color: aqua;width: 300px;height: 300px&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">a&lt;input type=<span class="string">&quot;text&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">b&lt;input type=<span class="string">&quot;text&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">c&lt;input type=<span class="string">&quot;text&quot;</span>&gt;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>完成后，当我们鼠标悬停到任意一个input标签上时，div块会变蓝，鼠标移开变红。</p>
+<h1 id="5-JS函数"><a href="#5-JS函数" class="headerlink" title="5. JS函数"></a>5. JS函数</h1><p>function在javascript里面属于一种高级数据类型。</p>
+<h2 id="5-1-arguments"><a href="#5-1-arguments" class="headerlink" title="5.1 arguments"></a>5.1 arguments</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"><span class="keyword">var</span> a</span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//下面这三个调用都是合法的</span></span><br><span class="line"><span class="title function_">test</span>();</span><br><span class="line"><span class="title function_">test</span>(<span class="number">1</span>);</span><br><span class="line"><span class="title function_">test</span>(<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在JS函数中，形参存在意义仅仅是作为一个助记符，因为向JS函数传递的参数会统统被传到属于该函数的一个<strong>arguments数组</strong>中，然后才从该数组中取值分配给形参，这时形参也就相当于arguments[0], arguments[1]…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;<span class="variable language_">arguments</span>.<span class="property">length</span>; i++)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">arguments</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">分别调用</span></span><br><span class="line"><span class="comment">    test();</span></span><br><span class="line"><span class="comment">    test(1);</span></span><br><span class="line"><span class="comment">    test(2,3);</span></span><br><span class="line"><span class="comment">    test(4,5,6);</span></span><br><span class="line"><span class="comment">控制台输出1 2 3 4 5 6</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-JS函数重载"><a href="#5-2-JS函数重载" class="headerlink" title="5.2 JS函数重载"></a>5.2 JS函数重载</h2><p>JS函数重载就是基于arguments数组，<strong>用if else自行判断</strong>。比如我要函数test当我传字符串时打印字符串，传数字时打印该数字的平方。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;<span class="variable language_">arguments</span>.<span class="property">length</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> v = <span class="variable language_">arguments</span>[i];</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> v == <span class="string">&quot;string&quot;</span>) <span class="variable language_">console</span>.<span class="title function_">log</span>(v);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> v == <span class="string">&quot;number&quot;</span>) <span class="variable language_">console</span>.<span class="title function_">log</span>(v*v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">分别调用</span></span><br><span class="line"><span class="comment">    test(1,2,3); //打印1，4，9</span></span><br><span class="line"><span class="comment">    test(4,&#x27;aaa&#x27;); //打印16，aaa</span></span><br><span class="line"><span class="comment">    test(&quot;aa&quot;,&quot;bb&quot;,3); //打印 aa，bb，9</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-function类型对象"><a href="#5-3-function类型对象" class="headerlink" title="5.3 function类型对象"></a>5.3 function类型对象</h2><p>function在JS中是一种数据类型，一个function类型的对象其实就是一个指针，它指向具体函数。</p>
+<p>function类型变量有两种声明方式：</p>
+<ol>
+<li>function funcName () {…}   ——标准形式</li>
+<li>var funcName &#x3D; function () {…};  ——匿名形式</li>
+</ol>
+<p>【以标准形式声明的函数，在其声明前就可以被调用】，这是因为<strong>浏览器会加载两次script标签</strong>，第一次将所有以标准形式声明的函数加载好，第二次忽略这些函数声明，开始自上而下的逐条加载指令。</p>
+<p>【以匿名形式声明的函数，在其声明前不可以被调用】，因为浏览器匿名声明函数的语句视为一条普通的指令。</p>
+<blockquote>
+<p>function类型变量（即函数名称）是全局变量</p>
+</blockquote>
+<h2 id="5-4-构造函数"><a href="#5-4-构造函数" class="headerlink" title="5.4 构造函数"></a>5.4 构造函数</h2><p>构造函数就是普通函数，是调用方式不同将它们区别开了（有没有new关键字）。</p>
+<p>比如声明了函数<code>function func() &#123;...&#125;</code> </p>
+<p>那么：<code>func();</code>，或者有返回值时： <code>var v = func();</code>，这是将它<strong>作为普通函数调用</strong>。</p>
+<p>如果<code>var v = new func();</code>，这是将它<strong>作为构造函数调用</strong>，且如果func()有返回值，该值无效。</p>
+<h1 id="6-Object类型"><a href="#6-Object类型" class="headerlink" title="6. Object类型"></a>6. Object类型</h1><p><strong>JS中所有通过构造函数创建（var obj &#x3D; new Func()）的对象都是Object类型对象</strong>，Object类型变量被创建后可【动态地往其中添加&#x2F;删除属性和方法】。</p>
+<p>动态添加属性：obj.fieldName &#x3D; value 或 obj[fieldName] &#x3D; value</p>
+<p>动态添加函数：obj.funcName &#x3D; function() {}; 或 obj[funcName] &#x3D; function() {};</p>
+<p>动态移除属性：delete obj.fieldName</p>
+<p>动态移除方法：delete obj.funcName</p>
+<h1 id="7-JSON"><a href="#7-JSON" class="headerlink" title="7. JSON"></a>7. JSON</h1><p>由JSON数据描述格式生成的对象都是Object类型的对象</p>
+<p>通过JSON可以在JS中更加方便的生成Object类型对象，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> student = &#123;</span><br><span class="line">			    <span class="string">&quot;sid&quot;</span>:<span class="number">1</span>,</span><br><span class="line">    			<span class="string">&quot;sname&quot;</span>:<span class="string">&quot;tom&quot;</span>,</span><br><span class="line">    			<span class="string">&quot;study&quot;</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                	...</span><br><span class="line">                 &#125;</span><br><span class="line">			 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成一个Object类型对象最简单的一种方式: <code>var obj = &#123;&#125;</code> ，而不用<code>var obj = new Object()</code>。</p>
+<h2 id="7-1-将java对象转换为JSON字符串"><a href="#7-1-将java对象转换为JSON字符串" class="headerlink" title="7.1 将java对象转换为JSON字符串"></a>7.1 将java对象转换为JSON字符串</h2><p>java中的json工具库有几种：谷歌的gson，fastjson速度快但不规范，jackson性能和规范都不错。我们以jackson为例（使用前导入jackson jar包）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="type">People</span> <span class="variable">p1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">People</span>();</span><br><span class="line"></span><br><span class="line">        <span class="type">ObjectMapper</span> <span class="variable">om</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>(); <span class="comment">//jackson转换工具</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> om.writeValueAsString(p1); <span class="comment">//将People类型的对象p1转化为json字符串</span></span><br><span class="line">        response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>); <span class="comment">//在响应报文中告知客户端传输的是json类型数据</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-2-JS将JSON字符串转化为JSON对象"><a href="#7-2-JS将JSON字符串转化为JSON对象" class="headerlink" title="7.2 JS将JSON字符串转化为JSON对象"></a>7.2 JS将JSON字符串转化为JSON对象</h2><p>假定已经接收到JSON字符串data了，调用eval函数可直接将其转化为JSON对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jsonObj = <span class="built_in">eval</span>(<span class="string">&quot;(&quot;</span> + data + <span class="string">&quot;)&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>后续JQuery有更好的方法，本小节了解即可。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/16/IT/datastructure_and_algorithm/%E3%80%8A%E5%9B%BE%E3%80%8B%E4%B8%93%E9%A2%98/" rel="prev" title="《图》专题">
+                  <i class="fa fa-chevron-left"></i> 《图》专题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/23/misc/maven/" rel="next" title="maven">
+                  maven <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

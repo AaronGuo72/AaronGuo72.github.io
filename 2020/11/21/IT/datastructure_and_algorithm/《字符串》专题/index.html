@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="《字符串》专题">
+<meta property="og:url" content="http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%8B%E4%B8%93%E9%A2%98/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/1.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/2.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/3.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/4.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/5.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/6.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/7.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/8.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/9.jpg">
+<meta property="article:published_time" content="2020-11-21T11:48:51.000Z">
+<meta property="article:modified_time" content="2021-01-23T05:52:24.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%8B%E4%B8%93%E9%A2%98/","path":"2020/11/21/IT/datastructure_and_algorithm/《字符串》专题/","title":"《字符串》专题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《字符串》专题 | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-KMP"><span class="nav-text">0. KMP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-1-%E6%A8%A1%E6%8B%9F%E6%A0%B7%E4%BE%8B"><span class="nav-text">0.1 模拟样例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-2-%E6%A8%A1%E6%9D%BF"><span class="nav-text">0.2 模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-2-1-%E5%88%9B%E5%BB%BAnext%E6%95%B0%E7%BB%84"><span class="nav-text">0.2.1 创建next数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-2-2-%E4%BD%BF%E7%94%A8next%E6%95%B0%E7%BB%84%E5%AE%8C%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D"><span class="nav-text">0.2.2 使用next数组完成字符串匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-3-%E4%BE%8B%E9%A2%98"><span class="nav-text">0.3 例题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AF%BB%E6%89%BE%E5%85%AC%E5%85%B1%E5%AD%97%E7%AC%A6"><span class="nav-text">1. 寻找公共字符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%AF%94%E8%BE%83%E5%B8%A6%E9%80%80%E6%A0%BC%E7%AC%A6%E7%9A%84%E4%B8%A4%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">2. 比较带退格符的两字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%88%92%E5%88%86%E5%AD%97%E6%AF%8D%E5%8C%BA%E9%97%B4"><span class="nav-text">3. 划分字母区间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%A7%BB%E6%8E%89k%E4%BD%8D%E6%95%B0%E5%AD%97"><span class="nav-text">4. 移掉k位数字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%B8%8A%E5%8D%87%E4%B8%8B%E9%99%8D%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">5. 上升下降字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">6. 无重复字符的最长字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E5%90%8C%E6%9E%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">7. 同构字符串</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《字符串》专题 | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《字符串》专题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-21 19:48:51" itemprop="dateCreated datePublished" datetime="2020-11-21T19:48:51+08:00">2020-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-23 13:52:24" itemprop="dateModified" datetime="2021-01-23T13:52:24+08:00">2021-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/1.jpg"></p>
+<span id="more"></span>
+
+
+
+<h1 id="0-KMP"><a href="#0-KMP" class="headerlink" title="0. KMP"></a>0. KMP</h1><p>高效的字符串匹配算法（在母串s中匹配模式串p）。<br>对于字符串匹配问题，如果采用暴力算法，也就是p逐位的与s比较，一旦中途某字符不匹配，p就前进1格，重新与s逐位比较，它的时间复杂度为O(n^n），n为字符串长度。<br>而事实上我们可以利用已知信息让p跳跃式的前进，降低时间复杂度，这就是KMP算法的目的。<br>注：自己对着代码手动模拟一遍能够降低理解难度</p>
+<h2 id="0-1-模拟样例"><a href="#0-1-模拟样例" class="headerlink" title="0.1 模拟样例"></a>0.1 模拟样例</h2><p>假如模式串p为[a, b, d, a, b, b]，母串为[b, a, b, d, a, b, c]</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/2.jpg"></p>
+<p>当匹配进行到这一步时，暴力做法是模式串右移一位，重新从头逐位与母串匹配</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/3.jpg"></p>
+<p>但我们发现<strong>在模式串中</strong>，与<strong>母串不匹配位置（上图圆圈处）左侧的子串</strong>中，存在<strong>最大公共前后缀</strong>（下图连线标出）</p>
+<blockquote>
+<p>前缀: 从<u>字符串首字符开始</u><strong>不包含最后一个字符</strong>的所有可能的连续子串<br>后缀: 字符串中<strong>不包含首字符</strong>的且<u>以最后一个字符结尾</u>的所有可能子串</p>
+</blockquote>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/4.jpg"></p>
+<p>找出模式串中的<strong>最大公共前后缀</strong>有啥意义呢？它可以帮我们实现模式串p的跳跃前进（发生某字符不匹配情况时，<strong>p可直接跳到它的最大公共后缀处开始新的匹配</strong>），且中间不会漏解（注意一定是<strong>最大</strong>的公共前后缀才能确保不会漏解），效果如下</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/5.jpg"></p>
+<p>以上就是kmp算法的原理了，道理很简单，既然模式串中某部分与母串匹配了，且这部分存在最大公共前后缀，那么在这对前后缀之间就不可能存在匹配的情况了（否则后缀就应该位于这个匹配的情况所在位置），因此可以直接把模式串移到后缀位置。<br>概括来看：</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/6.jpg"></p>
+<p>这样看来，我们可以在进行字符串匹配之前，预处理出模式串的信息：对模式串中每一个位置，先假定它与母串不匹配，得到这个位置<strong>左侧子串的最大公共前后缀</strong>，并由此拿到模式串在该位置如果与母串不匹配的话，可以跳跃前进几步的信息。<br>如果预先得到这样一个<strong>关于模式串某位置与母串不匹配时可以跳跃前进几步</strong>的数组（一般称为next数组），再进行字符串匹配，就能在匹配的过程中利用next数组提供的信息使得模式串能够跳跃式前进。</p>
+<h2 id="0-2-模板"><a href="#0-2-模板" class="headerlink" title="0.2 模板"></a>0.2 模板</h2><h3 id="0-2-1-创建next数组"><a href="#0-2-1-创建next数组" class="headerlink" title="0.2.1 创建next数组"></a>0.2.1 创建next数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*构造next数组*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getNext</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; <span class="comment">//从可能的最长的公共前后缀开始找，j指向当前公共前缀的末尾，i指向当前公共后缀的末尾 </span></span><br><span class="line">    ne[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">-1</span>; i&lt;pLength; i++) <span class="comment">//为什么i从1开始j从-1开始？想想可能的最长公共前后缀是什么样子</span></span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">/*如果当前【公共前缀末尾的下一个位置元素】与【后缀指针当前位置】元素不匹配，</span></span><br><span class="line"><span class="comment">        则j退回到当前公共前缀数组的前缀的后一位（因为前缀数组本身也有公共前后缀）。</span></span><br><span class="line"><span class="comment">        其实这一步是做了优化，其本质就是令j不断回退，一直退回到p[i]=p[j+1]的位置就停止。*/</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span>&amp;&amp;p[i]!=p[j+<span class="number">1</span>]) j = ne[j]; </span><br><span class="line">        <span class="comment">//只有当公共【前缀末尾的下一个位置元素】与【后缀指针当前位置】元素匹配时，j所代表的前缀数组才会向右扩大 </span></span><br><span class="line">        <span class="keyword">if</span>(p[i]==p[j+<span class="number">1</span>]) j++; </span><br><span class="line">        <span class="comment">//j当前所在位置，就是与以i结尾的后缀数组相匹配的前缀数组末尾</span></span><br><span class="line">        <span class="comment">//ne[i]=j 表示当模式串与母串在i处不匹配时，模式串可以向右一次跳跃j个下标</span></span><br><span class="line">        ne[i] = j; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>栗子</strong></p>
+<p>当前匹配进程如下</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/7.jpg"></p>
+<p>前后缀数组的下一个元素不匹配了，现在我们要做的是对前缀从右往左收缩，对后缀从左往右收缩，直到它们再次相等，才能开始下一次比对。</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/8.jpg"></p>
+<p>因为收缩开始前的前后缀数组是相同的，所以<strong>它们各自</strong>的最大公共前后缀也是相同的，因此回退可以是跳跃式的：j退回到前缀数组中最大前缀的末尾位置，即j &#x3D; ne[j]。</p>
+<p>然后继续匹配：</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%AD%97%E7%AC%A6%E4%B8%B2/9.jpg"></p>
+<p>上图是回退一次就相同的情况，如果回退一次j的下一个位置元素还是与i位置元素不同，则需要再令j&#x3D;ne[j]回退，直到相同或者j&lt;0时结束，此时j所在位置就是当字符串与模式串第i个字符不匹配时，模式串可以向右跳跃的步数。</p>
+<h3 id="0-2-2-使用next数组完成字符串匹配"><a href="#0-2-2-使用next数组完成字符串匹配" class="headerlink" title="0.2.2 使用next数组完成字符串匹配"></a>0.2.2 使用next数组完成字符串匹配</h3><p>s为母串，p为模式串</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//i为母串指针，j为模式串指针</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>,j=<span class="number">-1</span>;i&lt;sLength;i++) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">//如果当前【模式串的下一个位置元素】与【母串当前位置元素】不匹配</span></span><br><span class="line">        <span class="comment">//j退回到以它结尾的前缀的最大公共前缀末尾，但因为i不变，所以这句话其实相当于把模式串和母串当前已完成</span></span><br><span class="line">        <span class="comment">//匹配部分的子串的公共后缀找出来，然后直接把模式串前缀移动到这个公共后缀处，完成跳跃前进</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span>&amp;&amp;s[i]!=p[j+<span class="number">1</span>]) j = ne[j]; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(s[i]==p[j+<span class="number">1</span>]) j++; <span class="comment">//模式串当前匹配了多少位母串</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(j==pLength<span class="number">-1</span>) <span class="comment">//如果整个模式串匹配完毕 </span></span><br><span class="line">        &#123; <span class="comment">//本次在母串中成功匹配的模式串起始下标为i-j </span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i-j);</span><br><span class="line">            j = ne[j]; <span class="comment">//不写这句也能AC，不过因为这条指令之后就是【while(j&amp;&amp;s[i]!=p[j+1]) j = ne[j];】有j+1，为了避免边界问题还是加上</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>把字符串移动到它<strong>最大公共后缀开始的位置</strong>，反映到代码上就是把指向字符串的指针移动到它<strong>最大公共前缀的末尾</strong></p>
+</blockquote>
+<h2 id="0-3-例题"><a href="#0-3-例题" class="headerlink" title="0.3 例题"></a>0.3 例题</h2><p>给定一个母串S，以及一个模式串P，所有字符串中只包含大小写英文字母以及阿拉伯数字。模式串P在母串S中多次作为子串出现。求出模式串P在母串S中所有出现的位置的起始下标。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000010</span>;</span><br><span class="line"><span class="type">char</span> s[N];  <span class="comment">//母串</span></span><br><span class="line"><span class="type">char</span> p[N];  <span class="comment">//模式串</span></span><br><span class="line"><span class="type">int</span> ne[N];  <span class="comment">//next数组，初始为全0</span></span><br><span class="line"><span class="type">int</span> pLength, sLength; <span class="comment">//模式串长度，母串长度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*该算法默认所有数组下标从1开始，这样格式能够统一*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*获取next数组*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getNext</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; <span class="comment">//从可能的最长的公共前后缀开始找，j指向当前公共前缀的末尾，i指向当前公共后缀的末尾 </span></span><br><span class="line">    ne[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">-1</span>; i&lt;pLength; i++) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">//如果当前公共【前缀末尾的下一个位置元素】与【后缀当前位置】元素不匹配</span></span><br><span class="line">        <span class="comment">//则j退回到当前公共前缀数组的前缀的后一位（因为前缀数组本身也有公共前后缀）</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span>&amp;&amp;p[i]!=p[j+<span class="number">1</span>]) j = ne[j]; </span><br><span class="line">        <span class="comment">//只有当公共【前缀末尾的下一个位置元素】与【后缀当前位置】元素匹配时，j所代表的前缀数组才会向右扩大 </span></span><br><span class="line">        <span class="keyword">if</span>(p[i]==p[j+<span class="number">1</span>]) j++; </span><br><span class="line">        <span class="comment">//j当前所在位置，就是与以i结尾的后缀数组相匹配的前缀数组末尾</span></span><br><span class="line">        <span class="comment">//ne[i]=j 表示当模式串与母串在i处不匹配时，模式串可以向右一次跳跃j个下标</span></span><br><span class="line">        ne[i] = j; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;pLength&gt;&gt;p&gt;&gt;sLength&gt;&gt;s; <span class="comment">//用于记录母串和模式串的数组下标均从1开始</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">getNext</span>(); <span class="comment">//构造出模式串的next数组</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//i为母串指针，j为模式串指针</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>,j=<span class="number">-1</span>;i&lt;sLength;i++) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">//如果当前【模式串的下一个位置元素】与【母串当前位置元素】不匹配</span></span><br><span class="line">        <span class="comment">//j退回到以它结尾的前缀的最大公共前缀末尾，但因为i不变，所以这句话其实相当于把模式串和母串当前已完成</span></span><br><span class="line">        <span class="comment">//匹配部分的子串的公共后缀找出来，然后直接把模式串前缀移动到这个公共后缀处，完成跳跃前进</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span>&amp;&amp;s[i]!=p[j+<span class="number">1</span>]) j = ne[j]; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(s[i]==p[j+<span class="number">1</span>]) j++; <span class="comment">//模式串当前匹配了多少位母串</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(j==pLength<span class="number">-1</span>) <span class="comment">//如果整个模式串匹配完毕 </span></span><br><span class="line">        &#123; <span class="comment">//本次在母串中成功匹配的模式串起始下标为i-j </span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i-j);</span><br><span class="line">            j = ne[j]; <span class="comment">//不写这句也能AC，不过因为这条指令之后就是【while(j&amp;&amp;s[i]!=p[j+1]) j = ne[j];】有j+1，为了避免边界问题还是加上</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="1-寻找公共字符"><a href="#1-寻找公共字符" class="headerlink" title="1. 寻找公共字符"></a>1. 寻找公共字符</h1><p>【题目】</p>
+<p>Given an array A of strings made only from lowercase letters, return a list of all characters that show up in all strings within the list (including duplicates).  For example, if a character occurs 3 times in all strings but not 4 times, you need to include that character three times in the final answer.</p>
+<p>You may return the answer in any order.</p>
+<p>Example 1:</p>
+<p>Input: [“bella”,”label”,”roller”]<br>Output: [“e”,”l”,”l”]</p>
+<p>Example 2:</p>
+<p>Input: [“cool”,”lock”,”cook”]<br>Output: [“c”,”o”]</p>
+<p>【解析】</p>
+<p>因为题目说明了所有字符串都是由小写字母组成的，因此可以用长度为26的数组（桶）来标识字符串中每一个字母出现的频率。</p>
+<p>先用桶A记录第一个字符串中所有字母出现的频率。然后遍历所有其他字符串，对每一个字符串用一个桶B记录其字母频率，每次记录完一个字符串的字母频率，就对比A和B中的每条记录，把 <strong>较小</strong>的记录更新到桶A中，继续迭代，直到所有字符串都被比较完毕后，桶A中存储的数据就是答案（桶A的下标i+’a’对应小写字母，下标处的值对应该小写字母在所有字符串中是否都出现过，出现了几次）</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;string&gt; re; <span class="comment">//存储答案</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">commonChars</span><span class="params">(vector&lt;string&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> mark[<span class="number">26</span>] = &#123;<span class="number">0</span>&#125;; <span class="comment">//第一个桶</span></span><br><span class="line">      	<span class="comment">//记录第一个字符串的字母出现频率</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;A[<span class="number">0</span>].<span class="built_in">size</span>();i++) mark[A[<span class="number">0</span>][i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">       </span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> otherMark[<span class="number">26</span>] = &#123;<span class="number">0</span>&#125;; <span class="comment">//第二个桶</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i&lt;A.<span class="built_in">size</span>(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memset</span>(otherMark, <span class="number">0</span> ,<span class="built_in">sizeof</span>(otherMark)); <span class="comment">//旧桶翻新</span></span><br><span class="line">            <span class="comment">//记录其他字符串的字母出现频率</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j&lt;A[i].<span class="built_in">size</span>(); j++) otherMark[A[i][j]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">          	<span class="comment">//比较第一个桶和第二个桶中的数据，取它们字母出现频率的较小值，更新到第一个桶中</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>;k&lt;<span class="number">26</span>;k++) mark[k] = <span class="built_in">min</span>(mark[k], otherMark[k]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*此时mark中存储的就是每一个小写字母在所有字符串中出现的频率，将其转化为题目要求的格式放入答案数组*/</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;<span class="number">26</span>;i++) <span class="comment">//遍历所有小写字母i+&#x27;a&#x27;</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j&lt;mark[i]; j++) <span class="comment">//如第该字母在所字符串中出现了mark[i]次，将其放入答案数组中</span></span><br><span class="line">            &#123;</span><br><span class="line">                string s = <span class="built_in">string</span>(<span class="number">1</span>, i+<span class="string">&#x27;a&#x27;</span>); </span><br><span class="line">                re.<span class="built_in">push_back</span>(s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="2-比较带退格符的两字符串"><a href="#2-比较带退格符的两字符串" class="headerlink" title="2. 比较带退格符的两字符串"></a>2. 比较带退格符的两字符串</h1><p>【题目】</p>
+<p>Given two strings S and T, return if they are equal when both are typed into empty text editors. # means a backspace character.</p>
+<p>Note that after backspacing an empty text, the text will continue empty.</p>
+<p><code>Example 1:</code></p>
+<p>Input: S &#x3D; “ab#c”, T &#x3D; “ad#c”<br>Output: true<br>Explanation: Both S and T become “ac”.</p>
+<p><code>Example 2:</code></p>
+<p>Input: S &#x3D; “ab##”, T &#x3D; “c#d#”<br>Output: true<br>Explanation: Both S and T become “”.</p>
+<p><code>Example 3:</code></p>
+<p>Input: S &#x3D; “a##c”, T &#x3D; “#a#c”<br>Output: true<br>Explanation: Both S and T become “c”.</p>
+<p><code>Example 4:</code></p>
+<p>Input: S &#x3D; “a#c”, T &#x3D; “b”<br>Output: false<br>Explanation: S becomes “c” while T becomes “b”.</p>
+<p>Note:</p>
+<pre><code>1 &lt;= S.length &lt;= 200
+1 &lt;= T.length &lt;= 200
+S and T only contain lowercase letters and &#39;#&#39; characters.
+</code></pre>
+<p>【解析】</p>
+<p>将字符串的字符逐个入栈，只要碰到”#“就弹栈，最后比较两个字符串的栈，如果相同就返回true，不同就返回false</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">backspaceCompare</span><span class="params">(string S, string T)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> sLength = S.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> tLength = T.<span class="built_in">size</span>();</span><br><span class="line">        stack&lt;<span class="type">char</span>&gt; ss, tt;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*利用栈将两个字符串的退格符处理掉*/</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;sLength;i++) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(S[i]!=<span class="string">&#x27;#&#x27;</span>) ss.<span class="built_in">push</span>(S[i]);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(!ss.<span class="built_in">empty</span>()) ss.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;tLength;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(T[i]!=<span class="string">&#x27;#&#x27;</span>) tt.<span class="built_in">push</span>(T[i]);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(!tt.<span class="built_in">empty</span>()) tt.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(tt.<span class="built_in">size</span>()!=ss.<span class="built_in">size</span>()) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//如果两个栈长度不等，直接返回false</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*比较两个栈是否相同*/</span></span><br><span class="line">        <span class="type">int</span> ttLength = tt.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;ttLength;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> value1 = tt.<span class="built_in">top</span>(); tt.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="type">int</span> value2 = ss.<span class="built_in">top</span>(); ss.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span>(value1!=value2) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+
+<h1 id="3-划分字母区间"><a href="#3-划分字母区间" class="headerlink" title="3. 划分字母区间"></a>3. 划分字母区间</h1><p>【题目】</p>
+<p>简单的说，就是给定一个纯小写字母字符串，让我们划分出【最多】个区间，每个区间中的字母都仅在本区间中出现</p>
+<p>【解析】</p>
+<p>一开始先找到第一个字母（位置begin）在字符串中最后出现的位置end，则begin和end形成一个窗口，遍历这个窗口中的所有字母并逐个计算它们在整个字符串中最后出现的位置，如果过程中有字母的最后出现位置大于end，则将end更新。窗口遍历到end时，该窗口就是一个最小partition，其长度为end-begin+1。接着令begin&#x3D;end+1，开始寻找下一个partition。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/*返回字母c在字符串S中最后一次出现的位置*/</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">LastPos</span><span class="params">(string S, <span class="type">char</span> c)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = S.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = length<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(S[i] == c) <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">partitionLabels</span><span class="params">(string S)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = S.<span class="built_in">size</span>();</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; re;</span><br><span class="line">        <span class="keyword">if</span>(length==<span class="number">0</span>) <span class="keyword">return</span> re;</span><br><span class="line">        <span class="keyword">if</span>(length==<span class="number">1</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            re.<span class="built_in">push_back</span>(<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">return</span> re;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> end=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> update = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">/*partition操作*/</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> begin = <span class="number">0</span>; begin&lt;length;)</span><br><span class="line">        &#123;</span><br><span class="line">            end = <span class="built_in">LastPos</span>(S, S[begin]); <span class="comment">//先寻找begin位置上的字母在字符串最后出现位置，形begin~end的窗口</span></span><br><span class="line">            <span class="comment">/*遍历当前窗口中的每一个字母*/</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = begin+<span class="number">1</span>; j&lt;end; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                update = <span class="built_in">LastPos</span>(S, S[j]); <span class="comment">//计算当前字母在字符串中最后出现位置</span></span><br><span class="line">                <span class="keyword">if</span>(update==<span class="number">-1</span>) <span class="keyword">continue</span>; <span class="comment">//如果当前字母在字符串中唯一存在，则它必然不会导致end更新，跳过</span></span><br><span class="line">                end = <span class="built_in">max</span>(end, update);	<span class="comment">//如果当前字母的最后出现位置大于end，则更新end</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//当前窗口遍历完毕后，就得到了一个partition，end-begin+1就是该partition的长度</span></span><br><span class="line">            re.<span class="built_in">push_back</span>(end-begin+<span class="number">1</span>); </span><br><span class="line">            </span><br><span class="line">            begin = end+<span class="number">1</span>;<span class="comment">//开始寻找下一个partition</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="4-移掉k位数字"><a href="#4-移掉k位数字" class="headerlink" title="4. 移掉k位数字"></a>4. 移掉k位数字</h1><p>【题目】</p>
+<p>给定一个以字符串表示的非负整数 <em>num</em>，移除这个数中的 <em>k</em> 位数字，使得剩下的数字最小。</p>
+<p>注意:</p>
+<pre><code>num 的长度小于 10002 且 ≥ k。
+num 不会包含任何前导零。
+</code></pre>
+<p>示例 1 :</p>
+<p>输入: num &#x3D; “1432219”, k &#x3D; 3<br>输出: “1219”<br>解释: 移除掉三个数字 4, 3, 和 2 形成一个新的最小的数字 1219。</p>
+<p>示例 2 :</p>
+<p>输入: num &#x3D; “10200”, k &#x3D; 1<br>输出: “200”<br>解释: 移掉首位的 1 剩下的数字为 200. 注意输出不能有任何前导零。</p>
+<p>示例 3 :</p>
+<p>输入: num &#x3D; “10”, k &#x3D; 2<br>输出: “0”<br>解释: 从原数字移除所有的数字，剩余为空就是0。</p>
+<p>【解析】</p>
+<p>先将loc定为0，然后在[loc, k]之间选择一个最小的数作为答案的最高位，并把loc移动到这个最小的数所在位置。</p>
+<p>在[loc+1, k+1]之间选择一个最小的数作为答案的次高位，并把loc移动到这个最小的数所在位置。</p>
+<p>在[loc+1, k+1]之间选择一个最小的数作为答案的次次高位…..</p>
+<p>直到k&#x3D;&#x3D;length时，结束。</p>
+<p>最后将前导零消除即可得到答案。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">removeKdigits</span><span class="params">(string num, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        string re;		   <span class="comment">//答案</span></span><br><span class="line">        vector&lt;<span class="type">char</span>&gt; tmp;  <span class="comment">//未消除前导零的答案</span></span><br><span class="line">        <span class="type">int</span> length = num.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> loc = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(k!=length) <span class="comment">//当k==length时就得到答案了</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> miin = <span class="number">11</span>; <span class="comment">//将miin初始化为“无穷大”</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = loc+<span class="number">1</span>;i&lt;=k;i++) <span class="comment">//在[loc+1, k]之间寻找最小值</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(miin&gt;num[i]-<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    miin = num[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    loc = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(miin+<span class="string">&#x27;0&#x27;</span>); <span class="comment">//将最小值存入tmp数组</span></span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*消除前导零*/</span></span><br><span class="line">        <span class="type">int</span> count0 = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;tmp.<span class="built_in">size</span>();i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(tmp[i]!=<span class="string">&#x27;0&#x27;</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">else</span> count0++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(count0==tmp.<span class="built_in">size</span>()) <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">        re.<span class="built_in">assign</span>(tmp.<span class="built_in">begin</span>()+count0, tmp.<span class="built_in">end</span>());</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-上升下降字符串"><a href="#5-上升下降字符串" class="headerlink" title="5. 上升下降字符串"></a>5. 上升下降字符串</h1><p>【题目】</p>
+<p>给你一个字符串 s ，请你根据下面的算法重新构造字符串：</p>
+<pre><code>从 s 中选出 最小 的字符，将它 接在 结果字符串的后面。
+从 s 剩余字符中选出 最小 的字符，且该字符比上一个添加的字符大，将它 接在 结果字符串后面。
+重复步骤 2 ，直到你没法从 s 中选择字符。
+从 s 中选出 最大 的字符，将它 接在 结果字符串的后面。
+从 s 剩余字符中选出 最大 的字符，且该字符比上一个添加的字符小，将它 接在 结果字符串后面。
+重复步骤 5 ，直到你没法从 s 中选择字符。
+重复步骤 1 到 6 ，直到 s 中所有字符都已经被选过。
+</code></pre>
+<p>在任何一步中，如果最小或者最大字符不止一个 ，你可以选择其中任意一个，并将其添加到结果字符串。</p>
+<p>请你返回将 s 中字符重新排序后的 结果字符串 。</p>
+<p>示例 1：</p>
+<p>输入：s &#x3D; “aaaabbbbcccc”<br>输出：”abccbaabccba”<br>解释：第一轮的步骤 1，2，3 后，结果字符串为 result &#x3D; “abc”<br>第一轮的步骤 4，5，6 后，结果字符串为 result &#x3D; “abccba”<br>第一轮结束，现在 s &#x3D; “aabbcc” ，我们再次回到步骤 1<br>第二轮的步骤 1，2，3 后，结果字符串为 result &#x3D; “abccbaabc”<br>第二轮的步骤 4，5，6 后，结果字符串为 result &#x3D; “abccbaabccba”</p>
+<p>示例 2：</p>
+<p>输入：s &#x3D; “rat”<br>输出：”art”<br>解释：单词 “rat” 在上述算法重排序以后变成 “art”</p>
+<p>示例 3：</p>
+<p>输入：s &#x3D; “leetcode”<br>输出：”cdelotee”</p>
+<p>示例 4：</p>
+<p>输入：s &#x3D; “ggggggg”<br>输出：”ggggggg”</p>
+<p>示例 5：</p>
+<p>输入：s &#x3D; “spo”<br>输出：”ops”</p>
+<p>提示：</p>
+<pre><code>1 &lt;= s.length &lt;= 500
+s 只包含小写英文字母。
+</code></pre>
+<p>【解析】</p>
+<p>题目要求我们<strong>来回地</strong>遍历字符串，每次遍历都要<strong>取出</strong>一些字符放到结果字符串，而且取出字符的过程还必须按照 <strong>字典序</strong>，最终还要判断原字符串是否被取完。如果完全按照题目要求做时间复杂度是非常高，且代码实现也是比较复杂的。</p>
+<p>因为题目规定字符串中的字符都为小写字母，所以我们可以用桶的思想来做。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">sortString</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        string re;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*把字符串中所有字符放入桶中，这样就天然符合字典序了，而且将字符从原字符串中取出这个操作只需要对桶进行自减操作即可实现*/</span></span><br><span class="line">        <span class="type">int</span> bucket[<span class="number">27</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;s.<span class="built_in">size</span>();i++) bucket[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> length = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">while</span>(length) <span class="comment">//当原字符串中的字符串没有被取完时</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;<span class="number">27</span>;i++) <span class="comment">//按字典升序从原字符串中无重复地取出字符追加到结果字符串中</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(length &amp;&amp; bucket[i]) <span class="comment">//如果桶i的计数大于1，说明原字符串中还有i+&#x27;a&#x27;这个字符</span></span><br><span class="line">                &#123;</span><br><span class="line">                    re.<span class="built_in">push_back</span>(i+<span class="string">&#x27;a&#x27;</span>); <span class="comment">//将i+&#x27;a&#x27;追加到结果字符串中</span></span><br><span class="line">                    bucket[i]--; 		<span class="comment">//该操作相当于将字符i+&#x27;a&#x27;从原字符串中删除</span></span><br><span class="line">                    length--;			<span class="comment">//原字符串长度自减</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">26</span>;i&gt;=<span class="number">0</span>;i--)<span class="comment">//按字典降序从原字符串中无重复地取出字符追加到结果字符串中</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(length &amp;&amp; bucket[i])</span><br><span class="line">                &#123;</span><br><span class="line">                    re.<span class="built_in">push_back</span>(i+<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">                    bucket[i]--;</span><br><span class="line">                    length--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>总结，以下情况要考虑使用桶：</p>
+<ol>
+<li>按字典序或者数字大小的顺序从<strong>乱序的</strong>数组中多次取出元素</li>
+<li>要多次从【删除操作复杂度高的数据结构中进行删除操作】</li>
+<li>多次遍历一个【数据范围较小的类数组结构（如字符串），且其中可能存在较多的重复元素】</li>
+</ol>
+<h1 id="6-无重复字符的最长字符串"><a href="#6-无重复字符的最长字符串" class="headerlink" title="6. 无重复字符的最长字符串"></a>6. 无重复字符的最长字符串</h1><p>【题目】</p>
+<p>给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。</p>
+<p>示例 1:</p>
+<p>输入: s &#x3D; “abcabcbb”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “abc”，所以其长度为 3。</p>
+<p>示例 2:</p>
+<p>输入: s &#x3D; “bbbbb”<br>输出: 1<br>解释: 因为无重复字符的最长子串是 “b”，所以其长度为 1。</p>
+<p>示例 3:</p>
+<p>输入: s &#x3D; “pwwkew”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “wke”，所以其长度为 3。<br>     请注意，你的答案必须是 子串 的长度，”pwke” 是一个子序列，不是子串。</p>
+<p>【解析】</p>
+<p>在暴力做法的基础上可以进行一些优化。</p>
+<p>设置一个窗口[left, right]，初始为[0, 0]。在right右移的过程中，不断的判断窗口内[left, right-1]中有没有元素与下标为right的元素相等（同时对不等的元素计数），如果有，把left拉到这个元素之后即可（即以后的判断都可以跳过这个重复的部分）。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span>(length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> maax = <span class="number">1</span>;<span class="comment">//只要不是空字符串，则无重复字符的最长子字符串至少长为1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;<span class="comment">//窗口左端点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> right = <span class="number">1</span>;right&lt;length;right++)<span class="comment">//窗口右端点不断右移</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> count = <span class="number">1</span>; <span class="comment">//计算当前最长无重复字符的字符串长度</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = right<span class="number">-1</span>;j&gt;=left;j--) <span class="comment">//在[left, right-1]中寻找有没有与下标为right元素相同的元素</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(s[j]==s[right]) <span class="comment">//如果有</span></span><br><span class="line">                &#123;</span><br><span class="line">                    left = j+<span class="number">1</span>; <span class="comment">//把窗口左端点直接移到重复元素之后</span></span><br><span class="line">                    <span class="keyword">break</span>;      <span class="comment">//直接开始下次迭代</span></span><br><span class="line">                &#125;</span><br><span class="line">                count++; <span class="comment">//对不相等的元素计数</span></span><br><span class="line">            &#125;</span><br><span class="line">            maax = <span class="built_in">max</span>(maax, count); <span class="comment">//要求取最长字符串</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maax;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-同构字符串"><a href="#7-同构字符串" class="headerlink" title="7. 同构字符串"></a>7. 同构字符串</h1><p>【题目】</p>
+<p>给定两个长度相同的字符串 s 和 t，判断它们是否是同构的。</p>
+<p>如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。</p>
+<p>所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身。</p>
+<p>示例 1:</p>
+<p>输入: s &#x3D; “egg”, t &#x3D; “add”<br>输出: true</p>
+<p>示例 2:</p>
+<p>输入: s &#x3D; “foo”, t &#x3D; “bar”<br>输出: false</p>
+<p>示例 3:</p>
+<p>输入: s &#x3D; “paper”, t &#x3D; “title”<br>输出: true</p>
+<p>【解析】</p>
+<p>本题关键在于如何统一的标识两个字符串的结构。我们可以同时遍历两个字符串，在遍历的过程中，将当前指针所在<strong>下标作为两个字符串中该下标处元素的标识</strong>（即用两个哈希表分别存储两个字符串的结构信息：<strong>当前位置元素</strong>为key，<strong>当前位置下标</strong>为value），每走到一个新的位置i，就判断两字符串中该位置的元素的上一次出现位置是否相同，如果不相同说明不同构，如果相同就将它们的上一次出现位置更新为i。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isIsomorphic</span><span class="params">(string s, string t)</span> </span>&#123;</span><br><span class="line">        <span class="type">char</span> s_hash[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;, t_hash[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;; <span class="comment">//两个哈希表分别记录两个字符串的结构</span></span><br><span class="line">        <span class="type">int</span> length = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s_hash[s[i]]!=t_hash[t[i]]) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//这一次s[i]和t[i]出现在两个字符串中的对应位置，那么s[i]和t[i]上一次在各自字符串中出现的位置也必然对应，否则字符串s和t一定不同构</span></span><br><span class="line">            <span class="comment">//用当前遍历到的位置i来记录s[i]和t[i]这两个元素的出现位置</span></span><br><span class="line">            s_hash[s[i]] = i+<span class="number">1</span>; </span><br><span class="line">            t_hash[t[i]] = i+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E7%BB%84%E3%80%8B%E4%B8%93%E9%A2%98/" rel="prev" title="《数组》专题">
+                  <i class="fa fa-chevron-left"></i> 《数组》专题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%8B%E4%B8%93%E9%A2%98/" rel="next" title="《位运算》专题">
+                  《位运算》专题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

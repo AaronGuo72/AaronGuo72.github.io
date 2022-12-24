@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="《操作系统》Processes_and_Threads">
+<meta property="og:url" content="http://example.com/2020/12/07/IT/operating_system/%E3%80%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%8BProcesses-and-Threads/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/9.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/1.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/2.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/3.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/4.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/5.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/6.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/7.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/8.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/9.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/10.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/11.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/12.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/13.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/14.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/15.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/16.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/17.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/18.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/19.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/20.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/21.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/22.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/23.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/24.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/25.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/26.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/27.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/28.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/29.png">
+<meta property="og:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/30.png">
+<meta property="article:published_time" content="2020-12-07T06:00:34.000Z">
+<meta property="article:modified_time" content="2021-01-08T13:15:34.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/9.png">
+
+
+<link rel="canonical" href="http://example.com/2020/12/07/IT/operating_system/%E3%80%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%8BProcesses-and-Threads/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/12/07/IT/operating_system/%E3%80%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%8BProcesses-and-Threads/","path":"2020/12/07/IT/operating_system/《操作系统》Processes-and-Threads/","title":"《操作系统》Processes_and_Threads"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《操作系统》Processes_and_Threads | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1-PROCESSES"><span class="nav-text">2.1 PROCESSES</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-1-The-Process-Model"><span class="nav-text">2.1.1 The Process Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-2-Process-Creation"><span class="nav-text">2.1.2 Process Creation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-1-unix%E5%92%8Cwin%E5%88%9B%E5%BB%BA%E6%96%B0%E8%BF%9B%E7%A8%8B"><span class="nav-text">2.1.2.1 unix和win创建新进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-3-Process-Hierarchies"><span class="nav-text">2.1.3 Process Hierarchies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-4-Process-States"><span class="nav-text">2.1.4 Process States</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-5-Implementation-of-Processes"><span class="nav-text">2.1.5 Implementation of Processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-6-Modeling-Multiprogramming"><span class="nav-text">2.1.6 Modeling Multiprogramming</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-THREADS"><span class="nav-text">2.2 THREADS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-1-Thread-usage"><span class="nav-text">2.2.1 Thread usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-2-The-Classical-Thread-Model"><span class="nav-text">2.2.2 The Classical Thread Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-3-Implementing-Threads-in-User-Space"><span class="nav-text">2.2.3 Implementing Threads in User Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-4-Implementing-Threads-in-the-Kernel"><span class="nav-text">2.2.4 Implementing Threads in the Kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-5-Scheduler-Activations"><span class="nav-text">2.2.5 Scheduler Activations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3-INTERPROCESS-COMMUNICATION"><span class="nav-text">2.3 INTERPROCESS COMMUNICATION</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-1-Race-Conditions"><span class="nav-text">2.3.1 Race Conditions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-2-Critical-Regions"><span class="nav-text">2.3.2 Critical Regions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-3-Mutual-Exclusion-with-Busy-Waiting"><span class="nav-text">2.3.3 Mutual Exclusion with Busy Waiting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-1-Disabling-Interrupts"><span class="nav-text">2.3.3.1 Disabling Interrupts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-2-Lock-Variables"><span class="nav-text">2.3.3.2 Lock Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-3-Strict-Alternation"><span class="nav-text">2.3.3.3 Strict Alternation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-4-Peterson%E2%80%99s-Solution"><span class="nav-text">2.3.3.4 Peterson’s Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-5-The-TSL-Instruction"><span class="nav-text">2.3.3.5 The TSL Instruction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-4-Sleep-and-Wakeup"><span class="nav-text">2.3.4 Sleep and Wakeup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-1-The-Producer-Consumer-Problem"><span class="nav-text">2.3.4.1 The Producer-Consumer Problem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-5-Semaphores"><span class="nav-text">2.3.5 Semaphores</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-6-Mutexes"><span class="nav-text">2.3.6 Mutexes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-7-Monitors"><span class="nav-text">2.3.7 Monitors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-7-1-%E5%BC%95%E5%85%A5%E7%AE%A1%E7%A8%8B%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%9B%AE%E7%9A%84"><span class="nav-text">2.3.7.1 引入管程的两个目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-7-2-%E7%AE%A1%E7%A8%8B%E5%8F%AF%E8%83%BD%E5%A4%B1%E5%8E%BB%E4%BA%92%E6%96%A5%E6%80%A7%E7%9A%84%E4%B8%89%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-text">2.3.7.2 管程可能失去互斥性的三种解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hansen%E6%96%B9%E6%A1%88"><span class="nav-text">Hansen方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hoare%E6%96%B9%E6%A1%88"><span class="nav-text">Hoare方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MESA%E6%96%B9%E6%A1%88"><span class="nav-text">MESA方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hoare%E4%B8%8EMESA%E7%AE%A1%E7%A8%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-text">Hoare与MESA管程的比较</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-8-Inter-Process-Communication-IPC"><span class="nav-text">2.3.8 Inter Process Communication(IPC)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-8-1-Message-Passing"><span class="nav-text">2.3.8.1 Message Passing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-8-2-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98"><span class="nav-text">2.3.8.2 共享内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-8-3-%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1"><span class="nav-text">2.3.8.3 管道通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-9-Barriers"><span class="nav-text">2.3.9 Barriers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-4-SCHEDULING"><span class="nav-text">2.4 SCHEDULING</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-1-Introduction-to-Scheduling"><span class="nav-text">2.4.1 Introduction to Scheduling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-1-Process-behavior"><span class="nav-text">2.4.1.1 Process behavior</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-2-when-to-scheduling"><span class="nav-text">2.4.1.2 when to scheduling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-3-Categories-of-Scheduling-Algorithms"><span class="nav-text">2.4.1.3 Categories of Scheduling Algorithms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-4-Scheduling-Algorithm-Goals"><span class="nav-text">2.4.1.4 Scheduling Algorithm Goals</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-2-Scheduling-in-Batch-Systems"><span class="nav-text">2.4.2 Scheduling in Batch Systems</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-1-First-Come-First-Served"><span class="nav-text">2.4.2.1 First-Come, First-Served</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-2-Shortest-Job-First"><span class="nav-text">2.4.2.2 Shortest Job First</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-3-Shortest-Remaining-Time-Next"><span class="nav-text">2.4.2.3 Shortest Remaining Time Next</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-3-Scheduling-in-Interactive-Systems"><span class="nav-text">2.4.3 Scheduling in Interactive Systems</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-1-Round-Robin-Scheduling"><span class="nav-text">2.4.3.1 Round-Robin Scheduling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-2-Priority-Scheduling"><span class="nav-text">2.4.3.2 Priority Scheduling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-3-Multiple-Queues"><span class="nav-text">2.4.3.3 Multiple Queues</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-4-Shortest-Process-Next"><span class="nav-text">2.4.3.4 Shortest Process Next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-5-Lottery-Scheduling"><span class="nav-text">2.4.3.5 Lottery Scheduling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-4-Scheduling-in-Real-Time-Systems"><span class="nav-text">2.4.4 Scheduling in Real-Time Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-5-Policy-Versus-Mechanism"><span class="nav-text">2.4.5 Policy Versus Mechanism</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-6-Thread-Scheduling"><span class="nav-text">2.4.6 Thread Scheduling</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/07/IT/operating_system/%E3%80%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%8BProcesses-and-Threads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《操作系统》Processes_and_Threads | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《操作系统》Processes_and_Threads
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-07 14:00:34" itemprop="dateCreated datePublished" datetime="2020-12-07T14:00:34+08:00">2020-12-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-08 21:15:34" itemprop="dateModified" datetime="2021-01-08T21:15:34+08:00">2021-01-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/9.png"></p>
+<span id="more"></span>
+
+
+
+<h1 id="2-1-PROCESSES"><a href="#2-1-PROCESSES" class="headerlink" title="2.1 PROCESSES"></a>2.1 PROCESSES</h1><p>先聊聊<strong>进程和程序的区别</strong><br>假如bob要为他的女儿做生日蛋糕，他现在人在厨房中，所有的材料都已经备齐了：鸡蛋、奶油、水果…，另外还有一本蛋糕的食谱。类比来看，蛋糕的食谱是program，bob是CPU，所有食材是program data，process则是：阅读食谱，取材料，做蛋糕，送给女儿这一系列的动作。<br>假如在读食谱时，bob的儿子突然闯进来，说他被马蜂蛰了（更高优先级的事件正抢占CPU资源）。bob这时必须先在他目前食谱读到的位置做一个标记（保存当前进程状态），然后拿出急救书（读取另一个program），翻查并治疗他的儿子（开始执行更高优先级的进程）。当把儿子治好后，他又拿起食谱，从之前标记的地方开始继续读（切回原进程）。</p>
+<p>上述例子假设了在同一时刻只能运行一个进程，但我们知道在process中存在parallelism（并行）和concurrency（并发）两个概念，可以让计算机同时运行多个进程。其中并行其实是并发的子集，并行是指多个进程【在同一时刻运行】在多个CPU上，而并发则是指在【某一个时间间隔内】有多个进程在跑，这些进程既可以各自跑在不同的CPU上（并行），也可以全部跑在一个CPU上（伪并行）。<br>无论是并行还是并发，我们总是需要运行多个进程的，而如何去管理这些进程，就需要去交给操作系统来完成了。<br>为此人们发明了一种用于描述进程的模型，来把进程的格式给统一起来，方便操作系统的管理。</p>
+<h2 id="2-1-1-The-Process-Model"><a href="#2-1-1-The-Process-Model" class="headerlink" title="2.1.1 The Process Model"></a>2.1.1 The Process Model</h2><p>进程就是【运行中的程序实例】，其中包含了【program counter】, 【registers】, and 【variables】等一系列系统资源。<br>大多数情况下（单核或多核），我们都需要【伪并行】来帮助我们最大化的利用CPU资源，运行多个进程。这种伪并行实际上是通过CPU在多个进程间来回切换实现的，这种【切换】叫做<strong>multiprogramming</strong>，它模拟出了好像每个进程都独占了一个CPU的效果。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/1.png"><br>multiprogramming虽然模拟出了多个进程同时运行的效果，但实际上在内存中只有一个program counter，真正的并行4个进程其实会有4个program counters。图c是单核上实现伪并行的方法。</p>
+<blockquote>
+<p>本章暂时只讨论单核CPU</p>
+</blockquote>
+<p>进行multiprogramming时，CPU在每一个进程上停留的时间不一定相同，可能第二次切回到某进程时，它分得的时间片和上次不一样了，也就是说，CPU给每一个进程分配的时间片一般是会基于【当前】整个系统的状态来考虑的，不仅如此，它也会满足一些特殊的需求。</p>
+<p><strong>举一个极端例子</strong><br>假如一个视频播放的程序，由两部分组成：本地的音频程序，云端的视频程序。云端传输略有延迟，每次打开音频程序后，它都会首先通知云端，<strong>等</strong>（假定1ms）到云端的程序运行了且画面传输到本地后，再运行本地的音频程序。这1ms就是特殊的需求，音频程序不能在这1ms的等待过程中被CPU切换掉，否则音画就不同步了。</p>
+<p>总之，<br><strong>process</strong> 是一个动作，由I&#x2F;O、state和program等系统资源共同组成。一个processor可以被多个processes共享（但同一时间只能被一个占有），前提是有明确的算法去调度和管理这些进程；<br><strong>program</strong> 则是静态的，一直躺在硬盘上，啥事也不做，即使到了要被使用时，也只是由loader去把它的【副本】给加载到内存中，它自己不会有任何动作，因此【一个程序可以被启动多次，分属于多个不同的进程；而进程到程序的映射却是唯一的】。</p>
+<h2 id="2-1-2-Process-Creation"><a href="#2-1-2-Process-Creation" class="headerlink" title="2.1.2 Process Creation"></a>2.1.2 Process Creation</h2><p>每当操作系统启动时，都会创建很多进程，其中<strong>foreground processes</strong>是直接与用户交互的进程，<strong>background processes</strong>是不直接与用户交互但执行特定任务的进程（如接收邮件，接收网页，打印等），background processes又被称为<strong>daemons</strong>，linux中使用ps，或windwos中使用任务管理器即可查看它们。</p>
+<p>操作系统启动后，运行中的进程可以通过system call创建新的进程来协助它完成任务，比如从网络上下载数据并处理，就可以分配一个进程取数据放入公共buffer中，另一个进程从buffer中取数据然后处理，这样可以提升效率，如果更进一步，把两个进程分别运行在两个CPU上，速度提升就更明显了。</p>
+<p>总的来说，创建一个新进程，是通过一个【现有进程】调用process creation的sysytem call来完成的。</p>
+<h3 id="2-1-2-1-unix和win创建新进程"><a href="#2-1-2-1-unix和win创建新进程" class="headerlink" title="2.1.2.1 unix和win创建新进程"></a>2.1.2.1 unix和win创建新进程</h3><p>unix系统中唯一的创建新进程的方法就是：<strong>fork</strong>，它会创建出一个与当前父进程【完全一致】的新进程（子进程），它们之间连<strong>状态都一模一样</strong>。通常在子进程被创建后，在用它调用<strong>execve</strong>去把一个新的程序加载进来。</p>
+<p>例如，在linux中输入sort命令，shell就会创建一个子进程，然后把sort程序加载到该子进程中，由它来执行sort程序。</p>
+<p>windows是通过调用win32 API：<strong>CreateProcess</strong>，它会自动的创建新进程并把目标程序加载到新进程中。</p>
+<p>无论是unix还是win，新进程被创建后，新老进程各自都处在独立的虚拟内存空间中，但它们实际上共享同一段物理地址，被标记为copy-on-write区域，只有当它们中的一个数据要更新（被写入）时，才会把要更新的部分复制一份放到PM中的其他位置，然后对该位置进行更新，这样就保证了新老进程之间的独立性。（详细参考CSAPP《Virtual Memory-9.7.1 Shared Objects Revisited》）</p>
+<h2 id="2-1-3-Process-Hierarchies"><a href="#2-1-3-Process-Hierarchies" class="headerlink" title="2.1.3 Process Hierarchies"></a>2.1.3 Process Hierarchies</h2><p>某进程创建了子进程，子进程加载了新程序后，它们之间还是存在一些联系的。在unix中，一个进程与它的子进程、子子进程、子子子进程…共同组成了一个<strong>process group</strong>，每当用户发送一个信号给这个进程组时，其中所有的processes都能够收到这个信号，然后对其进行处理（catch、ignore或者执行default action）。</p>
+<p>举个栗子，unix系统的启动过程。<br>开机后，首先会执行一个特殊的进程init，它会fork一系列的必要进程（比如login程序），使用者login成功后，现有的必要进程又会fork出一些子进程（比如shell）来提供服务，然后用户又可以在shell上fork出更多的子进程，最后所有的进程就是一个树状结构，树根root就是最开始启动的进程init。</p>
+<blockquote>
+<p>相反的，windows中就没有process hierarchy，所有进程都是平等的。</p>
+</blockquote>
+<h2 id="2-1-4-Process-States"><a href="#2-1-4-Process-States" class="headerlink" title="2.1.4 Process States"></a>2.1.4 Process States</h2><p>虽然说每一个process都拥有自己独立的虚拟空间，但在很多情况下，process之间是需要进行交互的，比如进程B的input是进程A的output，这时进程B就必须要等待进程A执行完后才能执行，在等待的时候进程B就要被暂时阻塞。因此，我们现在可以把<strong>进程的状态分为三类</strong>：</p>
+<ol>
+<li><p><strong>running</strong>，运行时进程拥有CPU资源</p>
+</li>
+<li><p><strong>ready</strong>，随时可以被运行，但现在暂时没有CPU资源</p>
+</li>
+<li><p><strong>blocked</strong>，不能被运行（即使CPU空闲），必须要等到某个特定事件发生后才能运行</p>
+</li>
+</ol>
+<p>  <img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/2.png"></p>
+<p>操作系统的最底层是<strong>scheduler</strong>，所有中断处理、启动进程和停止进程的处理细节都依靠它来实现。在它的上面一层，就是系统中的所有进程。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/3.png"></p>
+<h2 id="2-1-5-Implementation-of-Processes"><a href="#2-1-5-Implementation-of-Processes" class="headerlink" title="2.1.5 Implementation of Processes"></a>2.1.5 Implementation of Processes</h2><p><strong>process table</strong>被抽象出来用于维护系统中的所有进程，其中的每一个条目对应一个进程（这些条目也被称为<strong>process control blocks</strong>），一个条目中包含了一个进程的所有states：program counter、stack pointer、memory allocation、打开的文件、accounting和scheduling等诸多信息，这些信息都是在process的状态被改变前（如running变blocked）必须要先保存的，这样才能保证CPU资源在之后切回到该process时它能够完整的恢复到切出时的状态。</p>
+<p>栗子：一个典型的process table entry</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/4.png"></p>
+<p>学习了process table，我们就能开始讨论，一个单核CPU是如何同时维护多个进程的。<br>内存中（一般在接近最底部的位置）有一块空间叫<strong>interrupt vector</strong>，它<strong>关联了所有的I&#x2F;O类</strong>，并且记录了一系列<strong>提供不同interrupt功能</strong>的函数地址表。</p>
+<p>中断大致是这样实现的：运行中的进程接收到中断信号，<strong>interrupt hardware</strong>会将该进程的states给push到系统栈上，然后系统会根据中断码（标识某个中断类型）去interrupt vector中找到该中断码对应的【中断处理程序】，把该程序的地址push到对应的寄存器，这些就是硬件的全部任务了。然后系统执行【中断处理程序】，接下来的工作都靠它（软件）来完成了。</p>
+<h2 id="2-1-6-Modeling-Multiprogramming"><a href="#2-1-6-Modeling-Multiprogramming" class="headerlink" title="2.1.6 Modeling Multiprogramming"></a>2.1.6 Modeling Multiprogramming</h2><p>从CPU利用率的角度来看multiprogramming。假如同时运行n个进程，每个进程用它总运行时间的p%来等待I&#x2F;O传输，那么某一时刻所有进程都停下来等待I&#x2F;O传输（这时CPU完全空闲）的概率就是$p^n$，也就是说<strong>从概率的角度来看CPU的利用率</strong>（粗略，假定进程不是正在运行就是在等待I&#x2F;O传输）为：<br>$$CPU ;;utilization &#x3D; 1-p^n$$</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/5.png"></p>
+<p>其中degree of multiprogramming就是<strong>总的进程数</strong>。<br>从这张图可以看出，如果每一个的进程都需要花费它们生命总时长的80%来等待I&#x2F;O传输，那么必须提高进程数到至少10个，这样才能把CPU的利用率维持在90%以上。即如果想要提高CPU的利用率，要么减少进程等待I&#x2F;O的时间，要么增加进程数。<br>看到这里你是否会觉得进程花费80%的时间来等待的I&#x2F;O是一件很少发生的事? 事实上，现在正在阅读这篇文章的你正在使用一个I&#x2F;O等待超过80%的进程（阅读器或是网页），大多数人的计算机中的大多数进程都会终其一生在漫长的等待中度过，只有极少的时间是忙碌的。即使勤劳如server，I&#x2F;O wait的比例经常是80%以上，不同之处在于它花费时间在读写disk，而个人PC花费时间在等待键盘或者鼠标的输入。</p>
+<p><strong>提高CPU利用率的方法，加适量的内存</strong><br>假定我们现在买了8G内存条，只能同时跑3个进程，每个进程的I&#x2F;O wait率为80%，这时的CPU利用率为：$1-0.8^3&#x3D;49%$，如果我们捡了500元钱，又买了一根8G的内存条装上，这下可以同时跑6个进程了<br>，CPU利用率为$ 1-0.8^6&#x3D;73% $，利用率提高了24%。上头了，我们又去图吧捡了一根8g内存条装上，$1-0.8^9&#x3D;86%$，这次利用率只提高了13%，之后边际效益递减。</p>
+<h1 id="2-2-THREADS"><a href="#2-2-THREADS" class="headerlink" title="2.2 THREADS"></a>2.2 THREADS</h1><p>事实上，一个进程可以被划分为多个线程，它们可在同一块内存空间中并发运行，而在我们看来它们就像几个独立的进程一样。</p>
+<blockquote>
+<p>context switch一般指进程切换，线程切换一般叫thread switch</p>
+</blockquote>
+<h2 id="2-2-1-Thread-usage"><a href="#2-2-1-Thread-usage" class="headerlink" title="2.2.1 Thread usage"></a>2.2.1 Thread usage</h2><p><strong>有进程了为啥还要线程</strong> ？</p>
+<ol>
+<li><p>因为很多应用程序会同时进行多个动作（比如视频播放器同时播放声音和图像），它们之间也可能存在依赖（一个动作的输入是另一个动作的结果），将这样的应用程序按动作划分为几个并行的线程，可以极大的<strong>简化编程</strong>过程。</p>
+</li>
+<li><p>Thread的一个重要的区别于process的特性就是：<strong>一个process中的所有threads共同使用一个内存空间，共享所有的数据</strong>。</p>
+</li>
+<li><p>Thread可被看作是轻量级的process，它可以非常容易被创建或销毁（一般比process快10~100倍）。</p>
+</li>
+<li><p>当我们拥有多核CPU时可以实现真正的parallel时，Threads的价值又会被体现出来，之后我们会学习到。</p>
+</li>
+</ol>
+<p>举个栗子，我们正在用一个多线程文本编辑程序编辑一本600页的书，一个线程在监听键盘输入并打印在屏幕上，一个线程每3分钟把输入的所有内容保存到磁盘上，一个线程监听鼠标操作，这些<strong>小</strong>动作同时运作，使用体验非常好。否则，如果该程序是单线程，那么每隔三分钟一次的备份期间，我们的鼠标和键盘都不能使用了，只能干等它备份完毕再继续，这程序就根本就没法用了。<br>另一个栗子，web server有三种实现方式:</p>
+<ol>
+<li>用多线程实现的，一个线程dispatcher用于接收用户指令，它接收指令后会唤醒一个被阻塞的worker（有多个），指派它去完成这个指令，指令完成后该worker将自己block，等待下一次dispatcher指派。</li>
+</ol>
+<p>  <img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/6.png"></p>
+<ol start="2">
+<li><p>用单线程实现，那么唯一的一个进程不光要接收用户指令，还要处理用户指令，它必须顺序的逐个执行：接收-&gt;处理-&gt;接收-&gt;处理…，在它处理指令的时候，无法接收任何新来的用户指令。</p>
+</li>
+<li><p>用finite-state machine实现，该方式也是单线程，特别之处在于它的read指令不会阻塞当前进程。这样的话，首先接收指令，如果指令是要读取网页内容，就先去内存中找，如果找不到就去disk找。在disk数据传输到内存的过程中（DMA, 不需要CPU），CPU会保存当前进程的states，让该进程去处理下一个事件：如果下一个事件又是read指令，它要求返回网页内容，那么就去处理这个指令，如果这个指令处理的过程中又有disk数据传输到内存中这一步，则同上；如果下一个事件是上一次请求的disk内容已经全部传输到内存了，正在等待发送，那么就先恢复到上一次进程的states，将数据发送，完成后又去处理下一个事件。这种方式比纯粹的单线程要快的多，缺点是程序很难写。</p>
+<blockquote>
+<p><strong>finite-state machine</strong>策略，在计算机领域非常常用。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="2-2-2-The-Classical-Thread-Model"><a href="#2-2-2-The-Classical-Thread-Model" class="headerlink" title="2.2.2 The Classical Thread Model"></a>2.2.2 The Classical Thread Model</h2><p><strong>进程模型</strong>基于两个相互独立的概念：resource grouping和execution。<br>【从resource grouping的角度来看process】：拥有一个address space，用来存放程序的text和data和一系列资源（打开的文件，子进程等），将它们组织一下，统一成一个进程的形式，方便管理。<br>【从execution的角度来看process】：一个运行中的thread，这个thread中有一个program counter不断的指向下一条要执行的指令；有registers，存储了正在使用中的变量；有stack，包含了程序的执行历史，该stack分为多个frame（栈帧），每一个正在被执行的函数占用一个frame。</p>
+<p>可以把threads和它们所属的process分开来看，process专用来组织资源，threads才是真正的被CPU调度的用来执行的实体。<br>threads与processes非常相似，在一个process中并发执行多个threads，就像在一台电脑上并发执行多个processes一样；threads可以共享一个process环境，共用一个address space，共享所有数据，资源，但又能各自互相独立的执行，类似地，processes共用一个physical memory，共享一些常驻内存的数据，共享printer、disk等资源，各自也能相互独立的执行。multithreading与multiprogramming类似，区别只是一个基于线程，一个基于进程。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/7.png"></p>
+<p>CPU在processes之间快速切换来达到并发的效果，类似地，CPU在threads之间快速切换来达到并发的效果，在外部看来，两者没有什么区别，只是前者比较慢。假如一个CPU中跑了3个线程，那么每一个线程的执行速度就是一个进程速度的1&#x2F;3。</p>
+<p>一个process中的多个threads并不像多个processes之间那么的相互独立，因为一个process中所有threads共用一个address space，所以它们之间连global variables都是共享的，一个线程不但可以read、write另一个线程的数据，甚至连另一个线程的stack都能给它灭掉，这就引出了thread的一个重要特点：<strong>threads之间没有内存保护机制</strong>，一是不可能提供保护，二是没必要提供保护。不同的processes可能属于不同的user，那么users之间就可能会存在恶意的行为，必须对内存进行保护，而一个process中的threads总是属于一个user，根本不需要内存保护。<br>要记住，<strong>抽象出threads就是为了让它们共同协作服务于一个程序</strong>，因此共享一片address space且无内存保护是合情合理的。如果threads之间还启用了内存保护，拥有不同的地址空间，那就变成进程了，切换效率直线下降。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/8.png"></p>
+<p>说private to each thread只是逻辑上的，这样才能让每一个threads相对独立的执行任务，真要想访问或改动是可以轻易做到的（如果能达到目标效果的话）。</p>
+<p>thread也拥有几种states：</p>
+<table>
+<thead>
+<tr>
+<th>states</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>running</td>
+<td>手持CPU资源，运行中</td>
+</tr>
+<tr>
+<td>ready</td>
+<td>随时可以运行，只是暂时没有拿到CPU资源</td>
+</tr>
+<tr>
+<td>blocked</td>
+<td>等待特定事件发生后才能运行</td>
+</tr>
+<tr>
+<td>terminated</td>
+<td>不能运行</td>
+</tr>
+</tbody></table>
+<p><strong>关于thread的system call</strong><br>一开始一个进程中只有一个thread，这thread可以通过比如thread_creation()这样的函数去创建新的thread（跟进程类似，进程也是通过进程调用system call创建的），这个函数会返回新thread的一个标识。<br>当一个thread使命结束后，它会调用一个类似thread_exit()函数来终止运行。<br>一个thread也可以通过调用thread_join()，来指定当另外一个thread终止后它才开始运行。<br>通过调用thread_yield()，某运行中的thread主动放弃CPU资源。这个函数在thread中相当重要，因为thread并没有clock interrupt这样的机制，除非自己主动放弃CPU资源，否则可以一直运行下去（只要CPU给到其所属的process，则永远只有该thread在运行），在这样的前提下，<strong>每一个thread在执行一段合理的时间后主动的让出CPU资源是程序能够正常运行的前提</strong>。</p>
+<h2 id="2-2-3-Implementing-Threads-in-User-Space"><a href="#2-2-3-Implementing-Threads-in-User-Space" class="headerlink" title="2.2.3 Implementing Threads in User Space"></a>2.2.3 Implementing Threads in User Space</h2><p>Threads可以完全在user space中实现，也可以完全在kernel space中实现，也可以在两者中共同实现。</p>
+<p>如果纯粹的在user space中实现的话，内核是不知道有thread存在的，在它看来，那只是一个普通的进程。这样做的好处在于，即使操作系统不支持线程，我们仍然可以在user space中实现线程。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/9.png"></p>
+<p>可以看到如果完全在user space中实现多线程的话，每一个process都要有一个自己<strong>私有的thread table</strong>，里面记录了每一个thread的详细信息，process负责维护它自己的thread table。</p>
+<p>完全在user-space中实现的threads可以尽可能的减少与内核的交互，比如线程之间的thread switch，只需要由自己所属的process改一下thread table即可实现（保存当前thread的状态，恢复另外一个thread的状态）。<br>这种<strong>线程之间的切换比进程切换要快至少一个数量级</strong>！主要原因是线程切换的整个过程都在调用局部函数，不需要调用system call，因此不需要频繁的进行mode switch。</p>
+<p>user-level threads还有另一个好处，每一个进程都可以定制自己的线程调度算法。</p>
+<p>user-level threads的几个问题：</p>
+<ol>
+<li>如何解决一个thread阻塞引发的它所属的整个process阻塞。因为kernel在维护所有进程，它感觉不到线程的存在。假如一个thread<strong>触发了page fault</strong>（阻塞性的system call），在kernel看来就是整个process触发了page fault，它就会阻塞整个process。事实上一个thread被阻塞时完全可以让该process中另外一个thread运行，这样才符合thread的初衷，如果一个thread被阻塞会引发整个process被阻塞的话，那还要thread干啥呢？一种解决方案是在每一次thread调用system call时，预先判断该system call是否为阻塞性的，如果为阻塞性的就暂时不调用，根据设计的方案等待一段时间再调用，但是这样会造成较多的额外资源开销</li>
+<li>如果一个thread正在运行，那么直到这个thread调用yield主动放弃CPU资源之前，该process中其他所有的threads都不能运行。因为单个进程中可没有类似于clock interrupts的机制来平均分配每一个threads的运行时间（因为即使有，鉴于threads之间切换的速度，该机制的时间花销也无法接受）</li>
+<li>一般使用多线程的程序会倾向于调用阻塞性的system call，比如多线程web server。因为如果程序很少被block，那何必还要用多线程呢？</li>
+</ol>
+<h2 id="2-2-4-Implementing-Threads-in-the-Kernel"><a href="#2-2-4-Implementing-Threads-in-the-Kernel" class="headerlink" title="2.2.4 Implementing Threads in the Kernel"></a>2.2.4 Implementing Threads in the Kernel</h2><p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/10.png"><br>既然在内核中实现，当然就由内核来掌控全局了。因此thread table只有一个，而且放在内核中，当一个thread想要创建一个新的线程或者销毁现有线程的话，就必须去调用内核中的函数来达到修改thread table以达到目的。<br>要注意的是，内核仍然会维护process table来管理所有process。</p>
+<p>现在线程状态的修改必须要跨越user-space和kernel-space了，因此线程之间的切换时间消耗要大的多。不过也换来了一点好处，当一个线程被block后，内核有两种选择，一种是在它原本的process中找另一个线程运行，另一种是在其他的process中找一个线程运行，因为现在kernel有了全局视野， <strong>不会再因为一个thread被block而将整个进程阻塞了</strong> 。</p>
+<p>这种情况下新增或者删除一个线程的时间开销也非常大（要沟通kernel来更新thread table），因此人们想到一种方法：当一个线程被删除时，它只是被标记为删除，其数据结构其实会被保留下来，等到下次要创建进程时，就直接把这个线程标记恢复即可。</p>
+<h2 id="2-2-5-Scheduler-Activations"><a href="#2-2-5-Scheduler-Activations" class="headerlink" title="2.2.5 Scheduler Activations"></a>2.2.5 Scheduler Activations</h2><p>user-space threads和kernel-space threads各有优点，Scheduler Activation技术就是取两者的长处：threads不需要去包装system calls来避免被阻塞，与此同时，当某个thread被阻塞时，可以在该thread所属的进程中找另一个thread来运行。</p>
+<p>比如一个线程被block，等待同进程中的另外一个线程的运行结果，这个过程根本不需要kernel参与，可以直接在user space中实现。schedualer activation技术就做到了这一点，它让kernel为每一个process分配<strong>virtual processors</strong>，让每一个process自行调度自己的virtual CPU资源。一开始只会为每一个process分配一个virtual processor，但是process可以请求增加virtual processor，或者主动将不用的返还给kernel，kernel也可以直接撤回分配出去的virtual processor。<br>当一个thread被阻塞时，kernel会直接将该thread的编号，本次阻塞的细节信息发送到对应的process（这个过程称为activate process，kernel发送信息给某process的动作称为<strong>upcall</strong>），一个process被activate后（相当于内核对该process说: 老兄，你的一个thread被阻塞啦，快去调度你的virtual processor），该process就会独立的自行处理接下来的事情（将该thread标记为blocked，然后找另一个ready状态的thread，恢复它之前的运行环境，再将virtual processor分配给它，使它开始运行）。</p>
+<h1 id="2-3-INTERPROCESS-COMMUNICATION"><a href="#2-3-INTERPROCESS-COMMUNICATION" class="headerlink" title="2.3 INTERPROCESS COMMUNICATION"></a>2.3 INTERPROCESS COMMUNICATION</h1><p>当一个进程的下一个指令需要用到另外一个进程的执行结果时，它们之间就需要互相通信，称为interprocess communication（IPC）。<br>主要在三种情况下需要IPC：</p>
+<ol>
+<li>进程之间需要信息交互时</li>
+<li>多个进程同时对一块数据进行访问时</li>
+<li>进程之间存在依赖关系时（一个进程的下一个指令需要另一个进程的执行结果）</li>
+</ol>
+<p>除了第1条（因为一个进程中所有线程共用一块内存空间），2、3在讨论线程时同样适用。</p>
+<h2 id="2-3-1-Race-Conditions"><a href="#2-3-1-Race-Conditions" class="headerlink" title="2.3.1 Race Conditions"></a>2.3.1 Race Conditions</h2><p>假定两个进程A、B同时往一块共享区域写数据，很可能A刚往里面写完数据，还没来得及对该数据进行下一步操作，它的CPU资源就被调走了。假如调给了B，B也往这块共享区域写入了数据。一段时间后，A再次获得CPU资源，则它接下来的操作都会基于那块共享区域中的数据，因为它还认为共享区域中的数据是它自己刚刚写进去的，事实上其中的数据早已被B覆盖成其他数据了。<br>Race Condition可能发生在共享内存空间、共享文件、和其他任意的共享区域。</p>
+<h2 id="2-3-2-Critical-Regions"><a href="#2-3-2-Critical-Regions" class="headerlink" title="2.3.2 Critical Regions"></a>2.3.2 Critical Regions</h2><p>中文称为<strong>临界区</strong>，这是解决Race Condition的一种有效方式。其原理就是将共享区域变成为一块<strong>互斥</strong>的区域，如果该区域正在被一个进程使用的话，其他所有想要使用该区域的进程都必须得等待当前占用进程使用完毕。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/11.png"></p>
+<p>想要彻底解决Race Condition，需要在critical region的基础上，满足以下要求：</p>
+<ol>
+<li>Critical Region中只能同时存在一个进程</li>
+<li>Critical Region之外的进程不能阻塞Critical region内的进程</li>
+<li>任何进程等待进入critical region的时间总是<strong>有限的</strong></li>
+</ol>
+<h2 id="2-3-3-Mutual-Exclusion-with-Busy-Waiting"><a href="#2-3-3-Mutual-Exclusion-with-Busy-Waiting" class="headerlink" title="2.3.3 Mutual Exclusion with Busy Waiting"></a>2.3.3 Mutual Exclusion with Busy Waiting</h2><p>下面介绍几种实现临界区互斥的方式。</p>
+<h3 id="2-3-3-1-Disabling-Interrupts"><a href="#2-3-3-1-Disabling-Interrupts" class="headerlink" title="2.3.3.1 Disabling Interrupts"></a>2.3.3.1 Disabling Interrupts</h3><p>俗称的“关中断”。<br>当某个process进入临界区后，就把系统的中断功能禁用，直到它离开临界区后再重新开启。这样一来，只要有process处于临界区，就不可能发生进程切换，也就能避免操作过程中的race condition了。</p>
+<p>但是其实这样的做法是不科学的：</p>
+<ol>
+<li>给予用户进程的权限过大，如果用户进程关中断后不再开启怎么办？</li>
+<li>process关中断只能影响它所属的CPU，如果系统中有多个CPU，其他CPU中的进程照样可以随意访问临界区。</li>
+</ol>
+<h3 id="2-3-3-2-Lock-Variables"><a href="#2-3-3-2-Lock-Variables" class="headerlink" title="2.3.3.2 Lock Variables"></a>2.3.3.2 Lock Variables</h3><p>用软件来实现互斥，比如定义一个初始为0的整型Lock Variable，表示critical region未被占用。一旦有进程想要使用critical region，就先检查下Lock Variable的值，如果是0，那就直接占用，然后把值改成1；如果是1，就等待其变成0.</p>
+<p>这种方案是不可行的，因为Lock Variable本身是一个共享变量，它本身可能会产生Race Condition。</p>
+<h3 id="2-3-3-3-Strict-Alternation"><a href="#2-3-3-3-Strict-Alternation" class="headerlink" title="2.3.3.3 Strict Alternation"></a>2.3.3.3 Strict Alternation</h3><blockquote>
+<p>为啥java不适合写操作系统？或者说java不适合任何实时性比较强的软件？因为它<strong>unpredictable</strong>，我们无法预知garbage collector会在啥时候被调用。</p>
+</blockquote>
+<p>下面给出实现互斥的示例代码，整型变量turn的值代表其对应的process是否可以进入临界区。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/12.png"></p>
+<p>可以看到内循环while在不断的测试turn的值是否可用（自己是否可以使用临界区），这种不断测试某个变量是否为特定值的过程称为<strong>busy waiting</strong>，它非常消耗CPU资源。使用busy waiting实现的锁称为<strong>自旋锁（spin lock）</strong>。</p>
+<p>以a为例，busy waiting直到turn的值为0，进入临界区。使用完毕后，退出临界区，将turn变为1（表示交出临界区的使用权），然后进入非临界区执行任务。<br>假如过了一会，在b开始busy waiting捕捉到turn&#x3D;1之前（即它还在执行非临界区的任务），a开始busy waiting turn的值。这时因为turn的值刚被a改成了1，所以a被自己阻塞了。如果现在起b不再进入临界区，那么a就永远无法进入临界区了，而事实上临界区并没有被占用。因此 <strong>该算法不对</strong> 。</p>
+<h3 id="2-3-3-4-Peterson’s-Solution"><a href="#2-3-3-4-Peterson’s-Solution" class="headerlink" title="2.3.3.4 Peterson’s Solution"></a>2.3.3.4 Peterson’s Solution</h3><p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/13.png"></p>
+<p>任意进程在进入临界区之前都要先调用enter_region函数，如果临界区正在被使用，它就会一直等待，直到临界区可用时，跳出enter_region函数，进入临界区。离开临界区时会调用leave_region函数，允许其他进程进入。</p>
+<p>假设一开始process 0调用enter_region，它声明想要使用临界区（interested[0]&#x3D;TRUE），并且将turn置为0。因为现在process 1并不需要使用临界区（interested[1]&#x3D;FALSE），所以process 0会直接跳出enter_region函数，进入临界区。如果现在process 1调用enter_region函数，它就会在该函数中busy wait，因为interested[0]&#x3D;TRUE，直到process 0离开临界区调用了leave_region了后，process 1才能进入临界区，</p>
+<p>现在假设process 0和process 1几乎在同一时间调用了enter_region，总有个先后，假如process 1慢一丁点，在process 0往下执行之前就把turn&#x3D;0给覆盖为turn&#x3D;1了，那么它就会busy wait，直到process 0离开（调用leave_region）后，它才能跳出函数，进入临界区。</p>
+<h3 id="2-3-3-5-The-TSL-Instruction"><a href="#2-3-3-5-The-TSL-Instruction" class="headerlink" title="2.3.3.5 The TSL Instruction"></a>2.3.3.5 The TSL Instruction</h3><p>2.3.3.1 Lock variable不现实的原因是，它本身是一个共享变量，会发生Race Condition。那么只要在对该变量进行操作的期间，确保不会有任何process读写这个变量就行了，这就是TSL instruction的目的。</p>
+<p>一般TSL用在多核计算机中，借助硬件的实现。</p>
+<p>【TSL RX,LOCK】（Test and Set Lock）指令，它【从内存中读取<strong>共享变量LOCK</strong>的值，将其存入寄存器RX中，然后再将一个非0的数（代表被某个process占用中）存到LOCK中】（这一系列的操作是 <strong>原子</strong> 的）。<br>实现原子性的方法是：指令执行过程中会把内存bus给锁住，这样不光本processor中的任意process都不能访问内存，任何其他的processors的processes也无法在这段时间访问内存。</p>
+<p>注意锁住内存bus比禁用interrupts厉害多了。禁用interrupts只在本processor中有效（只能让本processor中的其他线程无法访问内存了），但其他processor仍然可以访问。而锁内存bus是让所有processor都没办法访问内存了。</p>
+<p>LOCK是一个共享变量，当它的值为0时，任何process都可以通过TSL指令将它置为1，为1时，任何process都可用move指令将它置为0。</p>
+<p>如何用TSL指令实现临界区的互斥访问呢？</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/14.png"></p>
+<p>LOCK&#x3D;0表示critical region未被占用。一旦某进程想要使用critical region，就先调用enter_region检查下Lock Variable的值，如果是0，那就直接占用，然后把值改成1；如果是1，就等待其变成0.<br>使用完毕后调用leave_region将LOCK设为0，代表自己退出临界区。</p>
+<p>这种方案要求<strong>所有进程合作</strong>，默认没有进程会做出欺骗行为（比如一直不调用leave_region）。</p>
+<p>另外一种类似的指令是XCHG，它可以<strong>原子的</strong>交换两个位置的数据（比如寄存器和内存），比TSL的针对于对变量LOCK用法要广泛一些，不过就实现lock variable来看，两者的用法基本一致。</p>
+<h2 id="2-3-4-Sleep-and-Wakeup"><a href="#2-3-4-Sleep-and-Wakeup" class="headerlink" title="2.3.4 Sleep and Wakeup"></a>2.3.4 Sleep and Wakeup</h2><p>无论是Peterson’s method还是使用TSL的方法，都不可避免的使用了busy waiting，<strong>对CPU资源造成了极大的浪费</strong>不说，还<strong>可能出现极端情况</strong>。<br>比如两个进程A和B，A的优先级比B高的多（假定调度算法是只要A处于ready状态就直接给它CPU），那么一旦B进入了临界区后，A开始busy waiting，则B就永远都出不去了，因为A会一直占有CPU资源，而B永远没有机会调用leave方法。这种现象称为<strong>priority inversion problem</strong>。</p>
+<p>一种解决方案是使用<strong>Sleep&#x2F;Wake up</strong> 这对命令，它们都是system call。进程调用sleep使自己暂停运行，等待被其它进程用wake up唤醒，这样把busy waiting换成了sleep，就避免了priority inversion problem。</p>
+<h3 id="2-3-4-1-The-Producer-Consumer-Problem"><a href="#2-3-4-1-The-Producer-Consumer-Problem" class="headerlink" title="2.3.4.1 The Producer-Consumer Problem"></a>2.3.4.1 The Producer-Consumer Problem</h3><p>producer和consumer共用一个buffer，producer往里面放东西，consumer从里面拿东西。<br>用一个变量count表示当前buffer中的东西数量。producer每次往里面放东西之前都要先通过count测试buffer是否已满，如果满了，就进入sleep状态，直到consumer取走一个元素后，它再被唤醒，把东西放入，count++；类似地，consumer每次从buffer中取东西都要通过count测试buffer是否为空，如果为空，就进入sleep状态，直到producer往里面放入东西后，它就会被唤醒，把buffer中的东西取走，count–。</p>
+<p>在这种情景下会出现race condition，因为count是共享变量。<br>假如刚开始，buffer中没有东西，现在consumer正在测试count的值，准备要读取数据（其实读取不到）。在它刚获取到count的值时，还没来得及执行下一个指令时，scheduler将CPU转给了producer，producer往buffer里面放数据，count++，然后因为count&#x3D;&#x3D;1，所以它会发送wakeup信号给consumer。但是consumer现在逻辑上根本就没有sleep，只是暂时被阻塞了，因此这个wakeup信号丢失。当CPU再次给到consumer时，它会用之前读取到的count&#x3D;0来进行下一步动作，认为buffer为空，开始sleep。现在count将永远大于1了，producer永远不会唤醒consumer了，当buffer被塞满后，producer也将开始无尽的沉睡。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/15.png"></p>
+<p>这里主要的问题就是发送给consumer的wakeup信号丢失了，否则就不会有race condition。一种解决方案是使用<strong>wakeup waiting bit</strong>，当wakeup信号发送给一个醒着的进程时，这个bit会被置为1，过一会这个进程要sleep时，会仅将这个bit置0，然后继续醒着。<br>但是当有多个进程时，<strong>该方法就无用</strong>了（除非创建多个wakeup waiting bit，且其数量总是等于进程总数，这样又导致消耗过多的资源）</p>
+<h2 id="2-3-5-Semaphores"><a href="#2-3-5-Semaphores" class="headerlink" title="2.3.5 Semaphores"></a>2.3.5 Semaphores</h2><p>荷兰科学家Dijkstra发明的，一个特殊的变量<strong>信号量</strong>，定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">semaphore</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> count;</span><br><span class="line">    queueType queue; <span class="comment">//存放处于sleep状态的进程</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>semaphore机制中只有两种操作<strong>down</strong>和<strong>up</strong>（对应sleep和wakeup），<strong>也被称为PV操作</strong>。<br>某进程调用【down&#x2F;P操作】，会先 <strong>将semaphore的count–</strong> ，然后判断count值的情况：如果<strong>小于</strong>0，则该进程直接sleep，并被插入到queue中（表示等待进入临界区），scheduler选择另一个进程赋予CPU；如果大于等于0，则跳出down操作，继续往下执行。<br>某进程调用【up&#x2F;V操作】，会先 <strong>将semaphore的count++</strong> ，然后判断count的值的情况：如果<strong>小于等于</strong>0，说明semaphore的队列中有进程（有进程正在等待进入临界区），这些进程都处于sleep状态，正在等待CPU资源，则随机从中选择一个进程wakeup，接着将其状态改为ready，插入就绪队列随之准备运行。</p>
+<p>要注意down和up包含的一系列的操作：检查semaphore的值，改变该值，以及可能的sleep或者wakeup，是<strong>原子性的</strong>，即这些操作要么都一次执行完（中途不会被中断），要么就都不执行。实现方式为down和up都封装为system call，当它们被调用时，<strong>内核会短暂的关闭所有中断</strong>。这样很好的避免了race condition和同步问题。</p>
+<p><strong>信号量可以解决生产者-消费者的wakeup信号丢失问题</strong></p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/16.png"></p>
+<p>down(&amp;mutex)和up(&amp;mutex)之间的代码就是临界区代码，可以发现item&#x3D;produce_item()或者consume_item(item)也可以放在临界区中，但为什么不这样做？因为临界区被占用期间内核会关中断，如果中断持续时间过久会影响速度，因此应<strong>尽量减少临界区的代码</strong>。</p>
+<p>另外，如果是多核计算机，每一个semaphore还必须使用lock variable+TSL&#x2F;XCHG保护起来，来确保同一时间只有一个CPU访问semaphore。</p>
+<p>本例中我们使用了信号量的两种不同的用途：</p>
+<ol>
+<li>down(&amp;mutex)&#x2F;up(&amp;mutex) pair实现了互斥访问（mutual exclusion），它确保了同一时间只能有一个process访问互斥区域。</li>
+<li>另外的down(&amp;full&#x2F;&amp;empty)&#x2F;up(&amp;full&#x2F;&amp;empty) pair实现了同步（synchronization），它们确保了事件发生顺序。</li>
+</ol>
+<h2 id="2-3-6-Mutexes"><a href="#2-3-6-Mutexes" class="headerlink" title="2.3.6 Mutexes"></a>2.3.6 Mutexes</h2><p>mutex就是一个只有两种状态的变量：locked，unlocked（1、0），从它的名字也能看出其功能：mutual exclusive的简写。<br>当一个进程要访问临界区时，先检查mutex的值，如果是unlocked状态，就将其变为locked状态，然后进入临界区，此时如果其他进程，比如C，想要访问临界区，检查到mutex的值为locked，就会开始sleep（主动让出CPU），等到下次C再度获得CPU时，再检查mutex的值，如果还为locked就再sleep，直到临界区中的变量退出并将mutex的值改为unlocked之后，某一时刻线程C再度获得CPU，检查mutex值，发现为unlocked，将其改为locked，进入临界区</p>
+<p>可以通过TSL&#x2F;XCHG+mutex实现临界区的互斥访问。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/17.png"></p>
+<p>之前讨论过使用lock variable+TSL&#x2F;XCHG实现的enter_region方法，可以发现它与mutex_lock非常相似，但事实上，它们在使用上有非常大的差异。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/18.png"></p>
+<p>最大的区别在于mutex的实现中用yield代替了busy-waiting，极大的提高了运行效率</p>
+<p>要说明的是，除了慢一点，<strong>对【进程】使用enter_region是没有任何问题的</strong>，假如某进程A调用enter_region，这时临界区被其他进程占用，那么A就会busy waiting（测试lock的值），一段时间后CPU被调给正在占用临界区的进程，它执行完任务，释放临界区资源，过一会A重获CPU资源，就会停止busy waiting然后进入临界区。</p>
+<p>但因为【线程】不存在clock interrupt，这意味着除非线程主动放弃CPU（yield），否则一旦获得CPU资源就会永久持有。试想如果某线程A调用enter_region，这时临界区中有其他线程，那么线程A就会<strong>永久busy waiting</strong>，它所属的进程相当于废了，因为只要CPU资源给到该进程，线程A就会用所有的资源来busy waiting，因此enter_region方法线程根本就不能用。<br>如果使用mutex_lock，其中有yield方法，对线程就适用了（调用yield速度也非常快，因为只需要在user space中沟通本进程的thread shceduler），一旦检测到临界区正在被占用，就立即主动放弃CPU，然后进行下一次的检测</p>
+<h2 id="2-3-7-Monitors"><a href="#2-3-7-Monitors" class="headerlink" title="2.3.7 Monitors"></a>2.3.7 Monitors</h2><p>信号量+mutex确实实现了进程同步，但是太难编码了，甚至比汇编还要难，看看之前生产-消费者的例子</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/19.png"></p>
+<p>在生产者中，如果不小心把图中标注的两个down（P操作）交换了位置，会怎么样？先把mutex给锁住了，然后如果empty也刚好会被锁住（empty&#x3D;0，表示buffer被装满了），那么消费者就会被mutex锁住，无法从buffer中取东西，进而生产者也无法往buffer中放东西，这就形成了<strong>deadlock</strong>。</p>
+<p>为了解决这个编码难的问题，Brinch Hansen (1973) and Hoare (1974)提出了<strong>monitor</strong>，也就是<strong>管程</strong>的概念，它同样是一种实现进程同步互斥的工具。</p>
+<p>【管程】是由一系列的procedures、变量、数据结构组合而成<strong>集合体（模块）</strong>，每一个管程都有一个名字，并且<strong>管程的互斥性完全是由编译器实现的</strong>，因此它是编程语言的一部分，我们只能使用它。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/20.png"></p>
+<p>进程可以随时并且<strong>只能</strong>调用管程中的函数来访问管程中的数据结构。</p>
+<h3 id="2-3-7-1-引入管程的两个目的"><a href="#2-3-7-1-引入管程的两个目的" class="headerlink" title="2.3.7.1 引入管程的两个目的"></a>2.3.7.1 引入管程的两个目的</h3><ol>
+<li><p>实现互斥<br>管程本身是互斥的，即同一时间只能有一个进程访问管程中的数据结构，原理与我们之前讨论大致相同：每个进程访问管程之前会测试管程有无进程占用，有则暂时挂起自己，等到管程中当前进程使用完毕后，被挂起进程恢复运行，开始访问管程。这种互斥性完全是由编译器实现的（一般也是通过mutex或者binary semaphore）。<br>这样就可以把管程视为一个大黑箱，我们只要把临界区代码往管程里面扔就可以了，管程自会实现它们的互斥访问。这样就不用我们自己去写易错的semaphore+mutex代码了。</p>
+</li>
+<li><p>实现同步<br>通过<strong>condition variables</strong>（位于管程内部，每一个都代表一种让线程等待的原因，每一个都相当于一个队列，里面存放因为该原因而等待的进程），以及两个操作<strong>wait</strong>和<strong>signal</strong>来实现。<br>当管程发现当前占用自己的process中某一个procedure因为同步问题不能继续执行了（比如生产者进程发现buffer满了），就会让这个process在相应的condition variable（如full）上wait（被block），这时管程会开锁允许其他进程进入，或者挑选一个在condition variable上wait的进程占用管程。<br>正在占用管程的进程（如消费者，从满的buffer中取走一件物品后）可以对任一condition variable进行signal来允许在该condition variable上wait的某process（如生产者）继续执行，但这样会带来一些问题。</p>
+</li>
+</ol>
+<h3 id="2-3-7-2-管程可能失去互斥性的三种解决方案"><a href="#2-3-7-2-管程可能失去互斥性的三种解决方案" class="headerlink" title="2.3.7.2 管程可能失去互斥性的三种解决方案"></a>2.3.7.2 管程可能失去互斥性的三种解决方案</h3><p>试想：如果process A在管程中执行到一半被放到某condition variable（如LOCK）上wait了，这时A被block，process B开始占用管程，而B的临界区代码刚好就包含signal LOCK，从而将process A给unblock了，那现在管程不就同时被两个进程使用了？</p>
+<p>有三种解决方案方案：</p>
+<h4 id="Hansen方案"><a href="#Hansen方案" class="headerlink" title="Hansen方案"></a>Hansen方案</h4><p>signal只能出现在管程中procedure的最后一句，即执行完signal的进程必须退出管程。如果signal指定的condition variable上有多个进程在wait，则scheduler选择其一恢复执行。<br>以下是用Hansen管程实现的生产者-消费者模型</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/21.png"></p>
+<h4 id="Hoare方案"><a href="#Hoare方案" class="headerlink" title="Hoare方案"></a>Hoare方案</h4><p>管程中的P唤醒了处于wait状态的Q，则让Q执行，P等待。<br>如果P唤醒Q，P等待，Q执行后又唤醒了W，Q等待W…，管程内部可能会出现多个<strong>并不与某个condition variable绑定的</strong>处于wait状态的进程。Hoare方案会把这些进程在<strong>管程内部</strong>组织成一个<strong>紧急等待队列</strong>，它的优先级要高于在管程外等待的<strong>入口等待队列</strong>。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/22.png"></p>
+<p><strong>Hoare方案中的条件变量（condition vairable）</strong><br>假如声明了一个条件变量c。<br>某个process A执行wait(c)后，直接到condition varibale c上wait，然后会先检查紧急等待队列，如果非空，则唤醒队头进程；如果为空，则管程开锁，让门口等待的进程进入。<br>某个process A执行signal(c)后，如果条件变量c上没有正在wait的进程，则该signal无效；否则唤醒在c上等待的第一个进程，唤醒后根据Hoare方案，A就要被放到紧急等待队列的末尾。</p>
+<h4 id="MESA方案"><a href="#MESA方案" class="headerlink" title="MESA方案"></a>MESA方案</h4><p>管程中的P调用signal唤醒了处于wait状态的Q，Q继续等待（更换一个condition variable），P继续执行。<br>这个方案主要是解决了Hoare管程的一个缺点：P唤醒处于wait状态的Q，会切换成Q执行，P等待，过了一会还是要切换回P执行，因此【产生了两次额外的进程切换】。<br>MESA方案将Hoare管程中使用的signal方法换成了<strong>notify</strong>，当管程中的进程对某个condition variable使用notify后，就相当于通知wait在该condition variable上的第一个进程准备好<strong>在将来合适的时候可以</strong>继续执行，<strong>调用notify的进程现在还是继续执行</strong>。等到了合适的时候，<strong>重新检查</strong>之前被通知的进程能否进入管程，没有问题就进入，若不行就说明仍然不是合适的时候，继续等待，一段时间后再检查。<br>因为可能要多次重新检查进程是否满足进入管程的条件，因此判断是否满足条件要从if改成while，以下为使用MESA管程解决生产者-消费者问题：</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/23.png"></p>
+<p>MESA方案有一个缺陷，如果管程中的进程在发送notify之前运行失败了，那么等待该notify信号的进程就会被无限期的推迟执行而处于饥饿状态。为了解决这个问题，可以对notify进行一个改进: 加上监视计时器，无论是否被通知，一个等待时间超时的进程将变为就绪态。</p>
+<p>另外notify还可升级为broadcast，一次把在某一个condition variable上等待的所有进程全部放入【准备占用管程的就绪队列中】 ，当难以判断应该激活哪个进程时使用。</p>
+<p>MESA方案不会产生额外的进程切换，只会对condition variable进行<strong>至少</strong>一次额外的检查。</p>
+<h4 id="Hoare与MESA管程的比较"><a href="#Hoare与MESA管程的比较" class="headerlink" title="Hoare与MESA管程的比较"></a>Hoare与MESA管程的比较</h4><p>MESA管程错误比较少，因为notify后，进程将要进入管程时还会对它进行一次检查。总体来说MESA优于Hoare。</p>
+<p><strong>总结</strong><br>虽然都可以实现进程的同步和互斥，但信号量+TSL&#x2F;XCHG过于底层且编写困难，管程又只有个别语言能够使用（如java）且不适用于多CPU情况，并且它们都只能传递少量的数据（设计时临界区必须尽量小）。基于这些问题，更多的进程间消息传递的机制出现了。</p>
+<h2 id="2-3-8-Inter-Process-Communication-IPC"><a href="#2-3-8-Inter-Process-Communication-IPC" class="headerlink" title="2.3.8 Inter Process Communication(IPC)"></a>2.3.8 Inter Process Communication(IPC)</h2><h3 id="2-3-8-1-Message-Passing"><a href="#2-3-8-1-Message-Passing" class="headerlink" title="2.3.8.1 Message Passing"></a>2.3.8.1 Message Passing</h3><p>Message Passing机制适用于【进程之间完全没有共享区域的情况】，比如基于网络的分布式系统（CPU分属不同的机器），也适用于【共享内存的多CPU系统】，同样适用于我们一直在讨论的【单CPU系统】。<br>它主要解决进程间的<strong>同步</strong>和<strong>通信</strong>问题。</p>
+<p>Message Passing使用了两个原语：<strong>send</strong>和<strong>receive</strong>，它们都属于system call。<br>使用send发送消息，使用receive接收消息，在没有消息到来时，接收端会将自己阻塞，直到接收到下一条消息时被唤醒。</p>
+<p>操作系统中有一组<strong>消息缓冲区</strong>，每一个消息缓冲区中有<strong>消息头</strong>，里面包含了：消息类型、接收进程ID、发送进程ID、消息长度、控制信息；以及<strong>消息体</strong>，里面包含了消息内容。</p>
+<p><strong>消息传递的过程</strong></p>
+<p>进程sender调用send原语（system call）将信息发送到操作系统中的某一个消息缓冲区中，操作系统识别该消息的接收进程ID后，将该消息挂接到receiver中消息队列的末尾。<br>等到receiver获得CPU时，察觉到消息队列不空，就会调用receive原语（system call），操作系统就会将消息体复制到receiver的进程空间。</p>
+<p>即无论是发送还是接收，都必须要通过操作系统完成。</p>
+<p><strong>用PV操作实现SEND原语</strong></p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/24.png"></p>
+<h3 id="2-3-8-2-共享内存"><a href="#2-3-8-2-共享内存" class="headerlink" title="2.3.8.2 共享内存"></a>2.3.8.2 共享内存</h3><p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/25.png"><br>就是在物理内存中开辟一块共享区域，多个进程将自己的一块区域完全映射到这块共享区域上，之后对自己那块区域的读写就相当于对共享区域的读写。<br>不过这块区域只能同时被一个进程写，多个进程读（利用读者-写者中讨论的方法解决）</p>
+<h3 id="2-3-8-3-管道通信"><a href="#2-3-8-3-管道通信" class="headerlink" title="2.3.8.3 管道通信"></a>2.3.8.3 管道通信</h3><p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/26.png"><br>利用内存或文件（管道）来连接两个相互通信的进程。<br>要注意几点：</p>
+<ol>
+<li>管道中的数据是以字符流的方式写入和读出的</li>
+<li>遵循先进先出的顺序</li>
+</ol>
+<h2 id="2-3-9-Barriers"><a href="#2-3-9-Barriers" class="headerlink" title="2.3.9 Barriers"></a>2.3.9 Barriers</h2><p>barrier是一种同步机制，中文为：屏障或栅栏。<br>barrier是用于实现多个进程之间同步的，有些任务比如矩阵计算，矩阵太大时我们要把它拆分成多个子矩阵来分别计算，那么对每一个子矩阵的计算我们都可以用一个线程来完全，但是必须所有子矩阵全部计算完成后才可以进入到下一次的计算，也就是必须等到所有线程当前任务执行完毕后才可以一起开始下一次的任务，这时就可以用barrier来完成。</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/27.png"></p>
+<h1 id="2-4-SCHEDULING"><a href="#2-4-SCHEDULING" class="headerlink" title="2.4 SCHEDULING"></a>2.4 SCHEDULING</h1><p>在多线程的机器中，同一时间如果有多个线程或者多个进程都处于ready状态，它们就会对CPU资源进行争夺。假定我们的机器上只有一个CPU，这时<strong>做出决定让哪一个进程&#x2F;线程获得下一次CPU资源</strong>的叫<strong>scheduler</strong>，它是操作系统的一部分，具体的调度策略取决于它的<strong>scheduling algorithm</strong>。</p>
+<p>在大多数情况下，对processs的调度策略同样适用于threads。只有在少数情况中，thread的调度会产生一些特别的问题，需要特别讨论。</p>
+<h2 id="2-4-1-Introduction-to-Scheduling"><a href="#2-4-1-Introduction-to-Scheduling" class="headerlink" title="2.4.1 Introduction to Scheduling"></a>2.4.1 Introduction to Scheduling</h2><p>对个人电脑来说，scheduling并没有那么重要，因为大多数情况下我们同一时间只会与一个进程交互，而且80%的时间中这个进程还在等待我们输入，所以这是我们限制了CPU的发挥而不是CPU限制了我们的发挥。</p>
+<p>但是在比如web server这样的机器上，scheduling就至关重要了，比如同时有一个对结果分析的进程和一个处理用户请求的进程请求CPU，当然要给后者更高的优先级，否则会极大的影响用户体验。</p>
+<p>另外在一些移动设备上，比如移动手机、无线传感网络的节点等，这些设备的CPU和内存资源一般都比较珍贵，而且这些设备可能还有额外的要求，比如省电等，因此特别的scheduling对它们来说也很重要。</p>
+<p>除了决定下一个运行的process是谁，scheduler还必须兼顾<strong>高效的利用CPU资源</strong>这一任务。我们知道进程的context switch的代价很高：首先要进行mode switch，从用户态转到内核态，然后保存现场又需要一系列的指令，接着scheduler要运行scheduling算法选择下一个获得CPU资源的进程，然后恢复该进程的现场，还可能要进行其他一些更加耗时的操作。 <strong>好的scheduling算法减少进程context switch的次数</strong> ，显著提升运行速度。</p>
+<h3 id="2-4-1-1-Process-behavior"><a href="#2-4-1-1-Process-behavior" class="headerlink" title="2.4.1.1 Process behavior"></a>2.4.1.1 Process behavior</h3><p>进程分为两种类型：</p>
+<ol>
+<li><strong>CPU-bound</strong> 。这种进程的大部分时间都在computing（计算和逻辑判断等动作），比如筛素数的进程，绝大部分时间都在进行判断和计算。</li>
+<li><strong>I&#x2F;O-bound</strong> 。这种进程的大部分时间都在等待I&#x2F;O完成。</li>
+</ol>
+<h3 id="2-4-1-2-when-to-scheduling"><a href="#2-4-1-2-when-to-scheduling" class="headerlink" title="2.4.1.2 when to scheduling"></a>2.4.1.2 when to scheduling</h3><ol>
+<li>当一个新进程被创建时</li>
+<li>当一个进程被销毁时</li>
+<li>当进程被block时</li>
+<li>当I&#x2F;O中断发生时（比如某进程需要的数据已经都从硬盘传输到了内存中时）</li>
+<li>硬件clock interrupt发生时</li>
+</ol>
+<p>当clock interrupt发生时，scheduling algorithm根据应对方式被分为两种：</p>
+<ol>
+<li>nonpreemptive（非抢占式）。选择一个优先级最高的进程运行，<strong>直到它被block或者主动释放CPU资源，才进行下一次调度</strong>（选剩下优先级最高的进程运行），否则该进程会一直运行，中途不会被强制中断。（即使clock interrupt发生，也不会重新调度）</li>
+<li>preemptive（抢占式）。周期性产生clock interrupt（较频繁），<strong>每次interrupt都会重新调度</strong>，把CPU资源分给当前系统中优先级最高的进程，被<strong>抢夺</strong>了CPU的进程进入suspend状态。</li>
+</ol>
+<h3 id="2-4-1-3-Categories-of-Scheduling-Algorithms"><a href="#2-4-1-3-Categories-of-Scheduling-Algorithms" class="headerlink" title="2.4.1.3 Categories of Scheduling Algorithms"></a>2.4.1.3 Categories of Scheduling Algorithms</h3><p>显然，不同的情况下要使用不同的scheduling algorithm。</p>
+<ol>
+<li><p>Batch system</p>
+<p>批处理系统是不需要考虑用户体验的，所以应该尽可能的降低context switch的次数来提高性能，因此 <strong>非抢占式</strong> 的或者 <strong>中断周期较长</strong> 的抢占式算法比较适合，</p>
+</li>
+<li><p>Interactive system</p>
+<p>交互式的系统要考虑用户的使用体验，因此应该尽量避免让单个process运行过长时间（如果用户开了多个进程，一般意味着希望它们同时工作，而不是一个接一个的工作），因此 <strong>抢占式</strong> 的算法是比较合适的。注意web server也属于这种情况。</p>
+</li>
+<li><p>Real-time system</p>
+<p>实时系统中大多数情况下当然要使用 <strong>抢占式</strong> 的算法。</p>
+</li>
+</ol>
+<h3 id="2-4-1-4-Scheduling-Algorithm-Goals"><a href="#2-4-1-4-Scheduling-Algorithm-Goals" class="headerlink" title="2.4.1.4 Scheduling Algorithm Goals"></a>2.4.1.4 Scheduling Algorithm Goals</h3><p>【所有类型的系统中】<br><strong>Fairness</strong> ：机智的给每一个进程分配合理的CPU时间</p>
+<p><strong>Balance</strong> ：尽量使得CPU资源分配平均</p>
+<p>【在Batch systems中】</p>
+<p><strong>Throughput</strong> ：最大化每小时完成job的数量</p>
+<p><strong>Turnaround time</strong> ：最小化周转时间（一个job从提交到完成经过的时间）</p>
+<p><strong>CPU utilization</strong> ：让CPU保持高速运转</p>
+<p>【在Interactive systems中】重要的是<strong>Response time</strong> （快速响应用户请求）</p>
+<p>【在Real-time systems中】重要的是<strong>Meeting deadlines</strong> （确保实时性）</p>
+<h2 id="2-4-2-Scheduling-in-Batch-Systems"><a href="#2-4-2-Scheduling-in-Batch-Systems" class="headerlink" title="2.4.2 Scheduling in Batch Systems"></a>2.4.2 Scheduling in Batch Systems</h2><h3 id="2-4-2-1-First-Come-First-Served"><a href="#2-4-2-1-First-Come-First-Served" class="headerlink" title="2.4.2.1 First-Come, First-Served"></a>2.4.2.1 First-Come, First-Served</h3><p>先来先服务（FCFS）算法，一旦某进程处于ready状态就会立即被塞到一个 <strong>队列</strong> 的末尾。处于该队列中的进程按序先进先出，出就意味着该进程立即获得CPU资源，然后 <strong>开始运行直到其完成为止</strong> （不会因为运行了太久而被剥夺CPU资源）。</p>
+<p>该方法的优点是简单，缺点也是简单，可能会造成非常长的周转时间。</p>
+<h3 id="2-4-2-2-Shortest-Job-First"><a href="#2-4-2-2-Shortest-Job-First" class="headerlink" title="2.4.2.2 Shortest Job First"></a>2.4.2.2 Shortest Job First</h3><p>短作业优先（SJF）算法是非抢占性的，且假设了 <strong>每一个进程运行的时间是提前知道的</strong> 。</p>
+<p><strong>小栗子</strong></p>
+<p>假设现在有4个进程A、B、C、D，它们需要运行的时间分别为8、4、4、4（minutes）。</p>
+<p>如果按照ABCD的顺序运行，那么ABCD的周转时间分别为8、12、16、20（minutes），平均周转时间为14.</p>
+<p>而如果按照SJF，运行顺序为BCDA，周转时间分别为4、8、12、20，平均周转时间为11，因此这种情况下SJF策略降低了平均周转时间，实现了性能提升，其原理如下：</p>
+<p>假定ABCD的运行时间分别为abcd，则ABCD的平均周转时间为$\frac{a+(a+b)+(a+b+c)+(a+b+c+d)}{4}&#x3D;\frac{4a+3b+2c+d}{4}$ ，显然第一个运行的进程A对平均周转时间的影响最大，之后逐个降低，SJF正是利用了这个性质。</p>
+<p>SJF起作用的前提在于：<strong>所有进程同时处于ready状态</strong> 。如果并非如此，可能反而增加平均周转时间。</p>
+<p>例如ABCDE共5个进程，运行时间分别为2、4、1、1、1，到达时间（等待多久才变成ready态）分别为0、0、3、3、3，刚开始只有A或者B可选。按照SJF运行顺序为ABCDE，周转时间分别为2、6、4、5、6，平均为4.6。而如果按照BCDEA的顺序，平均周转时间只有4.4。</p>
+<h3 id="2-4-2-3-Shortest-Remaining-Time-Next"><a href="#2-4-2-3-Shortest-Remaining-Time-Next" class="headerlink" title="2.4.2.3 Shortest Remaining Time Next"></a>2.4.2.3 Shortest Remaining Time Next</h3><p>最短剩余时间优先（SRTN），是SJF算法的抢占性版本（因此同样假定预先知道所有进程的运行时间）。使用这种算法的scheduler，每当一个新的job到来时，会用【它的运行时间】与【当前运行中进程的剩余时间】比较，较小者上CPU。</p>
+<h2 id="2-4-3-Scheduling-in-Interactive-Systems"><a href="#2-4-3-Scheduling-in-Interactive-Systems" class="headerlink" title="2.4.3 Scheduling in Interactive Systems"></a>2.4.3 Scheduling in Interactive Systems</h2><p>Interactive System多指个人电脑以及服务器。</p>
+<h3 id="2-4-3-1-Round-Robin-Scheduling"><a href="#2-4-3-1-Round-Robin-Scheduling" class="headerlink" title="2.4.3.1 Round-Robin Scheduling"></a>2.4.3.1 Round-Robin Scheduling</h3><p><strong>轮询调度</strong>（RR），是一种最古老、最公平、使用最广泛的一种抢占式算法。它给所有process分配一个时间间隔，称为 <strong>quantum</strong> （时间片&#x2F;timeslice） ，每一个process都只能在自己的周期性获得的quantum中运行。</p>
+<p>如果quantum结束了进程缺还没有运行完，CPU资源就被会剥夺调度给下一个进程。如果quantum到时前进程就被block或者结束运行，那么在结束那一刻CPU资源就会被直接调走，不会等到quantum结束再调。</p>
+<p>该算法很容易实现，只需要scheduler维护一张【可运行进程】的链表，一旦当前进程的quantum结束，就把它转移到链表尾部</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/28.png"></p>
+<p>轮询调度最主要的问题还是 <strong>quantum应该设置多大</strong> 。太小的话context switch过于频繁，时间开销过大；太大了同样会有频繁的context switch（【quantum &gt; 进程运行时间】 会引发提前的context switch），但相比太小的quantum来说要好一些，因为它至少是按需切换的。另外，过大的quantum也会导致一些总运行时间较长的进程在一轮中运行过久，如果用户在中途有很多极短的请求就可能无法及时的得到反馈。</p>
+<h3 id="2-4-3-2-Priority-Scheduling"><a href="#2-4-3-2-Priority-Scheduling" class="headerlink" title="2.4.3.2 Priority Scheduling"></a>2.4.3.2 Priority Scheduling</h3><p>Round-robin平等对待每个进程，但有时我们确实需要给予某些进程更高的优先级（比如web server中处理用户请求的进程应该比统计数据的进程拥有更高的优先级），因此，可以给每一个进程标注优先级，每次都让优先级最高的进程运行，这种策略被称为 <strong>priority scheduling</strong> 。</p>
+<p>为了避免优先级最高的进程运行过长时间，每隔一个时钟周期当前运行的进程的优先级都会被降低一点。或者按照轮询调度算法给每一个进程分配一个quantum，每个quantum结束后都会选取优先级最高的进程运行。</p>
+<p>优先级怎么定义？这取决于现实情况了。比如在部队中，将军的进程优先级应为100，大校90，中校80，一直到小兵1。也可以由系统 <strong>动态地</strong> 指定从而达到某种目的，比如让I&#x2F;O-bound process具有更高的优先级就可以提升整体性能表现，因为读取I&#x2F;O数据只需要CPU发出一个指令，具体数据从硬盘读取到内存的过程是不需要CPU参与的（DMA），这段读取的过程可以与其他执行计算的进程并行。</p>
+<h3 id="2-4-3-3-Multiple-Queues"><a href="#2-4-3-3-Multiple-Queues" class="headerlink" title="2.4.3.3 Multiple Queues"></a>2.4.3.3 Multiple Queues</h3><p>将所有processes <strong>按照优先级分组</strong> ，【在每个组内】应用round-robin scheduling，【对所有组】应用priority scheduling。即从优先级最高的组开始，对这个组中所有进程轮询调度，当这个组中进程都运行完毕后，就去优先级次高的组，重复上述步骤。<br>这种策略的问题在于，优先级低的进程可能会产生 <strong>饥饿现象</strong> （等待时间过长给进程的正常执行带来显著影响，如果这个较长的等待时间使得某个进程即使最后得到了CPU也没有实际意义时，就称该进程 <strong>饥饿死亡</strong> ）</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/29.png"></p>
+<h3 id="2-4-3-4-Shortest-Process-Next"><a href="#2-4-3-4-Shortest-Process-Next" class="headerlink" title="2.4.3.4 Shortest Process Next"></a>2.4.3.4 Shortest Process Next</h3><p>它其实与SJF原理相同，只不过在batch system中叫SJF，到了interactive system这边就叫SPN了。。。</p>
+<p>之前介绍过SJF是假定了预先知道所有进程的运行时间，该假设的目的就是每次schedule都能找到运行时间最短的那个进程。从实现的角度来看，如何预知所有进程的运行时间呢？</p>
+<p>一种办法是根据进程 <strong>过去</strong> 的行为，给每一个可运行进程做一个运行时间的 <strong>估计</strong> ，根据这个估计的运行值来挑选运行时间最短的进程。估计的方法如下：</p>
+<p>对于某一个进程，先预测（瞎猜）它下一条指令的运行时间为$T_0$，执行后，得到该指令真正的运行时间为$T_1$，那么就可以预测下一次该指令的运行时间为 $aT_0+(1-a)T_1$ 。其中权重a是一个可选值（类似于快排中pivot选哪个元素，希尔排序中的gap选多少），一般取0.5。</p>
+<p>这样一来第一次预测该指令的运行时间为$T_0$，第二次为$\frac{T_0}{2}+\frac{T_1}{2}$，接着$\frac{T_0}{4}+\frac{T_1}{4}+\frac{T_2}{2}$，然后$\frac{T_0}{8}+\frac{T_1}{8}+\frac{T_2}{4}+\frac{T_3}{2}$ 。可以看到随着预测次数的增加，较早预测的数值在当前预测的数值中所占的权重越来越低，因为第一次的预测完全可能是瞎猜的跟实际值相差可能很多，而之后是根据实际运行时间 <strong>慢慢地</strong> 校准的（越来越准），因此早先预测的数值所占权重越来越低正是我们所期望的，这一过程也被称作 <strong>aging</strong> ，十分形象。</p>
+<h3 id="2-4-3-5-Lottery-Scheduling"><a href="#2-4-3-5-Lottery-Scheduling" class="headerlink" title="2.4.3.5 Lottery Scheduling"></a>2.4.3.5 Lottery Scheduling</h3><p>彩票调度，给每一个进程一些彩票，优先级的高的给多一点，低的给少一点，每次调度时随机抽一张彩票，中奖者获得CPU。从概率的角度来看，只要持有彩票该进程总会运行，因此不存在饥饿问题。</p>
+<h2 id="2-4-4-Scheduling-in-Real-Time-Systems"><a href="#2-4-4-Scheduling-in-Real-Time-Systems" class="headerlink" title="2.4.4 Scheduling in Real-Time Systems"></a>2.4.4 Scheduling in Real-Time Systems</h2><p>比如网上或插CD听歌，音乐数据从外设传输到内存后就要被实时的处理，转化为音频。否则音乐就会断断续续的播放。</p>
+<p>实时操作系统又被分为 <strong>hard real time</strong> ：必须满足实时需求；和 <strong>soft real time</strong> ：允许一点点的延迟。无论是哪种类型，实现real-time的前提都是把一个程序拆分成多个部分，一个部分装进一个process，每一个部分的行为都是可预知的，这些processes通常几秒就运行完毕。换句话说，将一个大的实时需求转化为多个小需求，给予每一个小需求足够的资源让它们可以满足实时的需求，最后大的实时需求得到满足。</p>
+<p>在实时系统上可能发生的事件被分为两类：<strong>periodic</strong> （可预知的事件，通常在固定的时间间隔触发），<strong>aperiodic</strong> （不可预知的事件）。</p>
+<p>实时系统一般会同时处理多个periodic事件。假设有m个periodic events，第i个事件的周期为$P_i$，且它需要花费$C_i$秒CPU资源去处理，那么当且仅当<br>$$<br>\sum_{i&#x3D;1}^m \frac{C_i}{P_i} \le 1<br>$$<br>这个实时系统才是 <strong>schedulable</strong> 的，即能跑的动。如果超过了1，就说明所有periodic事件的负荷大于CPU的最大负荷了。</p>
+<p>公式中的$\frac{1}{P_i}$代表事件i每秒内发生多少次，则 $\frac{C_i}{P_i}$ 代表每一秒内要消耗多少时间去处理事件i，$\sum_{i&#x3D;1}^m \frac{C_i}{P_i}$就代表一秒内处理所有事件需要消耗的总时间，显然如果大于1就相当于1秒内要办的事消耗的时间大于1秒了。</p>
+<h2 id="2-4-5-Policy-Versus-Mechanism"><a href="#2-4-5-Policy-Versus-Mechanism" class="headerlink" title="2.4.5 Policy Versus Mechanism"></a>2.4.5 Policy Versus Mechanism</h2><p>其实只有程序（特指user processes）最懂自己应该使用哪种调度算法，可惜我们之前讨论的所有scheduler都不会接收用户的输入来调整自己的调度算法，所以很难达到最好的效果。</p>
+<p>解决这种问题的办法就是将 <strong>scheduling mechanism</strong> 和 <strong>scheduling policy</strong> 分开，即让scheduling algorithm的一部分参数可以由用户进程填写。这样一来假如kernel采用priority-scheduling调度所有进程，但是提供一个system call让进程可以为自己的子进程设置优先级，就实现了kernel决定mechanism，而具体的policy是可以由各个user processes来设置的。</p>
+<h2 id="2-4-6-Thread-Scheduling"><a href="#2-4-6-Thread-Scheduling" class="headerlink" title="2.4.6 Thread Scheduling"></a>2.4.6 Thread Scheduling</h2><p>如果计算机系统中支持线程，那么在user-level threads和kernel-level threads下的调度算法是完全不同的。</p>
+<p><strong>user-level下</strong></p>
+<p>user-level下的特点是内核感知不到thread的存在。</p>
+<p>假定采用轮询调度，系统中只有两个进程A和B，quantum都为50msec，进程A中的每一个线程（A1、A2、A3…）的运行时间为5msec，进程B一样。那么CPU切换到A后的30msec内，系统中所有线程的运行顺序应该是A1-A2-A3-A1-A2-A3…</p>
+<p><strong>kernel-level下</strong> </p>
+<p>kernel-level的特点是内核拥有全局视野，它既可以调度进程，也可以直接调度线程。</p>
+<p>在kernel-level下，现取user-level中例子的背景，CPU切换到A后的30msec内，系统中所有线程的运行顺序可能为A1-A2-A3-A1-A2-A3…，但是也可能为A1-B1-A2-B2-A3-B3，其中第二种执行顺序是绝对不可能发生在user-level中的，因为在user-level中刚切换到进程A后的30msec之内绝对不会切换到进程B。而在kernel-level中，在kernel拥有全局视野的情况下，它可能会交替的运行两个不同进程中的线程（因为它完全不知道process context switch代价有多高）</p>
+<p><img src="/images/operating_system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F_2/30.png"></p>
+<hr>
+<p>user-level threads和kernel-level threads的主要区别在于性能，进行thread context switch的代价比process context switch要小的多。因为user-level threads中会进行较多的线程切换较少的进程切换，所以性能较好；而kernel-level threads中有很大的可能会进行较多不同进程间线程的切换，这直接导致线程切换，所以性能较差（这点也可以打补丁，context switch前检查当前thread和准备切换到的thread是否在同一个process内，如果不在就挑选别的）。</p>
+<p>令一方面，kernel-level threads的好处在于如果一个线程调用了阻塞性的system call（比如读I&#x2F;O）不会阻塞整个进程，而user-level threads会。</p>
+<p>不过user-level threads相比之下的一个巨大的优越性在于，每个process可以自定义自己的thread scheduler，还记得前面说过，只有程序自己最懂自己应该使用什么调度算法。针对自己实现的thread scheduler知道哪些线程是干嘛的，这就能乘着I&#x2F;O-bound thread在读I&#x2F;O被block的时候，专门挑CPU-bound thread来运行以最大化并行效果，这是kernel-level threads绝对达不到的效果。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/07/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BVirtual-Memory/" rel="prev" title="《CSAPP》Virtual_Memory">
+                  <i class="fa fa-chevron-left"></i> 《CSAPP》Virtual_Memory
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/19/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BNetwork-Layer-DataPlane/" rel="next" title="《计网》Network-Layer-DataPlane">
+                  《计网》Network-Layer-DataPlane <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

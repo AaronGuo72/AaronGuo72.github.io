@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="版本控制系统的作用就是方便的管理文件的各个版本，如果我们对比如文件的第99个版本不满意，可以令它轻易的回滚到第98个甚至第一个版本。另外，版本控制系统还方便了多人共同开发一个项目，因为它可以这个项目进行集中式的管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git">
+<meta property="og:url" content="http://example.com/2021/01/30/misc/git/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:description" content="版本控制系统的作用就是方便的管理文件的各个版本，如果我们对比如文件的第99个版本不满意，可以令它轻易的回滚到第98个甚至第一个版本。另外，版本控制系统还方便了多人共同开发一个项目，因为它可以这个项目进行集中式的管理。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/misc/git/1.png">
+<meta property="og:image" content="http://example.com/images/misc/git/2.png">
+<meta property="og:image" content="http://example.com/images/misc/git/3.png">
+<meta property="og:image" content="http://example.com/images/misc/git/4.png">
+<meta property="og:image" content="http://example.com/images/misc/git/5.png">
+<meta property="og:image" content="http://example.com/images/misc/git/6.png">
+<meta property="og:image" content="http://example.com/images/misc/git/7.png">
+<meta property="og:image" content="http://example.com/images/misc/git/8.png">
+<meta property="og:image" content="http://example.com/images/misc/git/9.png">
+<meta property="og:image" content="http://example.com/images/misc/git/10.png">
+<meta property="og:image" content="http://example.com/images/misc/git/11.png">
+<meta property="og:image" content="http://example.com/images/misc/git/12.png">
+<meta property="og:image" content="http://example.com/images/misc/git/13.png">
+<meta property="og:image" content="http://example.com/images/misc/git/14.png">
+<meta property="og:image" content="http://example.com/images/misc/git/15.png">
+<meta property="og:image" content="http://example.com/images/misc/git/16.png">
+<meta property="og:image" content="http://example.com/images/misc/git/17.png">
+<meta property="og:image" content="http://example.com/images/misc/git/18.png">
+<meta property="og:image" content="http://example.com/images/misc/git/19.png">
+<meta property="og:image" content="http://example.com/images/misc/git/20.png">
+<meta property="og:image" content="http://example.com/images/misc/git/21.png">
+<meta property="og:image" content="http://example.com/images/misc/git/22.png">
+<meta property="og:image" content="http://example.com/images/misc/git/23.png">
+<meta property="og:image" content="http://example.com/images/misc/git/24.png">
+<meta property="og:image" content="http://example.com/images/misc/git/25.png">
+<meta property="og:image" content="http://example.com/images/misc/git/26.png">
+<meta property="og:image" content="http://example.com/images/misc/git/27.png">
+<meta property="og:image" content="http://example.com/images/misc/git/28.png">
+<meta property="og:image" content="http://example.com/images/misc/git/29.png">
+<meta property="og:image" content="http://example.com/images/misc/git/30.png">
+<meta property="og:image" content="http://example.com/images/misc/git/31.png">
+<meta property="og:image" content="http://example.com/images/misc/git/32.png">
+<meta property="og:image" content="http://example.com/images/misc/git/33.png">
+<meta property="og:image" content="http://example.com/images/misc/git/34.png">
+<meta property="og:image" content="http://example.com/images/misc/git/35.png">
+<meta property="og:image" content="http://example.com/images/misc/git/36.png">
+<meta property="og:image" content="http://example.com/images/misc/git/37.png">
+<meta property="og:image" content="http://example.com/images/misc/git/38.png">
+<meta property="article:published_time" content="2021-01-30T00:02:24.000Z">
+<meta property="article:modified_time" content="2021-01-30T00:55:34.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/misc/git/1.png">
+
+
+<link rel="canonical" href="http://example.com/2021/01/30/misc/git/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/01/30/misc/git/","path":"2021/01/30/misc/git/","title":"git"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>git | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-git%E4%BB%8B%E7%BB%8D"><span class="nav-text">1. git介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-text">2. 初始化本地仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%90%91%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%B8%AD%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6"><span class="nav-text">3. 向本地仓库中提交文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E6%9F%A5%E7%9C%8B%E6%9A%82%E5%AD%98%E5%8C%BA%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%8C%BA%E4%B8%AD%E6%9C%89%E6%B2%A1%E6%9C%89%E6%9C%AAcommit%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-text">4. 查看暂存区和工作区中有没有未commit的文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BF%AE%E6%94%B9%E5%B7%A5%E4%BD%9C%E5%8C%BA%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E5%90%8E"><span class="nav-text">5. 修改工作区文件内容后</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%9F%A5%E7%9C%8Bcommit%E8%AE%B0%E5%BD%95"><span class="nav-text">6. 查看commit记录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E5%89%8D%E8%BF%9B%E6%88%96%E5%90%8E%E9%80%80%E5%88%B0%E6%9F%90%E7%89%88%E6%9C%AC"><span class="nav-text">7. 前进或后退到某版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-text">8. 删除文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-%E6%81%A2%E5%A4%8D%E6%96%87%E4%BB%B6"><span class="nav-text">9. 恢复文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E6%AF%94%E5%AF%B9%E4%B8%8D%E5%90%8C%E5%8C%BA%E5%9F%9F%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">10. 比对不同区域中所有文件的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-%E5%88%86%E6%94%AF"><span class="nav-text">11. 分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#11-1-%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF"><span class="nav-text">11.1 查看分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-2-%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF"><span class="nav-text">11.2 创建分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-3-%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="nav-text">11.3 切换分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-4-%E8%A7%A3%E5%86%B3%E5%88%86%E6%94%AF%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98"><span class="nav-text">11.4 解决分支冲突问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E8%BF%9C%E7%A8%8B%E5%BA%93"><span class="nav-text">12. 远程库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#12-1-%E5%85%AC%E5%8F%B8%E5%86%85%E9%83%A8%E8%BF%9C%E7%A8%8B%E5%BA%93%E4%BA%A4%E4%BA%92"><span class="nav-text">12.1 公司内部远程库交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-1-%EF%BC%88%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%EF%BC%89%E5%B0%86%E6%9C%AC%E5%9C%B0%E5%BA%93%E5%86%85%E5%AE%B9push%E5%88%B0%E8%BF%9C%E7%A8%8B%E5%BA%93"><span class="nav-text">12.1.1 （项目经理）将本地库内容push到远程库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-2-%EF%BC%88%E7%A8%8B%E5%BA%8F%E5%91%98%EF%BC%89%E5%B0%86%E8%BF%9C%E7%A8%8B%E5%BA%93%E5%86%85%E5%AE%B9clone%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%BA%93"><span class="nav-text">12.1.2 （程序员）将远程库内容clone到本地库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-3-%EF%BC%88%E7%A8%8B%E5%BA%8F%E5%91%98%EF%BC%89%E5%B0%86%E6%9C%AC%E5%9C%B0%E5%BA%93%E5%86%85%E5%AE%B9push%E5%88%B0%E8%BF%9C%E7%A8%8B%E5%BA%93"><span class="nav-text">12.1.3 （程序员）将本地库内容push到远程库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-4-%EF%BC%88%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%EF%BC%89%E5%B0%86%E8%BF%9C%E7%A8%8B%E5%BA%93%E5%86%85%E5%AE%B9pull%E5%88%B0%E6%9C%AC%E5%9C%B0%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="nav-text">12.1.4 （项目经理）将远程库内容pull到本地工作区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-5-%E8%BF%9C%E7%A8%8B%E5%BA%93%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3"><span class="nav-text">12.1.5 远程库冲突解决</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-2-%E8%B7%A8%E5%85%AC%E5%8F%B8%E8%BF%9C%E7%A8%8B%E5%BA%93%E4%BA%A4%E4%BA%92"><span class="nav-text">12.2 跨公司远程库交互</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Idea%E4%B8%AD%E4%BD%BF%E7%94%A8git"><span class="nav-text">13. Idea中使用git</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#13-1-%E5%B0%86git%E9%9B%86%E6%88%90%E5%88%B0idea%E4%B8%AD"><span class="nav-text">13.1 将git集成到idea中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-2-%E5%9C%A8idea%E4%B8%AD%E7%94%A8git%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%BA%93%E4%BA%A4%E4%BA%92"><span class="nav-text">13.2 在idea中用git与远程库交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2-1-%E5%AF%B9%E8%BF%9C%E7%A8%8B%E5%BA%93%E8%BF%9B%E8%A1%8Cpush%E5%92%8Cpull"><span class="nav-text">13.2.1 对远程库进行push和pull</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2-2-%E5%B0%86%E8%BF%9C%E7%A8%8B%E5%BA%93clone%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="nav-text">13.2.2 将远程库clone到本地</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/30/misc/git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="git | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-01-30 08:02:24 / Modified: 08:55:34" itemprop="dateCreated datePublished" datetime="2021-01-30T08:02:24+08:00">2021-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>版本控制系统的作用就是方便的管理文件的各个版本，如果我们对比如文件的第99个版本不满意，可以令它轻易的回滚到第98个甚至第一个版本。另外，版本控制系统还方便了多人共同开发一个项目，因为它可以这个项目进行集中式的管理。</p>
+<span id="more"></span>
+
+<p>本博文为赵珊珊老师网课笔记。</p>
+<h1 id="1-git介绍"><a href="#1-git介绍" class="headerlink" title="1. git介绍"></a>1. git介绍</h1><p>版本控制系统分为两类，第一类是集中式版本控制系统，如SVN，它是由【一个公共的】服务器进行版本控制，这种做法的弊端就是可靠性不高，如果出现单点故障很可能导致数据丢失。另外SVN只能逐步进行版本回滚，比如当前版本99，想回滚到版本1，只能99回到98，98回到97…</p>
+<p>另一类是分布式管理系统，如git，它由【分布式的多个】服务器进行版本控制，相比SVN它的可靠性更高。且git可以<strong>直接</strong>回滚到任意版本。</p>
+<p>git结构分为【本地库】，【暂存区】和【工作区】。用户在工作区编辑文件，通过git add命令将文件发送到暂存区，然后通过git commit命令将暂存区中的文件提交到本地库中，本地库中存储了该文件的各个历史版本。</p>
+<p>接着，本地库要与远程库（代码托管中心）交互。</p>
+<p>当局域网内部通过远程库合作时（即内部团队协作开发场景），可以选择搭建gitlab服务器作为远程库：</p>
+<ol>
+<li>由项目经理首先创建自己的本地库，并写好项目架构文件，将其push到公司内部的远程库中。</li>
+<li>开发人员向项目经理取得其架构文件的访问权，然后去远程库将架构文件clone到自己的本地库中</li>
+<li>开发人员按照架构文件写好代码，将代码从自己的本地库push到远程库中</li>
+<li>项目经理收到文件更新通知，去远程库将新版本的文件pull到自己的本地库中</li>
+</ol>
+<p>当跨公司使用远程库合作时（多公司协作开发场景，每个公司各有自己的远程库），一般选择用github或者gitee作为远程库：</p>
+<p>本地库与远程库在局域网内部的交互同上，特殊点在于当公司A和公司B的远程库进行交互时（假定公司A主管项目）</p>
+<ol>
+<li>公司B将A公司的远程库fork到自己的远程库中，开始开发</li>
+<li>开发完成，公司B对公司A的远程库发起pull request</li>
+<li>公司A审核公司B提交的代码，如果通过，就将其代码merge到自己的远程库中</li>
+</ol>
+<h1 id="2-初始化本地仓库"><a href="#2-初始化本地仓库" class="headerlink" title="2. 初始化本地仓库"></a>2. 初始化本地仓库</h1><p>用git bash进入到自己的仓库目录下，使用git init命令，生成.git文件表明git仓库初始化成功。</p>
+<h1 id="3-向本地仓库中提交文件"><a href="#3-向本地仓库中提交文件" class="headerlink" title="3. 向本地仓库中提交文件"></a>3. 向本地仓库中提交文件</h1><ol>
+<li>在仓库目录下，创建需要版本控制的文件，如first.txt</li>
+<li>将需要版本控制的文件提交到暂存区：git add first.txt。（必须经过这一步才能最终将它提交到本地库）</li>
+<li>将暂存区的文件commit到本地库中：git commit -m “这里是对本次提交的注释” first.txt</li>
+</ol>
+<p><img src="/images/misc/git/1.png"></p>
+<h1 id="4-查看暂存区和工作区中有没有未commit的文件"><a href="#4-查看暂存区和工作区中有没有未commit的文件" class="headerlink" title="4. 查看暂存区和工作区中有没有未commit的文件"></a>4. 查看暂存区和工作区中有没有未commit的文件</h1><p>创建两个文件，一个unAdd.txt放在工作区（未add），一个unCommit.txt放在暂存区（未commit），使用 <strong>git status</strong> 查看状态：</p>
+<p><img src="/images/misc/git/2.png"></p>
+<h1 id="5-修改工作区文件内容后"><a href="#5-修改工作区文件内容后" class="headerlink" title="5. 修改工作区文件内容后"></a>5. 修改工作区文件内容后</h1><p>我们将first.txt的内容更改后，查看状态</p>
+<p><img src="/images/misc/git/3.png"></p>
+<p>因此修改后要重新add并commit该文件。</p>
+<h1 id="6-查看commit记录"><a href="#6-查看commit记录" class="headerlink" title="6. 查看commit记录"></a>6. 查看commit记录</h1><p>接上一小节，将first.txt重新add并commit后，查看 <strong>git log</strong></p>
+<p><img src="/images/misc/git/4.png"></p>
+<p>其中黄色commit之后的哈希值是key，这个key对应的value就是本地库的某一个版本</p>
+<p>可以用加强版命令查看：<strong>git reflog</strong></p>
+<p><img src="/images/misc/git/5.png"></p>
+<p>该命令显示的库版本哈希值精简了，HEAD@{num}中的NUM代表某一个版本在本地仓库中的存储索引（HEAD是操作指针）。该图第一行（蓝色HEAD所在行）就是我们当前工作区对应的本地库版本</p>
+<h1 id="7-前进或后退到某版本"><a href="#7-前进或后退到某版本" class="headerlink" title="7. 前进或后退到某版本"></a>7. 前进或后退到某版本</h1><p>先用git reflog查看本地库所有版本以及它们的索引（就是HEAD后花括号中的数值）。</p>
+<p><img src="/images/misc/git/6.png"></p>
+<p>假设现在要后退到版本3，输入</p>
+<p><strong>git reset –hard 6a54aa7</strong>  &#x2F;&#x2F;hard参数使得本地库和工作区以及暂存区的数据同步，必须要加</p>
+<p><img src="/images/misc/git/7.png"></p>
+<p>再查看git reflog</p>
+<p><img src="/images/misc/git/8.png"></p>
+<p>再更改first.txt，然后再add，commit，看reflog</p>
+<p><img src="/images/misc/git/9.png"></p>
+<h1 id="8-删除文件"><a href="#8-删除文件" class="headerlink" title="8. 删除文件"></a>8. 删除文件</h1><ol>
+<li><p>删除工作区文件</p>
+<p>rm test.txt</p>
+</li>
+<li><p>将删除操作同步到暂存区</p>
+<p>git add test.txt</p>
+</li>
+<li><p>将删除操作同步到本地库</p>
+<p>git commit -m “删除test.txt文件” test.txt</p>
+</li>
+</ol>
+<p>效果如下</p>
+<p><img src="/images/misc/git/10.png"></p>
+<h1 id="9-恢复文件"><a href="#9-恢复文件" class="headerlink" title="9. 恢复文件"></a>9. 恢复文件</h1><p>回滚到删除文件前的版本即可</p>
+<h1 id="10-比对不同区域中所有文件的区别"><a href="#10-比对不同区域中所有文件的区别" class="headerlink" title="10. 比对不同区域中所有文件的区别"></a>10. 比对不同区域中所有文件的区别</h1><p>【比对工作区和暂存区中所有文件的区别】使用命令：<strong>git diff</strong></p>
+<p>【比对暂存区和本地库中所有文件的区别】使用命令：<strong>git diff 历史某版本索引号 文件名</strong></p>
+<h1 id="11-分支"><a href="#11-分支" class="headerlink" title="11. 分支"></a>11. 分支</h1><p>在之前的图片中可以看到当前目录后标识了(master)，这意味着我们当前位于master（主干）分支上。一般情况下，公司机构的git主干分支上的项目版本都是稳定版，是已经投入使用的版本，也就是说，一般不会轻易的更新主干分支上的项目版本。在主干上【开分支】的情况通常有两种：1. 给项目加功能，2. 修复当前版本项目的bug。这两种情况都要对项目进行修改，而且这个修改的过程可能会对原版本产生一定的影响，为了确保万无一失，开一个分支，这个分支上<strong>克隆了当前版本项目的镜像</strong>，在这个分支上进行开发。这样做的好处是可以随时回滚（在分支上写实验版本，不想要了就丢掉，不影响主干），另外一个好处是在分支开发<strong>不会影响当前主干上最新版本的正常运行</strong>。分支开发完成后，可以将分支合并到主干，完成主干版本的更新。</p>
+<h2 id="11-1-查看分支"><a href="#11-1-查看分支" class="headerlink" title="11.1 查看分支"></a>11.1 查看分支</h2><p><code>git branch -v</code></p>
+<p><img src="/images/misc/git/11.png"></p>
+<p>可以看到我们当前只有一个主干，该命令把主干上最新的提交信息做了展示。</p>
+<h2 id="11-2-创建分支"><a href="#11-2-创建分支" class="headerlink" title="11.2 创建分支"></a>11.2 创建分支</h2><p><code>git branch &#123;branchName&#125;</code></p>
+<p><img src="/images/misc/git/12.png"></p>
+<p>* 代表我们当前在哪个分支上</p>
+<p>可以看到刚创建的MyBranch的版本哈希和master最新的版本哈希相同，这是因为MyBranch镜像了master最新的版本号。</p>
+<h2 id="11-3-切换分支"><a href="#11-3-切换分支" class="headerlink" title="11.3 切换分支"></a>11.3 切换分支</h2><p><code>git checkout &#123;branchName&#125;</code></p>
+<p><img src="/images/misc/git/13.png"></p>
+<p>可以看到目录后括号中内容变成了(MyBranch)，即当前位于MyBranch分支下</p>
+<h2 id="11-4-解决分支冲突问题"><a href="#11-4-解决分支冲突问题" class="headerlink" title="11.4 解决分支冲突问题"></a>11.4 解决分支冲突问题</h2><p>如果分支上某文件的版本更新了，主干上该文件的版本也更新了，这时如果在主干上输入命令 <code>git merge MyBranch</code> （表示将【MyBranch分支合并到主干上】，反之如果在分支上输入git merge master代表【将主干内容合并到分支上】），会提示错误</p>
+<p><img src="/images/misc/git/14.png"></p>
+<p>提示test.txt存在冲突问题，可以看到出现冲突问题时目录右侧的状态变为MERGING。</p>
+<p>假设我们当前发生冲突的文件为test.txt，可以使用 <code>cat &#123;文件名&#125;</code> 命令来查看该文件内容，发现其内容已经变成</p>
+<p><img src="/images/misc/git/15.png"></p>
+<p>“&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;” 上方空行下方的内容是【当前分支】修改的该文件的内容，“&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;” 下方的内容是【待合并分支】修改的该文件的内容。</p>
+<p>现实中如果出现这种冲突问题，就需要各分支的人员商讨，是舍弃掉某一个分支上的内容呢？还是直接合并两个分支上的内容呢？讨论完成后，<strong>直接对该冲突文件进行修改</strong>，然后将该文件add，commit更新到本地库</p>
+<p><img src="/images/misc/git/16.png"></p>
+<p>最后commit，注意<strong>解决冲突的commit后不能加文件名</strong></p>
+<p><img src="/images/misc/git/17.png"></p>
+<h1 id="12-远程库"><a href="#12-远程库" class="headerlink" title="12. 远程库"></a>12. 远程库</h1><h2 id="12-1-公司内部远程库交互"><a href="#12-1-公司内部远程库交互" class="headerlink" title="12.1 公司内部远程库交互"></a>12.1 公司内部远程库交互</h2><p>选用github作为远程库，先进行一下准备工作</p>
+<ol>
+<li><p>创建Repository</p>
+<p><img src="/images/misc/git/18.png"></p>
+<p>现在远程库的地址就是GitResp仓库的url</p>
+</li>
+<li><p>为远程库url起别名</p>
+<p><code>git remote add &#123;alias&#125; &#123;url&#125;</code> 命令可以给仓库起别ing</p>
+<p><code>git remote -v</code> 命令查看远程仓库别名信息</p>
+<p><img src="/images/misc/git/19.png"></p>
+<p>之后就可以用别名访问远程库了，不用每次都输入很长的url</p>
+</li>
+</ol>
+<h3 id="12-1-1-（项目经理）将本地库内容push到远程库"><a href="#12-1-1-（项目经理）将本地库内容push到远程库" class="headerlink" title="12.1.1 （项目经理）将本地库内容push到远程库"></a>12.1.1 （项目经理）将本地库内容push到远程库</h3><p><code>git push &#123;别名&#125; &#123;分支名&#125;</code> 该命令可将某个分支的内容push到别名对应的远程库中。</p>
+<p><img src="/images/misc/git/20.png"></p>
+<h3 id="12-1-2-（程序员）将远程库内容clone到本地库"><a href="#12-1-2-（程序员）将远程库内容clone到本地库" class="headerlink" title="12.1.2 （程序员）将远程库内容clone到本地库"></a>12.1.2 （程序员）将远程库内容clone到本地库</h3><ol>
+<li><p>选定本地库要存放的路径，用git进入</p>
+</li>
+<li><p>去github上找到对应的远程库，查看其url，复制</p>
+<p><img src="/images/misc/git/21.png"></p>
+</li>
+<li><p>使用 <code>git clone &#123;远程库url&#125;</code> 即可将远程库pull到本地</p>
+<p><img src="/images/misc/git/22.png"></p>
+<p>查询可以发现，git clone指令自动帮我们创建了远程库的别名：origin</p>
+<p><img src="/images/misc/git/23.png"></p>
+</li>
+</ol>
+<h3 id="12-1-3-（程序员）将本地库内容push到远程库"><a href="#12-1-3-（程序员）将本地库内容push到远程库" class="headerlink" title="12.1.3 （程序员）将本地库内容push到远程库"></a>12.1.3 （程序员）将本地库内容push到远程库</h3><p>注意本实验如果在本机上做的话直接就能提交成功了（这不合理，因为没有征得项目经理的同意），因为windows上有缓存记录了本机就是远程库的管理者，如果在其他机器上就不行了。想要在本地上实验也可以，先将缓存删除。</p>
+<p><img src="/images/misc/git/24.png"></p>
+<p>然后执行push操作，会被拒绝。因为必须要项目经理来邀请该程序员加入本项目。</p>
+<p><img src="/images/misc/git/25.png"></p>
+<p>将邀请连接发送给被邀请成员即可。</p>
+<h3 id="12-1-4-（项目经理）将远程库内容pull到本地工作区"><a href="#12-1-4-（项目经理）将远程库内容pull到本地工作区" class="headerlink" title="12.1.4 （项目经理）将远程库内容pull到本地工作区"></a>12.1.4 （项目经理）将远程库内容pull到本地工作区</h3><ol>
+<li><p>将远程库内容fetch到本地库</p>
+<p><code>git fetch &#123;远程库url&#125; &#123;pull到本地库中的哪个分支&#125;</code></p>
+<p><img src="/images/misc/git/26.png"></p>
+</li>
+<li><p>然后就可以在本地库查看远程库中的内容</p>
+<p><img src="/images/misc/git/27.png"></p>
+<p>进入远程库master分支后使用ll，cat等命令查看文件</p>
+</li>
+<li><p>确认无误，进行merge操作</p>
+<p><img src="/images/misc/git/28.png"></p>
+</li>
+</ol>
+<p>实际上【fetch+merge&#x3D;pull】，拆开来做的好处是可以检查要合并的内容是否正确，确认无误后再merge。pull的好处就是简单。</p>
+<h3 id="12-1-5-远程库冲突解决"><a href="#12-1-5-远程库冲突解决" class="headerlink" title="12.1.5 远程库冲突解决"></a>12.1.5 远程库冲突解决</h3><p>假如连接远程库的双方更新了同一个文件内容，那么【后】将该更新push到远程库的一方会push失败，因为文件内容发生冲突了，这时它必须先将远程库的内容pull到本地手动将冲突解决后再将其push到远程库。</p>
+<h2 id="12-2-跨公司远程库交互"><a href="#12-2-跨公司远程库交互" class="headerlink" title="12.2 跨公司远程库交互"></a>12.2 跨公司远程库交互</h2><p>两个公司A和B各有自己的远程库，假如项目是A发起的：</p>
+<ol>
+<li><p>公司B将公司A的远程库内容fork到自己的远程库中</p>
+<p><img src="/images/misc/git/29.png"></p>
+</li>
+<li><p>公司B将刚fork到自己远程库中的内容clone到本地库，开始对项目进行开发</p>
+</li>
+<li><p>开发完成后，将项目push到自己的远程库中</p>
+</li>
+<li><p>去到公司A的远程库，发起pull request</p>
+<p><img src="/images/misc/git/30.png"></p>
+</li>
+<li><p>公司A审核B提交的内容，如果通过，点击merge合并内容即可</p>
+</li>
+</ol>
+<h1 id="13-Idea中使用git"><a href="#13-Idea中使用git" class="headerlink" title="13. Idea中使用git"></a>13. Idea中使用git</h1><h2 id="13-1-将git集成到idea中"><a href="#13-1-将git集成到idea中" class="headerlink" title="13.1 将git集成到idea中"></a>13.1 将git集成到idea中</h2><p><img src="/images/misc/git/31.png"></p>
+<p><strong>对当前项目使用git</strong></p>
+<p><img src="/images/misc/git/32.png"></p>
+<p>成功将gittest项目文件夹设置为git仓库</p>
+<p><img src="/images/misc/git/33.png"></p>
+<p>现在我们只要创建一个类文件，idea就会询问</p>
+<p><img src="/images/misc/git/34.png"></p>
+<p>点击add后（将文件放入暂存区），该文件的名字就会变成绿色。右击文件也可手动add。</p>
+<p>文件变为绿色后，我们可以对它执行commit操作，还可以对该次commit加上注释，效果就和命令行中git commit -m一样。</p>
+<p><img src="/images/misc/git/35.png"></p>
+<p>现在我们在修改刚刚提交的文件时，与本地库不一致的部分会变为绿色</p>
+<p><img src="/images/misc/git/36.png"></p>
+<p>修改完成后手动add+commit即可</p>
+<h2 id="13-2-在idea中用git与远程库交互"><a href="#13-2-在idea中用git与远程库交互" class="headerlink" title="13.2 在idea中用git与远程库交互"></a>13.2 在idea中用git与远程库交互</h2><h3 id="13-2-1-对远程库进行push和pull"><a href="#13-2-1-对远程库进行push和pull" class="headerlink" title="13.2.1 对远程库进行push和pull"></a>13.2.1 对远程库进行push和pull</h3><p>将文件commit到本地库后，就可以把它push到指定的远程库了（如果github中没有该项目则先要去github中创建与项目同名的仓库，若github中已有该项目，本次push是为了更新远程库，则要先将远程库pull到本地解决可能的冲突，然后才能push）。</p>
+<p><img src="/images/misc/git/37.png"></p>
+<h3 id="13-2-2-将远程库clone到本地"><a href="#13-2-2-将远程库clone到本地" class="headerlink" title="13.2.2 将远程库clone到本地"></a>13.2.2 将远程库clone到本地</h3><p><img src="/images/misc/git/38.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/29/IT/datastructure_and_algorithm/%E3%80%8A%E5%A0%86%E3%80%8B%E4%B8%93%E9%A2%98/" rel="prev" title="《堆》专题">
+                  <i class="fa fa-chevron-left"></i> 《堆》专题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/10/IT/java/Servlet/" rel="next" title="Servlet">
+                  Servlet <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

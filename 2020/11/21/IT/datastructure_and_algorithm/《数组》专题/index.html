@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="《数组》专题">
+<meta property="og:url" content="http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E7%BB%84%E3%80%8B%E4%B8%93%E9%A2%98/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/1.jpg">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/2.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/3.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/4.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/5.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/7.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/8.png">
+<meta property="article:published_time" content="2020-11-21T11:40:59.000Z">
+<meta property="article:modified_time" content="2021-02-16T01:40:04.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E7%BB%84%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E7%BB%84%E3%80%8B%E4%B8%93%E9%A2%98/","path":"2020/11/21/IT/datastructure_and_algorithm/《数组》专题/","title":"《数组》专题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《数组》专题 | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%B0%86%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0%E5%B9%B3%E6%96%B9"><span class="nav-text">1. 将有序数组中所有元素平方</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9C%89%E5%A4%9A%E5%B0%91%E6%AF%94%E5%BD%93%E5%89%8D%E5%85%83%E7%B4%A0%E5%B0%91%E7%9A%84%E6%95%B0"><span class="nav-text">2. 数组中有多少比当前元素少的数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%A5%87%E5%81%B6%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84"><span class="nav-text">3. 奇偶排序数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6"><span class="nav-text">4. 区间合并</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="nav-text">4.1 区间合并模板题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-text">5. 前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E4%B8%80%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-text">5.1 一维前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-%E4%B8%80%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="nav-text">5.1.1 一维前缀和模板题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-text">5.2 二维前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="nav-text">5.2.1 二维前缀和模板题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%B7%AE%E5%88%86"><span class="nav-text">6. 差分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-%E4%B8%80%E7%BB%B4%E5%B7%AE%E5%88%86"><span class="nav-text">6.1 一维差分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-1-%E4%B8%80%E7%BB%B4%E5%B7%AE%E5%88%86%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="nav-text">6.1.1 一维差分模板题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-%E4%BA%8C%E7%BB%B4%E5%B7%AE%E5%88%86"><span class="nav-text">6.2 二维差分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-1-%E4%BA%8C%E7%BB%B4%E5%B7%AE%E5%88%86%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="nav-text">6.2.1 二维差分模板题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E7%9F%A9%E9%98%B5%E9%81%8D%E5%8E%86"><span class="nav-text">7. 矩阵遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5"><span class="nav-text">7.1 顺时针打印矩阵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E5%8F%8C%E6%8C%87%E9%92%88"><span class="nav-text">8. 双指针</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C"><span class="nav-text">8.1 连续子数组的最大和</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E7%BB%84%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《数组》专题 | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《数组》专题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-21 19:40:59" itemprop="dateCreated datePublished" datetime="2020-11-21T19:40:59+08:00">2020-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-02-16 09:40:04" itemprop="dateModified" datetime="2021-02-16T09:40:04+08:00">2021-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/1.jpg"></p>
+<span id="more"></span>
+
+<h1 id="1-将有序数组中所有元素平方"><a href="#1-将有序数组中所有元素平方" class="headerlink" title="1. 将有序数组中所有元素平方"></a>1. 将有序数组中所有元素平方</h1><p>【题目】</p>
+<p>Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.</p>
+<p>Example 1:</p>
+<p>Input: [-4,-1,0,3,10]<br>Output: [0,1,9,16,100]</p>
+<p>Example 2:</p>
+<p>Input: [-7,-3,2,3,11]<br>Output: [4,9,9,49,121]</p>
+<p>【解析】</p>
+<p><strong>普通做法</strong>：先对所有元素平方，然后排序。时间复杂度O(n+nlogn)</p>
+<p><strong>双指针做法</strong>：利用题目条件。题目给定的数组是单调不减的数组，因此可以先找到一个seperator（其左侧元素全负，右侧元素全正），然后将整个数组所有元素平方。这时从（seperator-1，0）是一个单调递减的数组，从（seperator，arrayLength-1）是另一个单调递减的数组，将它们归并排序。此法的时间复杂度为O(n)。</p>
+<p>【ac代码】</p>
+<p><strong>双指针做法</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sortedSquares</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> seperator = <span class="number">0</span>; <span class="comment">//数组中正负的分界点</span></span><br><span class="line">        <span class="type">int</span> length = A.<span class="built_in">size</span>();</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; re;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) <span class="comment">//寻找分界点</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(A[i]&gt;=<span class="number">0</span>) </span><br><span class="line">            &#123;</span><br><span class="line">                seperator = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) A[i]*=A[i]; <span class="comment">//将整个数组平方</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">/*归并排序*/</span></span><br><span class="line">        <span class="type">int</span> l = seperator<span class="number">-1</span>, r = seperator, k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(l&gt;=<span class="number">0</span>&amp;&amp;r&lt;length)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(A[l]&lt;A[r]) re.<span class="built_in">push_back</span>(A[l--]);</span><br><span class="line">            <span class="keyword">else</span> re.<span class="built_in">push_back</span>(A[r++]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(l&gt;=<span class="number">0</span>) re.<span class="built_in">push_back</span>(A[l--]);</span><br><span class="line">        <span class="keyword">while</span>(r&lt;length) re.<span class="built_in">push_back</span>(A[r++]);</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-数组中有多少比当前元素少的数"><a href="#2-数组中有多少比当前元素少的数" class="headerlink" title="2. 数组中有多少比当前元素少的数"></a>2. 数组中有多少比当前元素少的数</h1><p>【题目】</p>
+<p>Given the array nums, for each nums[i] find out how many numbers in the array are smaller than it. That is, for each nums[i] you have to count the number of valid j’s such that j !&#x3D; i and nums[j] &lt; nums[i].</p>
+<p>Return the answer in an array.</p>
+<p>Example 1:</p>
+<p>Input: nums &#x3D; [8,1,2,2,3]<br>Output: [4,0,1,1,3]<br>Explanation:<br>For nums[0]&#x3D;8 there exist four smaller numbers than it (1, 2, 2 and 3).<br>For nums[1]&#x3D;1 does not exist any smaller number than it.<br>For nums[2]&#x3D;2 there exist one smaller number than it (1).<br>For nums[3]&#x3D;2 there exist one smaller number than it (1).<br>For nums[4]&#x3D;3 there exist three smaller numbers than it (1, 2 and 2).</p>
+<p>Example 2:</p>
+<p>Input: nums &#x3D; [6,5,4,8]<br>Output: [2,1,0,3]</p>
+<p>Example 3:</p>
+<p>Input: nums &#x3D; [7,7,7,7]<br>Output: [0,0,0,0]</p>
+<p>Constraints:</p>
+<pre><code>2 &lt;= nums.length &lt;= 500
+0 &lt;= nums[i] &lt;= 100
+</code></pre>
+<p><strong>《暴力法》</strong></p>
+<p>【解析】</p>
+<p>对数组中每一个元素都遍历一遍整个数组，找出所有比它小的数。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">smallerNumbersThanCurrent</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = nums.<span class="built_in">size</span>();</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; re;</span><br><span class="line">        <span class="type">int</span> count; <span class="comment">//记录数组中有多少个元素比nums[i]小</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            count = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j&lt;length;j++) </span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[j]!=nums[i] &amp;&amp; nums[j]&lt;nums[i]) count++;</span><br><span class="line">            &#125;</span><br><span class="line">            re.<span class="built_in">push_back</span>(count);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>《木桶法》</strong></p>
+<p>【解析】</p>
+<p>注意到题目说明了数据范围，数组中每个元素都小于100。因此可以创建100个桶，把元素（整数）放入下标与其相等的桶中，完成后再遍历原数组（因为答案要求与原数组同序），比nums[i]小的元素数量就是0~i-1号桶（有记录的情况下）记录的频率总数。</p>
+<p><strong>这解法告诉我们，一定要认真读题！！！</strong></p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> barrel[<span class="number">101</span>]=&#123;<span class="number">0</span>&#125;; <span class="comment">//要开到101个位置，数组的最大下标才为100</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; re;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">smallerNumbersThanCurrent</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) <span class="comment">//把元素出现频率记录在桶中</span></span><br><span class="line">        &#123;</span><br><span class="line">           barrel[nums[i]]++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//重新遍历原数组，计算对于每一个元素，数组中比它小的元素有多少</span></span><br><span class="line">        <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            sum = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//比nums[i]小的元素数量为sum(barrel[0]~barrel[i-1])</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j&lt;nums[i]; j++) sum += barrel[j];</span><br><span class="line">            re.<span class="built_in">push_back</span>(sum);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-奇偶排序数组"><a href="#3-奇偶排序数组" class="headerlink" title="3. 奇偶排序数组"></a>3. 奇偶排序数组</h1><p>【题目】</p>
+<p>给定一个非负整数数组 A， A 中一半整数是奇数，一半整数是偶数。</p>
+<p>对数组进行排序，以便当 A[i] 为奇数时，i 也是奇数；当 A[i] 为偶数时， i 也是偶数。</p>
+<p>你可以返回任何满足上述条件的数组作为答案。</p>
+<p><strong>提示：</strong></p>
+<ol>
+<li><code>2 &lt;= A.length &lt;= 20000</code></li>
+<li><code>A.length % 2 == 0</code></li>
+<li><code>0 &lt;= A[i] &lt;= 1000</code></li>
+</ol>
+<p>【解析】</p>
+<p>双指针法，在原数组中使用一个奇指针（ji）和一个偶指针（ou），奇偶指针所指的元素轮流push到答案数组中即可。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sortArrayByParityII</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; re;</span><br><span class="line">        <span class="type">int</span> length = A.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> ji = <span class="number">0</span>, ou = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(ou&lt;length &amp;&amp; ji&lt;length)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(ou&lt;length &amp;&amp; A[ou]%<span class="number">2</span>!=<span class="number">0</span>) ou++; <span class="comment">//寻找下一个偶元素所在位置</span></span><br><span class="line">            re.<span class="built_in">push_back</span>(A[ou++]);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span>(ji&lt;length &amp;&amp; A[ji]%<span class="number">2</span>==<span class="number">0</span>) ji++; <span class="comment">//寻找下一个奇元素所在位置</span></span><br><span class="line">            re.<span class="built_in">push_back</span>(A[ji++]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-区间合并"><a href="#4-区间合并" class="headerlink" title="4. 区间合并"></a>4. 区间合并</h1><blockquote>
+<p>将所有存在交集的区间合并为一个区间。</p>
+</blockquote>
+<p>如[1,2,3]、[3,4,5]合并为[1,2,3,4,5,]</p>
+<p> 这类问题一般是先将所有区间按照左端点排序</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/2.png"></p>
+<p> 然后逐个判断是否存在交集。（要注意的是有些区间的右端点可能比它的下一个区间的右端点大）</p>
+<p><strong>模板</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">​```C++</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII; <span class="comment">//自定义二元组类型</span></span><br><span class="line"><span class="function">vector&lt;PII&gt; <span class="title">merge</span><span class="params">(vector&lt;PII&gt;&amp; arr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;PII&gt; re;<span class="comment">//存放已经合并好的数组</span></span><br><span class="line">    <span class="built_in">sort</span>(arr.<span class="built_in">begin</span>(),arr.<span class="built_in">end</span>());<span class="comment">//按每个区间最左侧端点排序</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;arr.<span class="built_in">size</span>()<span class="number">-1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">          <span class="keyword">while</span>(i&lt;arr.<span class="built_in">size</span>()<span class="number">-1</span>&amp;&amp;arr[i].second&gt;=arr[i+<span class="number">1</span>].first)<span class="comment">//如果当前区间和下个区间重合 </span></span><br><span class="line">         &#123;</span><br><span class="line">                <span class="keyword">if</span>(arr[i].second&gt;arr[i+<span class="number">1</span>].second) <span class="comment">//如果当前区间最右侧位置大于下一区间最右侧位置</span></span><br><span class="line">                &#123;<span class="comment">//令下一区间等于当前区间</span></span><br><span class="line">                     arr[i+<span class="number">1</span>].first = arr[i].first;</span><br><span class="line">                     arr[i+<span class="number">1</span>].second = arr[i].second;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span><span class="comment">//如果当前区间最右侧位置小于下一区间最右侧位置</span></span><br><span class="line">                &#123;<span class="comment">//把下一区间的左端点拉伸到当前区间的左端点位置</span></span><br><span class="line">                    arr[i+<span class="number">1</span>].first = arr[i].first;    </span><br><span class="line">                &#125;</span><br><span class="line">                i++; <span class="comment">//继续判断合并后的区间是否与它的下一区间重合</span></span><br><span class="line">         &#125;</span><br><span class="line">         re.<span class="built_in">push_back</span>(arr[i]);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> re;</span><br><span class="line"> &#125;</span><br><span class="line">​```</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-1-区间合并模板题"><a href="#4-1-区间合并模板题" class="headerlink" title="4.1 区间合并模板题"></a>4.1 区间合并模板题</h2><p>以【左端点，右端点】的形式给出一组区间，将这组区间合并，求出合并后的区间数量。（注：两区间端点相交也算重合）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line">vector&lt;PII&gt; ve;  <span class="comment">//其中每一个元素都代表一个区间的两个端点下标</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*将所有存在交集的区间合并，返回合并后的区间集合*/</span></span><br><span class="line"><span class="function">vector&lt;PII&gt; <span class="title">IntervalMerge</span><span class="params">(vector&lt;PII&gt;&amp; value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;PII&gt; re; <span class="comment">//返回值</span></span><br><span class="line">    <span class="built_in">sort</span>(value.<span class="built_in">begin</span>(), value.<span class="built_in">end</span>()); <span class="comment">//将所有区间按照左端点大小排序</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;value.<span class="built_in">size</span>()<span class="number">-1</span>;i++)<span class="comment">//遍历所有区间</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//如果当前区间和下一个区间重合</span></span><br><span class="line">        <span class="keyword">while</span>(i&lt;value.<span class="built_in">size</span>()<span class="number">-1</span>&amp;&amp;value[i].second&gt;=value[i+<span class="number">1</span>].first) </span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/*将下一区间变为当前区间*/</span></span><br><span class="line">            <span class="comment">//如果当前区间包含下一个区间</span></span><br><span class="line">            <span class="keyword">if</span>(value[i].second&gt;=value[i+<span class="number">1</span>].second)</span><br><span class="line">            &#123;</span><br><span class="line">                value[i+<span class="number">1</span>].first = value[i].first;</span><br><span class="line">                value[i+<span class="number">1</span>].second = value[i].second;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//如果当前区间不包含下一个区间</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                value[i+<span class="number">1</span>].first = value[i].first;</span><br><span class="line">            &#125;</span><br><span class="line">            i++; <span class="comment">//继续检查合并后的区间能否与它的下一个区间合并</span></span><br><span class="line">        &#125;</span><br><span class="line">        re.<span class="built_in">push_back</span>(value[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="type">int</span> a,b;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;n;i++) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;a,&amp;b);</span><br><span class="line">        ve.<span class="built_in">push_back</span>(&#123;a,b&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;PII&gt; re = <span class="built_in">IntervalMerge</span>(ve);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,re.<span class="built_in">size</span>());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="5-前缀和"><a href="#5-前缀和" class="headerlink" title="5. 前缀和"></a>5. 前缀和</h1><p>前缀和的作用就是能快速地（在O(1)时间内）求出数组某子集的和，因此当问题<strong>多次</strong>询问数组某一区间（每次不同）的和时首先考虑用前缀和。</p>
+<h2 id="5-1-一维前缀和"><a href="#5-1-一维前缀和" class="headerlink" title="5.1 一维前缀和"></a>5.1 一维前缀和</h2><p>原数组（差分）：$a_1a_2a_3a_4…a_i$</p>
+<p>前缀和数组: $S_i&#x3D;a_1+a_2+a_3+…+a_i&#x3D;S_{i-1}+a_{i}$</p>
+<p>求某子集的和: $Sum[l,r]&#x3D;s_r-s_{l-1}$</p>
+<p>定义$S_0&#x3D;0$，且定义<strong>原数组a下标从1开始</strong>（为了统一格式）。<br>因为假如我们要求和的子集下标下界刚好为最小下标处（即下标1处）时，$S_{l-1}$才有意义，使得整个公式统一了。</p>
+<p><strong>模板</strong></p>
+<ol>
+<li>先初始化前缀和数组（假设给定<strong>下标从0开始</strong>的数组是arr[ ], 且定义好s[0]&#x3D;0，求arr[]的前缀和数组s[]）<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*原数组arr的下标从1开始*/</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=arr.<span class="built_in">size</span>();i++) s[i] = s[i<span class="number">-1</span>]+arr[i]; </span><br></pre></td></tr></table></figure></li>
+<li>得到前缀和数组后，对于每次对原数组区间[l, r]的和的询问，只需要做一个减法：s[r]-s[l-1]就行了。（如求[1, 2]、[5, 8]子集的和）</li>
+</ol>
+<p>  [1,2]子集的和 &#x3D; s[2]-s[0];</p>
+<p>  [5,8]子集的和 &#x3D; s[8]-s[4];</p>
+<h3 id="5-1-1-一维前缀和模板题"><a href="#5-1-1-一维前缀和模板题" class="headerlink" title="5.1.1 一维前缀和模板题"></a>5.1.1 一维前缀和模板题</h3><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/797/">https://www.acwing.com/problem/content/797/</a></p>
+<p>输入一个长度为n的整数序列。</p>
+<p>接下来再输入m个询问，每个询问输入一对l, r。</p>
+<p>对于每个询问，输出原序列中从第l个数到第r个数的和。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数n和m。</p>
+<p>第二行包含n个整数，表示整数数列。</p>
+<p>接下来m行，每行包含两个整数l和r，表示一个询问的区间范围。</p>
+<p><strong>输出格式</strong></p>
+<p>共m行，每行输出一个询问的结果。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤<em>l</em>≤<em>r</em>≤<em>n</em>,<br>1≤<em>n</em>,<em>m</em>≤100000,<br>−1000≤数列中元素的值≤1000</p>
+<p><strong>输入样例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">5 3</span><br><span class="line">2 1 3 6 4</span><br><span class="line">1 2</span><br><span class="line">1 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">6</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="type">int</span> q[N];</span><br><span class="line"><span class="type">int</span> s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;q[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++) s[i] = s[i<span class="number">-1</span>]+q[i];</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> l, r;</span><br><span class="line">    <span class="keyword">while</span>(m--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;l,&amp;r);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, s[r]-s[l<span class="number">-1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-2-二维前缀和"><a href="#5-2-二维前缀和" class="headerlink" title="5.2 二维前缀和"></a>5.2 二维前缀和</h2><p>二位前缀和的作用是快速求矩阵（长宽可不等）中某一子矩阵中所有元素的和。</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/3.png"></p>
+<p>在矩阵a中，$S_{ij}$就表示以$(0, 0)$为左上角，$a(i, j)$为左下角的子矩阵中所有元素的和。</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/4.png"></p>
+<p>$S_{ij}$可以这样计算：<br>$$<br>S_{ij} &#x3D; S_{(i-1)j}+S_{i(j-1)}-S_{(i-1)(j-1)}+a_{ij}<br>$$</p>
+<p>通过这个公式，就可以构造出矩阵a的前缀和矩阵S。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>;j&lt;m;j++)</span><br><span class="line">        s[i][j] = s[i<span class="number">-1</span>][j]+s[i][j<span class="number">-1</span>]-s[i<span class="number">-1</span>][j<span class="number">-1</span>]+a[i][j]; </span><br></pre></td></tr></table></figure>
+
+
+
+<p>之后的询问给出矩阵a中任一子矩阵的左上角坐标(x1, y1)和右下角坐标(x2, y2)，我们就可以通过4次加减运算快速求出a矩阵中任一子矩阵所有元素的和：</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/5.png"><br>$$<br>sum &#x3D; s[x_2][y_2]-s[x_1-1][y_2]-s[x_2][y_1-1]+s[x_1-1][y_1-1]<br>$$</p>
+<h3 id="5-2-1-二维前缀和模板题"><a href="#5-2-1-二维前缀和模板题" class="headerlink" title="5.2.1 二维前缀和模板题"></a>5.2.1 二维前缀和模板题</h3><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/798/">https://www.acwing.com/problem/content/798/</a></p>
+<p>输入一个n行m列的整数矩阵，再输入q个询问，每个询问包含四个整数x1, y1, x2, y2，表示一个子矩阵的左上角坐标和右下角坐标。</p>
+<p>对于每个询问输出子矩阵中所有数的和。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个整数n，m，q。</p>
+<p>接下来n行，每行包含m个整数，表示整数矩阵。</p>
+<p>接下来q行，每行包含四个整数x1, y1, x2, y2，表示一组询问。</p>
+<p><strong>输出格式</strong></p>
+<p>共q行，每行输出一个询问的结果。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤<em>n</em>,<em>m</em>≤1000,<br>1≤<em>q</em>≤200000,<br>1≤<em>x</em>1≤<em>x</em>2≤<em>n</em>,<br>1≤<em>y</em>1≤<em>y</em>2≤<em>m</em>,<br>−1000≤矩阵内元素的值≤1000</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="type">int</span> d[N][N];</span><br><span class="line"><span class="type">int</span> s[N][N];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,q;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;q);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i][j]);</span><br><span class="line">            s[i][j] = s[i<span class="number">-1</span>][j]+s[i][j<span class="number">-1</span>]-s[i<span class="number">-1</span>][j<span class="number">-1</span>]+d[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> x1,y1,x2,y2;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d&quot;</span>,&amp;x1,&amp;y1,&amp;x2,&amp;y2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,s[x2][y2]-s[x1<span class="number">-1</span>][y2]-s[x2][y1<span class="number">-1</span>]+s[x1<span class="number">-1</span>][y1<span class="number">-1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-差分"><a href="#6-差分" class="headerlink" title="6. 差分"></a>6. 差分</h1><p>求差分就是求前缀和的逆运算，它的作用是<strong>快速的对数组的某子数组中所有元素进行加减运算</strong>。</p>
+<h2 id="6-1-一维差分"><a href="#6-1-一维差分" class="headerlink" title="6.1 一维差分"></a>6.1 一维差分</h2><p>回顾前缀和的定义：</p>
+<p>原数组（差分）：$a_1a_2a_3a_4…a_i$</p>
+<p>前缀和：$S_i &#x3D; a_1+a_2+…+a_i&#x3D;S_{i-1}+a_i$</p>
+<p>因此<strong>差分的定义</strong>就是</p>
+<p>给定一个数组：$S_1S_2S_3S_4…S_i$</p>
+<p>它的差分数组d[ ]满足：$S_r &#x3D; d_1+d_2+…+d_r$</p>
+<p> 这样一来，如果我们要对数组S的<strong>某一子集中所有元素</strong>进行加减操作，可以先构造到这个数组S的差分数组d。假设对差分数组中元素$d_5$加上5，则把复原为原数组后，原数组$S_5$和$S_5$之后的所有元素都被加上了5（因为$S_5$和$S_5$之后的所有元素都有一个共同的加数$d_5$）。但这只对$S_5$和$S_5$之后的所有元素生效，<strong>如果不光定义了左边界还定义了右边界呢</strong>？</p>
+<p> 例如想要对S数组的[l,r]这个区间内所有元素+10，那就先构造它的差分数组d，然后执行$d_l+10$, 再执行$d_{r+1}-10$即可。（相当于先把$S_l$和$S_l$之后的所有元素+10，然后把$S_r$之后的所有元素-10），然后再求差分数组d的前缀和（即复原），就得到[l, r]区间所有元素+10后的S数组了。</p>
+<p><strong>怎么根据现有数组来构造它的差分数组呢？</strong></p>
+<p>首先可以确定的是全0数组的差分数组也一定是全零的。利用这一点，在判断“<strong>多次对数组不同区间的扫描中，某一下标位置被扫描的次数</strong>“这类问题时，可轻松利用差分求出。</p>
+<p>而对于非全0的数组：</p>
+<ol>
+<li>假设差分数组为d，它的前缀和数组（也就是原数组）为S。<br>我们知道它们有这样一种关系：$d[i] &#x3D; S[i]-S[i-1]$<br>这样一来我们就能构造出任意数组的差分数组了。</li>
+<li>另外还可用插入法构造差分数组（推荐）。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    d[l] += c;</span><br><span class="line">    d[r + <span class="number">1</span>] -= c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) </span><br><span class="line">&#123;   </span><br><span class="line">    <span class="built_in">insert</span>(i, i, S[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="6-1-1-一维差分模板题"><a href="#6-1-1-一维差分模板题" class="headerlink" title="6.1.1 一维差分模板题"></a>6.1.1 一维差分模板题</h3><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/799/">https://www.acwing.com/problem/content/799/</a></p>
+<p>输入一个长度为n的整数序列。</p>
+<p>接下来输入m个操作，每个操作包含三个整数l, r, c，表示将序列中[l, r]之间的每个数加上c。</p>
+<p>请你输出进行完所有操作后的序列。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数n和m。</p>
+<p>第二行包含n个整数，表示整数序列。</p>
+<p>接下来m行，每行包含三个整数l，r，c，表示一个操作。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，包含n个整数，表示最终序列。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤<em>n</em>,<em>m</em>≤100000,<br>1≤<em>l</em>≤<em>r</em>≤<em>n</em>,<br>−1000≤<em>c</em>≤1000,<br>−1000≤整数序列中元素的值≤1000</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="type">int</span> d[N];</span><br><span class="line"><span class="type">int</span> s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> c)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    d[l] += c;</span><br><span class="line">    d[r+<span class="number">1</span>] -= c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;s[i]); </span><br><span class="line">        <span class="built_in">insert</span>(i, i, s[i]); <span class="comment">//根据s[]构造差分数组</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> l, r, val; <span class="comment">//将原数组区间[l, r]中所有的元素加val</span></span><br><span class="line">    <span class="keyword">while</span>(m--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;l,&amp;r,&amp;val);</span><br><span class="line">        <span class="built_in">insert</span>(l, r, val); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++) s[i] = s[i<span class="number">-1</span>]+d[i]; <span class="comment">//将差分数组复原成原数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,s[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-2-二维差分"><a href="#6-2-二维差分" class="headerlink" title="6.2 二维差分"></a>6.2 二维差分</h2><p>与一维类似，它目的是快速地对矩阵的某子矩阵中所有的元素进行加减操作。</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/7.png"></p>
+<p>如上图矩阵d，把$(x_1, y_1$)这个点上的值加上或者减去x，则d的前缀和矩阵中所有位于点$(x_1, y_1)$（包括它本身）右下角的值全部加上或者减去x。</p>
+<p>因此，当需要多次对矩阵s中不同的子矩阵中所有元素进行加减操作时，可以先根据s构造出它对应的差分数组d，然后对d进行上图中的操作，最后再求出d的前缀和数组，这个前缀和数组就是对s中某一子矩阵中所有元素进行了加减操作后的数组。</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E6%95%B0%E7%BB%84/8.png"></p>
+<p>举个例子，假如现在我们要把上图矩阵s的蓝色区域中所有元素+val：</p>
+<p>第一步，通过插入法构造差分矩阵（构造好的矩阵d也如上图）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> x1, <span class="type">int</span> y1, <span class="type">int</span> x2, <span class="type">int</span> y2, <span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">    d[x1][y1] += val;</span><br><span class="line">    d[x2 + <span class="number">1</span>][y1] -= val;</span><br><span class="line">    d[x1][y2 + <span class="number">1</span>] -= val;</span><br><span class="line">    d[x2 + <span class="number">1</span>][y2 + <span class="number">1</span>] += val;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">            <span class="built_in">insert</span>(i, j, i, j, S[i][j]);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>第二步，进行如下步骤对d矩阵进行操作（每进行一轮如下操作，相当于将原矩阵中由【左上角(x1, y1)和右下角(x2, y2)】确定的子矩阵中所有元素加上val）</p>
+<ul>
+<li>$d(x_1, y_1) +&#x3D;val$</li>
+<li>$d(x_1, y_2+1) -&#x3D;val$</li>
+<li>$d(x_2+1, y_1) -&#x3D;val$</li>
+<li>$d(x_2+1, y_2+1) +&#x3D;val$</li>
+</ul>
+<p>也就是说，通过二维差分，只需要4次加减运算就可以对某矩阵的任一子矩阵中所有元素同时进行加减运算。</p>
+<p>最后一步，计算出d的前缀和数组即可。</p>
+<h3 id="6-2-1-二维差分模板题"><a href="#6-2-1-二维差分模板题" class="headerlink" title="6.2.1 二维差分模板题"></a>6.2.1 二维差分模板题</h3><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/800/">https://www.acwing.com/problem/content/800/</a></p>
+<p>输入一个n行m列的整数矩阵，再输入q个操作，每个操作包含五个整数x1, y1, x2, y2, c，其中(x1, y1)和(x2, y2)表示一个子矩阵的左上角坐标和右下角坐标。</p>
+<p>每个操作都要将选中的子矩阵中的每个元素的值加上c。</p>
+<p>请你将进行完所有操作后的矩阵输出。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数n,m,q。</p>
+<p>接下来n行，每行包含m个整数，表示整数矩阵。</p>
+<p>接下来q行，每行包含5个整数x1, y1, x2, y2, c，表示一个操作。</p>
+<p><strong>输出格式</strong></p>
+<p>共 n 行，每行 m 个整数，表示所有操作进行完毕后的最终矩阵。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤<em>n</em>,<em>m</em>≤1000,<br>1≤<em>q</em>≤100000,<br>1≤<em>x</em>1≤<em>x</em>2≤<em>n</em>,<br>1≤<em>y</em>1≤<em>y</em>2≤<em>m</em>,<br>−1000≤<em>c</em>≤1000,<br>−1000≤矩阵内元素的值≤1000</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="type">int</span> d[N][N];</span><br><span class="line"><span class="type">int</span> s[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> x1, <span class="type">int</span> y1, <span class="type">int</span> x2, <span class="type">int</span> y2, <span class="type">int</span> val)</span> <span class="comment">//插入法构造差分矩阵</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    d[x1][y1]     += val;</span><br><span class="line">    d[x2+<span class="number">1</span>][y1]   -= val;</span><br><span class="line">    d[x1][y2+<span class="number">1</span>]   -= val;</span><br><span class="line">    d[x2+<span class="number">1</span>][y2+<span class="number">1</span>] += val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,q;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;q);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++) <span class="comment">//读取原矩阵并构造其对应的差分矩阵</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;s[i][j]);</span><br><span class="line">            <span class="built_in">insert</span>(i, j, i, j, s[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> x1,y1,x2,y2,c;</span><br><span class="line">    <span class="keyword">while</span>(q--) <span class="comment">//按题目要求对差分矩阵进行操作</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d%d&quot;</span>, &amp;x1,&amp;y1,&amp;x2,&amp;y2,&amp;c);</span><br><span class="line">        <span class="built_in">insert</span>(x1,y1,x2,y2,c);</span><br><span class="line">    &#125;</span><br><span class="line">            </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++) <span class="comment">//将差分矩阵恢复为前缀和矩阵</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            s[i][j] = s[i<span class="number">-1</span>][j]+s[i][j<span class="number">-1</span>]-s[i<span class="number">-1</span>][j<span class="number">-1</span>]+d[i][j];</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, s[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-矩阵遍历"><a href="#7-矩阵遍历" class="headerlink" title="7. 矩阵遍历"></a>7. 矩阵遍历</h1><p>矩阵遍历是一类问题，如果按照传统方法做，需要大量的if判断出否出界，可以按照如下方法简化：</p>
+<p>定义两个方向数组：int dx[] &#x3D; {-1, 0, 1 ,0}, dy[] &#x3D; {0, 1, 0, -1};</p>
+<p>再定义一个方向$d\in [0,3]$ ，那么如果指针当前遍历到矩阵的[x, y]处：</p>
+<ol>
+<li>向上走（d&#x3D;1方向）: x+&#x3D;dx[d], y+&#x3D;dy[d]。完成后指针移动到[x, y+1]处。</li>
+<li>向右走（d&#x3D;2方向）: x+&#x3D;dx[d], y+&#x3D;dy[d]。完成后指针移动到[x+1, y]处。</li>
+<li>向下走（d&#x3D;3方向）: x+&#x3D;dx[d], y+&#x3D;dy[d]。完成后指针移动到[x, y-1]处。</li>
+<li>向左走（d&#x3D;0方向）: x+&#x3D;dx[d], y+&#x3D;dy[d]。完成后指针移动到[x-1, y]处。</li>
+</ol>
+<p>可以看到，只需要改变d的值即可完成4个方向移动的操作，而且采用该方法后判断指针是否越界十分方便。另外，该方法可以很轻易的拓展为其他情况，比如往一个点周围的8个方向走，看到这里请读者尝试构造出8个方向的方向数组。</p>
+<h2 id="7-1-顺时针打印矩阵"><a href="#7-1-顺时针打印矩阵" class="headerlink" title="7.1 顺时针打印矩阵"></a>7.1 顺时针打印矩阵</h2><p>这是上述方案的典型应用。</p>
+<p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/">https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/</a></p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">spiralOrder</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; re;</span><br><span class="line">        <span class="type">int</span> row = matrix.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span>(row==<span class="number">0</span>) <span class="keyword">return</span> re;</span><br><span class="line">        <span class="type">int</span> column = matrix[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> dx[] = &#123;<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span> ,<span class="number">0</span>&#125;, dy[] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>&#125;; <span class="comment">//方向数组</span></span><br><span class="line">        <span class="type">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>, d = <span class="number">1</span>; <span class="comment">//从(0, 0)开始走，初始方向d=1（即向右走一步）</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;row*column;i++)&#123;</span><br><span class="line">            re.<span class="built_in">push_back</span>(matrix[x][y]);</span><br><span class="line">            matrix[x][y] = <span class="number">0x3f3f3f3f</span>; <span class="comment">//走过的点要标记一下</span></span><br><span class="line">            <span class="type">int</span> a = x+dx[d], b = y+dy[d]; <span class="comment">//下一个到达的位置是(a, b)</span></span><br><span class="line">            <span class="keyword">if</span>(a&lt;<span class="number">0</span> || a&gt;=row || b&lt;<span class="number">0</span> || b&gt;=column || matrix[a][b] == <span class="number">0x3f3f3f3f</span>)&#123; <span class="comment">//如果(a, b)这个坐标越界，或者(a, b)已经被访问过</span></span><br><span class="line">                d = (d+<span class="number">1</span>)%<span class="number">4</span>; <span class="comment">//改变方向</span></span><br><span class="line">                a = x+dx[d], b = y+dy[d]; <span class="comment">////下一个到达的位置是(a, b)</span></span><br><span class="line">            &#125;</span><br><span class="line">            x = a, y = b; <span class="comment">//指针继续走</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="8-双指针"><a href="#8-双指针" class="headerlink" title="8. 双指针"></a>8. 双指针</h1><p>最…子数组这类问题一般都可以暴力做出来，然后利用双指针降低复杂度，其关键在于抓住题目条件挖掘出数组的一些性质从而将问题通过一次遍历解决掉。</p>
+<h2 id="8-1-连续子数组的最大和"><a href="#8-1-连续子数组的最大和" class="headerlink" title="8.1 连续子数组的最大和"></a>8.1 连续子数组的最大和</h2><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/">https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/</a></p>
+<p>在一个存在负数的数组中找出和最大的子数组，返回这个和。</p>
+<p>【解析】</p>
+<p>将子数组想象成一个不断向右侧扩大的窗口，一开始窗口中只包含数组的第一个元素。每次窗口右端点扩大前，先检查当前窗口的和，如果和为负数，那么当前窗口必然不会出现在和最大的连续子数组中，所以这时应该将窗口左端点向右收缩到与右端点扩大后相同的位置。多次求某窗口的和可以先预处理出前缀和提高速度。</p>
+<p>【ac代码】</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxSubArray</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] sum = <span class="keyword">new</span> <span class="title class_">int</span>[nums.length+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;i&lt;nums.length;i++) sum[i+<span class="number">1</span>] = sum[i] + nums[i]; <span class="comment">//前缀和</span></span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mx</span> <span class="operator">=</span> Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> <span class="number">1</span>;right&lt;sum.length;right++)&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">intervalSum</span> <span class="operator">=</span> sum[right]-sum[left-<span class="number">1</span>]; <span class="comment">//当前窗口的和</span></span><br><span class="line">            mx = Integer.max(mx, intervalSum);        <span class="comment">//取窗口和的最大值</span></span><br><span class="line">            <span class="keyword">if</span>(intervalSum&lt;<span class="number">0</span>) &#123; 					<span class="comment">//如果当前窗口和小于0，将窗口收缩到与其右端点扩大后相同的位置</span></span><br><span class="line">                left = right+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E6%A0%91%E3%80%8B%E4%B8%93%E9%A2%98/" rel="prev" title="《树》专题">
+                  <i class="fa fa-chevron-left"></i> 《树》专题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%8B%E4%B8%93%E9%A2%98/" rel="next" title="《字符串》专题">
+                  《字符串》专题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

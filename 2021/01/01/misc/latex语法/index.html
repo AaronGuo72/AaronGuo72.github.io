@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录了一些latex的常用语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="latex语法">
+<meta property="og:url" content="http://example.com/2021/01/01/misc/latex%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:description" content="记录了一些latex的常用语法">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-01T07:30:45.000Z">
+<meta property="article:modified_time" content="2021-01-08T13:30:48.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/01/01/misc/latex%E8%AF%AD%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/01/01/misc/latex%E8%AF%AD%E6%B3%95/","path":"2021/01/01/misc/latex语法/","title":"latex语法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>latex语法 | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%AC%A6%E5%8F%B7"><span class="nav-text">基本符号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="nav-text">标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E7%AC%A6"><span class="nav-text">比较符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%B0%BA%E5%AF%B8%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">大尺寸运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%95%B0"><span class="nav-text">高数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0"><span class="nav-text">线性代数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E5%88%97%E5%BC%8F"><span class="nav-text">行列式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5"><span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A6%E6%8B%AC%E5%8F%B7%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%8E%E8%A1%8C%E5%88%97%E5%BC%8F"><span class="nav-text">带括号的矩阵与行列式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F"><span class="nav-text">样式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8A%E5%85%AC%E5%BC%8F%E6%A1%86%E8%B5%B7%E6%9D%A5"><span class="nav-text">把公式框起来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E5%85%AC%E5%BC%8F%E5%8A%A0%E9%A2%9C%E8%89%B2"><span class="nav-text">给公式加颜色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D"><span class="nav-text">希腊字母</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E5%85%AC%E5%BC%8F"><span class="nav-text">多行公式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E7%BB%84"><span class="nav-text">公式组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%AE%B5%E5%87%BD%E6%95%B0"><span class="nav-text">分段函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/01/misc/latex%E8%AF%AD%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="latex语法 | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          latex语法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-01 15:30:45" itemprop="dateCreated datePublished" datetime="2021-01-01T15:30:45+08:00">2021-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-08 21:30:48" itemprop="dateModified" datetime="2021-01-08T21:30:48+08:00">2021-01-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>记录了一些latex的常用语法</p>
+<span id="more"></span>
+
+<p><strong>注意在typora中这样写：a_1  正常显示，但放到hexo博客中要变成a\_1，即特殊字符前一定要转义。</strong></p>
+<h1 id="基本符号"><a href="#基本符号" class="headerlink" title="基本符号"></a>基本符号</h1><h2 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h2><table>
+<thead>
+<tr>
+<th>sign</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\triangle$</td>
+<td>\triangle</td>
+</tr>
+<tr>
+<td>$\dot{A}$</td>
+<td>\dot{A}</td>
+</tr>
+<tr>
+<td>$\widehat{A}$</td>
+<td>\widehat{A}</td>
+</tr>
+<tr>
+<td>$\tilde{A}$</td>
+<td>\tilde{A}</td>
+</tr>
+<tr>
+<td>$\overline{A}$</td>
+<td>\overline{A}</td>
+</tr>
+</tbody></table>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><table>
+<thead>
+<tr>
+<th>sign</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\cdot$</td>
+<td>\cdot</td>
+</tr>
+<tr>
+<td>$\times$</td>
+<td>\times</td>
+</tr>
+<tr>
+<td>$\div$</td>
+<td>\div</td>
+</tr>
+<tr>
+<td>$\pm$</td>
+<td>\pm</td>
+</tr>
+<tr>
+<td>$\mp$</td>
+<td>\mp</td>
+</tr>
+<tr>
+<td>$\equiv$</td>
+<td>\equiv</td>
+</tr>
+<tr>
+<td>$\sqrt[3]{x}$</td>
+<td>\sqrt[3]{x}</td>
+</tr>
+<tr>
+<td>$\prod_{x&#x3D;1}^n$</td>
+<td>\prod_{x&#x3D;1}^n</td>
+</tr>
+<tr>
+<td>$$\sum_{x&#x3D;1}^n$$</td>
+<td>\sum_{x&#x3D;1}^n</td>
+</tr>
+</tbody></table>
+<h2 id="比较符"><a href="#比较符" class="headerlink" title="比较符"></a>比较符</h2><p>一些符号加上前缀not即可取其反义符号。</p>
+<table>
+<thead>
+<tr>
+<th>sign</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\le$</td>
+<td>\le</td>
+</tr>
+<tr>
+<td>$\ge$</td>
+<td>\ge</td>
+</tr>
+<tr>
+<td>$\neq$</td>
+<td>\neq</td>
+</tr>
+<tr>
+<td>$\ll$</td>
+<td>\ll</td>
+</tr>
+<tr>
+<td>$\gg$</td>
+<td>\gg</td>
+</tr>
+<tr>
+<td>$\subset$</td>
+<td>\subset</td>
+</tr>
+<tr>
+<td>$\supset$</td>
+<td>\supset</td>
+</tr>
+<tr>
+<td>$\subseteq$</td>
+<td>\subseteq</td>
+</tr>
+<tr>
+<td>$\supseteq$</td>
+<td>\supseteq</td>
+</tr>
+<tr>
+<td>$\approx$</td>
+<td>\approx</td>
+</tr>
+<tr>
+<td>$\cong$</td>
+<td>\cong</td>
+</tr>
+<tr>
+<td>$\in$</td>
+<td>\in</td>
+</tr>
+<tr>
+<td>$\owns$</td>
+<td>\owns</td>
+</tr>
+<tr>
+<td>$\propto$</td>
+<td>\propto</td>
+</tr>
+<tr>
+<td>$\leftrightarrow$</td>
+<td>\leftrightarrow</td>
+</tr>
+<tr>
+<td>$\iff$</td>
+<td>\iff</td>
+</tr>
+<tr>
+<td>$\Rightarrow$</td>
+<td>\Rightarrow</td>
+</tr>
+<tr>
+<td>$\nRightarrow$</td>
+<td>\nRightarrow</td>
+</tr>
+<tr>
+<td>$\overset{x&#x3D;0}{\Rightarrow}$</td>
+<td>\overset{x&#x3D;0}{\Rightarrow}</td>
+</tr>
+<tr>
+<td>$\xlongequal[down]{up}$</td>
+<td>长等号</td>
+</tr>
+<tr>
+<td>$\perp$</td>
+<td>\perp</td>
+</tr>
+</tbody></table>
+<h2 id="大尺寸运算符"><a href="#大尺寸运算符" class="headerlink" title="大尺寸运算符"></a>大尺寸运算符</h2><table>
+<thead>
+<tr>
+<th>sign</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\sum$</td>
+<td>\sum</td>
+</tr>
+<tr>
+<td>$\prod$</td>
+<td>\prod</td>
+</tr>
+<tr>
+<td>$\coprod$</td>
+<td>\coprod</td>
+</tr>
+<tr>
+<td>$\int$</td>
+<td>\int</td>
+</tr>
+<tr>
+<td>$\bigcup$</td>
+<td>\bigcup</td>
+</tr>
+<tr>
+<td>$\bigcap$</td>
+<td>\bigcap</td>
+</tr>
+<tr>
+<td>$\bigsqcup$</td>
+<td>\bigsqcup</td>
+</tr>
+<tr>
+<td>$\oint$</td>
+<td>\oint</td>
+</tr>
+<tr>
+<td>$\bigvee$</td>
+<td>\bigvee</td>
+</tr>
+<tr>
+<td>$\bigwedge$</td>
+<td>\bigwedge</td>
+</tr>
+<tr>
+<td>$\bigoplus$</td>
+<td>\bigoplus</td>
+</tr>
+<tr>
+<td>$\bigotimes$</td>
+<td>\bigotimes</td>
+</tr>
+<tr>
+<td>$\bigodot$</td>
+<td>\bigodot</td>
+</tr>
+<tr>
+<td>$\biguplus$</td>
+<td>\biguplus</td>
+</tr>
+</tbody></table>
+<h1 id="高数"><a href="#高数" class="headerlink" title="高数"></a>高数</h1><table>
+<thead>
+<tr>
+<th>sign</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\lim\limits_{x \to 0} f(x)$</td>
+<td>\lim\limits_{x \to 0} f(x)</td>
+</tr>
+<tr>
+<td>$\infty$</td>
+<td>\infty</td>
+</tr>
+<tr>
+<td>$\partial$</td>
+<td>\partial</td>
+</tr>
+<tr>
+<td>$\forall$</td>
+<td>\forall</td>
+</tr>
+<tr>
+<td>$\exists$</td>
+<td>\exists</td>
+</tr>
+<tr>
+<td>$\nabla$</td>
+<td>\nabla</td>
+</tr>
+<tr>
+<td>$\emptyset$</td>
+<td>\emptyset</td>
+</tr>
+<tr>
+<td>$\int_a^b{f(x)dx}$</td>
+<td>\int_a^b{f(x)dx}</td>
+</tr>
+<tr>
+<td>$\iint_a^b f(x)dx$</td>
+<td>\iint_a^b f(x)dx</td>
+</tr>
+<tr>
+<td>$\oint_a^b f(x)dx$</td>
+<td>\oint_a^b f(x)dx</td>
+</tr>
+</tbody></table>
+<p>微分：$\frac{dy}{dx}\big|_{x&#x3D;x_0}$</p>
+<h1 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h1><table>
+<thead>
+<tr>
+<th>sign</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\vec{A}$</td>
+<td>\vec{A}</td>
+</tr>
+<tr>
+<td>$\cdots$</td>
+<td>\cdots</td>
+</tr>
+<tr>
+<td>$\vdots$</td>
+<td>\vdots</td>
+</tr>
+<tr>
+<td>$\ddots$</td>
+<td>\ddots</td>
+</tr>
+</tbody></table>
+<h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><p>$$<br>\begin{vmatrix}<br>x_{<em>{11} } &amp; x</em>{<em>{12} } &amp; \dots &amp; x</em>{<em>{1n} } \<br>x</em>{<em>{21} } &amp; x</em>{<em>{22} } &amp; \dots &amp; x</em>{<em>{2n} } \<br>\vdots &amp; \vdots &amp; \ddots  &amp; \vdots  \<br>x</em>{<em>{m1} } &amp; x</em>{<em>{m2} } &amp; \dots &amp; x</em>{_{mn} } \<br>\end{vmatrix}<br>$$</p>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><p>生成矩阵的命令中每一行以 \ 结束，矩阵的元素之间用 &amp; 来分隔开。</p>
+<p>$$<br>\begin{bmatrix}<br>x_{<em>{11} } &amp; x</em>{<em>{12} } &amp; \dots &amp; x</em>{<em>{1n} } \<br>x</em>{<em>{21} } &amp; x</em>{<em>{22} } &amp; \dots &amp; x</em>{<em>{2n} } \<br>\vdots &amp; \vdots &amp; \ddots  &amp; \vdots  \<br>x</em>{<em>{m1} } &amp; x</em>{<em>{m2} } &amp; \dots &amp; x</em>{_{mn} } \<br>\end{bmatrix}<br>$$</p>
+<h2 id="带括号的矩阵与行列式"><a href="#带括号的矩阵与行列式" class="headerlink" title="带括号的矩阵与行列式"></a>带括号的矩阵与行列式</h2><p>$$<br>\begin{pmatrix} a &amp; b \ c &amp; d \ \end{pmatrix} \quad</p>
+<p>\begin{bmatrix} a &amp; b \ c &amp; d \ \end{bmatrix} \quad</p>
+<p>\left[ \begin{matrix} a &amp; b \ c &amp; d \ \end{matrix} \right] \quad</p>
+<p>\begin{Bmatrix} a &amp; b \ c &amp; d \ \end{Bmatrix} \quad</p>
+<p>\left| \begin{matrix} a &amp; b \ c &amp; d \ \end{matrix} \right| \quad</p>
+<p>\begin{vmatrix} a &amp; b \ c &amp; d \ \end{vmatrix} \quad</p>
+<p>\begin{Vmatrix} a &amp; b \ c &amp; d \ \end{Vmatrix} \quad</p>
+<p>\left[ \begin{array} {c|c} a &amp; b \ c &amp; d \ \end{array} \right]<br>$$</p>
+<h1 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h1><h2 id="把公式框起来"><a href="#把公式框起来" class="headerlink" title="把公式框起来"></a>把公式框起来</h2><p>$\boxed{f(x)+g(x)}$</p>
+<h2 id="给公式加颜色"><a href="#给公式加颜色" class="headerlink" title="给公式加颜色"></a>给公式加颜色</h2><p>$\color{blue}{f(x)+g(x)}$</p>
+<h1 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h1><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>命令</th>
+<th>符号</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\alpha$</td>
+<td>\alpha</td>
+<td>$\theta$</td>
+<td>\theta</td>
+</tr>
+<tr>
+<td>$\beta$</td>
+<td>\beta</td>
+<td>$\vartheta$</td>
+<td>\vartheta</td>
+</tr>
+<tr>
+<td>$\gamma$</td>
+<td>\gamma</td>
+<td>$\iota$</td>
+<td>\iota</td>
+</tr>
+<tr>
+<td>$\delta$</td>
+<td>\delta</td>
+<td>$\kappa$</td>
+<td>\kappa</td>
+</tr>
+<tr>
+<td>$\epsilon$</td>
+<td>\epsilon</td>
+<td>$\lambda$</td>
+<td>\lambda</td>
+</tr>
+<tr>
+<td>$\varepsilon$</td>
+<td>\varepsilon</td>
+<td>$\mu$</td>
+<td>\mu</td>
+</tr>
+<tr>
+<td>$\zeta$</td>
+<td>\zeta</td>
+<td>$\nu$</td>
+<td>\nu</td>
+</tr>
+<tr>
+<td>$\eta$</td>
+<td>\eta</td>
+<td>$\xi$</td>
+<td>\xi$$</td>
+</tr>
+<tr>
+<td>$\pi$</td>
+<td>\pi</td>
+<td>$\phi$</td>
+<td>\phi</td>
+</tr>
+<tr>
+<td>$\varpi$</td>
+<td>\varpi</td>
+<td>$\varphi$</td>
+<td>\varphi</td>
+</tr>
+<tr>
+<td>$\rho$</td>
+<td>\rho</td>
+<td>$\chi$</td>
+<td>\chi</td>
+</tr>
+<tr>
+<td>$\varrho$</td>
+<td>\varrho</td>
+<td>$\psi$</td>
+<td>\psi</td>
+</tr>
+<tr>
+<td>$\sigma$</td>
+<td>\sigma</td>
+<td>$\omega$</td>
+<td>\omega</td>
+</tr>
+<tr>
+<td>$\varsigma$</td>
+<td>\varsigma</td>
+<td>$\tau$</td>
+<td>\tau</td>
+</tr>
+<tr>
+<td>$\upsilon$</td>
+<td>\upsilon</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>第一个字母大写即可转换为对应希腊字母的大写</p>
+<h1 id="多行公式"><a href="#多行公式" class="headerlink" title="多行公式"></a>多行公式</h1><h2 id="公式组"><a href="#公式组" class="headerlink" title="公式组"></a>公式组</h2><p>不需要对齐的公式组用 gather , 需要对齐使用 align，用 \ 和 &amp; 来分行和设置对齐的位置。</p>
+<p>$$<br>\begin{aligned}<br>&amp;x&#x3D;a+b+c \<br>&amp;y&#x3D;d+e+f+g<br>\end{aligned}<br>$$</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">\begin</span>&#123;aligned&#125;</span><br><span class="line"><span class="built_in">&amp;</span>x=a+b+c <span class="keyword">\\</span></span><br><span class="line"><span class="built_in">&amp;</span>y=d+e+f+g</span><br><span class="line"><span class="keyword">\end</span>&#123;aligned&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="分段函数"><a href="#分段函数" class="headerlink" title="分段函数"></a>分段函数</h2><p>$$<br>y&#x3D;\begin{cases}<br>&amp;-x,\quad &amp;x \leq 0 \<br>&amp;x, &amp;x&gt;0<br>\end{cases}<br>$$</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y=<span class="keyword">\begin</span>&#123;cases&#125;</span><br><span class="line"><span class="built_in">&amp;</span>-x,<span class="keyword">\quad</span> <span class="built_in">&amp;</span>x <span class="keyword">\leq</span> 0 <span class="keyword">\\</span></span><br><span class="line"><span class="built_in">&amp;</span>x, <span class="built_in">&amp;</span>x&gt;0</span><br><span class="line"><span class="keyword">\end</span>&#123;cases&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><table>
+<thead>
+<tr>
+<th>sign</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空$\quad$格</td>
+<td>\quad</td>
+</tr>
+<tr>
+<td>$\dots$</td>
+<td>\dots</td>
+</tr>
+<tr>
+<td>$\lfloor$</td>
+<td>\lfloor</td>
+</tr>
+<tr>
+<td>$\rfloor$</td>
+<td>\rfloor</td>
+</tr>
+<tr>
+<td>$\lceil$</td>
+<td>\lceil</td>
+</tr>
+<tr>
+<td>$\rceil$</td>
+<td>\rceil</td>
+</tr>
+<tr>
+<td>$\angle$</td>
+<td>\angle</td>
+</tr>
+<tr>
+<td>$\text{hello world}$</td>
+<td>\text{hello world}</td>
+</tr>
+<tr>
+<td>$0,0,\overbrace{\cdots}^{n-3},0$</td>
+<td>0,0,\overbrace{\cdots}^{n-3},0</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/19/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BNetwork-Layer-DataPlane/" rel="prev" title="《计网》Network-Layer-DataPlane">
+                  <i class="fa fa-chevron-left"></i> 《计网》Network-Layer-DataPlane
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/01/misc/hexo%E5%8D%9A%E5%AE%A2/" rel="next" title="hexo博客">
+                  hexo博客 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="关于哈希表的算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《哈希表》专题">
+<meta property="og:url" content="http://example.com/2021/01/03/IT/datastructure_and_algorithm/%E3%80%8A%E5%93%88%E5%B8%8C%E8%A1%A8%E3%80%8B%E4%B8%93%E9%A2%98/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:description" content="关于哈希表的算法。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/1.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/2.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/3.png">
+<meta property="og:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/4.png">
+<meta property="article:published_time" content="2021-01-03T12:13:58.000Z">
+<meta property="article:modified_time" content="2021-01-03T13:02:32.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/1.png">
+
+
+<link rel="canonical" href="http://example.com/2021/01/03/IT/datastructure_and_algorithm/%E3%80%8A%E5%93%88%E5%B8%8C%E8%A1%A8%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/01/03/IT/datastructure_and_algorithm/%E3%80%8A%E5%93%88%E5%B8%8C%E8%A1%A8%E3%80%8B%E4%B8%93%E9%A2%98/","path":"2021/01/03/IT/datastructure_and_algorithm/《哈希表》专题/","title":"《哈希表》专题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《哈希表》专题 | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-text">1. 哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%99%AE%E9%80%9A%E5%93%88%E5%B8%8C"><span class="nav-text">1.1 普通哈希</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E4%B8%A4%E7%A7%8D%E5%93%88%E5%B8%8C%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-text">1.2 两种哈希表结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E6%8B%89%E9%93%BE%E6%B3%95"><span class="nav-text">1.2.1 拉链法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%BC%80%E6%94%BE%E5%AF%BB%E5%9D%80%E6%B3%95"><span class="nav-text">1.2.2 开放寻址法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E5%8F%960x3f3f3f3f%E4%B8%BA%E6%97%A0%E7%A9%B7%E5%A4%A7%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-text">1.2.3 取0x3f3f3f3f为无穷大的好处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C"><span class="nav-text">1.3 字符串哈希</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-two-sum"><span class="nav-text">2. two sum</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%A4%A7%E9%A4%90%E8%AE%A1%E6%95%B0"><span class="nav-text">3. 大餐计数</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/03/IT/datastructure_and_algorithm/%E3%80%8A%E5%93%88%E5%B8%8C%E8%A1%A8%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《哈希表》专题 | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《哈希表》专题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-01-03 20:13:58 / Modified: 21:02:32" itemprop="dateCreated datePublished" datetime="2021-01-03T20:13:58+08:00">2021-01-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>关于哈希表的算法。</p>
+<span id="more"></span>
+
+<h1 id="1-哈希表"><a href="#1-哈希表" class="headerlink" title="1. 哈希表"></a>1. 哈希表</h1><p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/1.png"></p>
+<p><strong>哈希表的主要作用</strong>: 查找速度为O(1)。</p>
+<h2 id="1-1-普通哈希"><a href="#1-1-普通哈希" class="headerlink" title="1.1 普通哈希"></a>1.1 普通哈希</h2><p><strong>如何构造哈希数组？</strong></p>
+<p>比如数据的值域为0~99，我们对每一个数据取模，然后把该数据放到哈希数组中取模结果的位置。</p>
+<p><strong>哈希数组应该开多大？让每个数对多少取模?</strong></p>
+<p>首先明确数据最多会有多少个，假如为N个，则哈希数组的长度就取大于等于N的最小质数P，每个数也都对P取模（P最好离2的整数次幂远些以降低发生冲突的概率）。<br>比如数据一共会有10个，那我们的N就取11，然后把每个数据放到数组中<strong>该数据%11下标位置</strong>。</p>
+<p><strong>取模后产生位置冲突如何解决？</strong></p>
+<p>使用拉链法或者开放寻址法。</p>
+<h2 id="1-2-两种哈希表结构"><a href="#1-2-两种哈希表结构" class="headerlink" title="1.2 两种哈希表结构"></a>1.2 两种哈希表结构</h2><h3 id="1-2-1-拉链法"><a href="#1-2-1-拉链法" class="headerlink" title="1.2.1 拉链法"></a>1.2.1 拉链法</h3><p>其大概结构如下</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/2.png"></p>
+<p>这个数组中的每一个元素其实都是一个链表的头结点（它的值就是链表第一个节点的下标），对每个取模后index相同的数据，就往该链表中插入一个新的节点。（如果有删除的需求，可以在链表的节点中加入一个bool属性，删除它就把它变为FALSE即可）</p>
+<blockquote>
+<p>在学习下面内容之前最好先复习下<strong>数组模拟单链表</strong>的内容。</p>
+</blockquote>
+<p><strong>向哈希表中新增数据</strong></p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100003</span>;<span class="comment">//数据最多有多少个，N就取刚好大于等于的那个质数</span></span><br><span class="line"><span class="type">int</span> h[N]; <span class="comment">//哈希数组，初始化为全-1</span></span><br><span class="line"><span class="type">int</span> e[N]; <span class="comment">//所有节点的值</span></span><br><span class="line"><span class="type">int</span> ne[N]; <span class="comment">//所有节点的next指针</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> k = (x%N+N)%N; <span class="comment">//C++对负数取模会得到负数，+N再%N将其结果变为正数。</span></span><br><span class="line">    e[idx] = value; <span class="comment">//新增一个节点</span></span><br><span class="line">    <span class="comment">/*采用头插法添加新节点*/</span></span><br><span class="line">    ne[idx] = h[k]; <span class="comment">//让新节点的next指向该链表的第一个节点。注意h[k]是哈希数组下标k位置所对应链表的头结点，它的值就是这个链表第一个节点的下标</span></span><br><span class="line">    h[k] = idx++; <span class="comment">//让头结点指向新节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>查询某数据是否在哈希表中</strong></p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">find</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> k = (x%N+N)%N; <span class="comment">//寻找哈希值</span></span><br><span class="line">    <span class="type">int</span> temp = h[k]; <span class="comment">//获取哈希值位置链表的头结点</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(temp==<span class="number">-1</span>) <span class="keyword">break</span>; <span class="comment">//链表遍历完毕，跳出循环</span></span><br><span class="line">        <span class="keyword">if</span>(e[temp]==value) <span class="keyword">return</span> <span class="literal">true</span>;<span class="comment">//如果某节点的值等于value，说明哈希表中存在此元素</span></span><br><span class="line">        temp = ne[temp];<span class="comment">//遍历指针走向链表的下一个节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;<span class="comment">//哈希表中找不到value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-2-开放寻址法"><a href="#1-2-2-开放寻址法" class="headerlink" title="1.2.2 开放寻址法"></a>1.2.2 开放寻址法</h3><p>把哈希数组开到数据总个数的2~3倍。如果插入数据的位置发生冲突，则会不断向右寻找下一个空位插入。<br>开放寻址法只需要一个find(value)函数，它的作用是先按上述规则寻找value，如果找到了则返回value所在的下标，如果没找到就在下一个可用空位插入value，并返回这个空位的下标。</p>
+<p><strong>模板</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">200003</span>;<span class="comment">//假如数据总个数为100000，我们的N取大于等于它两倍的最小质数</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> null = <span class="number">0x3f3f3f3f</span>;<span class="comment">//用无穷大模拟null，表示哈希数组的某个位置未被占用</span></span><br><span class="line"><span class="type">int</span> h[N];<span class="comment">//全部初始化为0x3f</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> k = (value%N+N)%N; <span class="comment">//计算哈希值k</span></span><br><span class="line">    <span class="keyword">while</span>(h[k] != null &amp;&amp; h[k] != value)<span class="comment">//当k位置被占用，且占用的值不等于vaue</span></span><br><span class="line">    &#123;</span><br><span class="line">            k++;<span class="comment">//继续向右寻找</span></span><br><span class="line">            <span class="keyword">if</span>(k==N) k = <span class="number">0</span>; <span class="comment">//在整个数组中不断的寻找，直到找到为止。因为数组长度为数据总个数的两倍，这个空位总能够找到。</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;<span class="comment">//若找到了value，就返回value的下标；若没找到，就返回一个合理的空位下标，value应该被存在这个位置中。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*向哈希表中添加某value*/</span></span><br><span class="line">h[<span class="built_in">find</span>(value)] = value;</span><br><span class="line"><span class="comment">/*查询哈希表中是否存在某value*/</span></span><br><span class="line"><span class="keyword">if</span>(h[<span class="built_in">find</span>(v)]!=null) <span class="built_in">printf</span>(<span class="string">&quot;Yes\n&quot;</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;No\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-3-取0x3f3f3f3f为无穷大的好处"><a href="#1-2-3-取0x3f3f3f3f为无穷大的好处" class="headerlink" title="1.2.3 取0x3f3f3f3f为无穷大的好处"></a>1.2.3 取0x3f3f3f3f为无穷大的好处</h3><ol>
+<li>首先它换算成10进制刚好超过$10^9$，而一般算法的数据规模都不会超过$10^9$。</li>
+<li>其次它即使乘以2也不会溢出，满足了无穷大+无穷大&#x3D;无穷大的定义。</li>
+<li>再者如果想把某个数组的全部元素初始化为无穷大，因为memset是以字节为单位的，所以memset(arr, 0x7fffffff, sizeof arr)是行不通的（7fffffff都4个字节了）。想把数组内容全部初始化真正的最大值0x7fffffff，只能写循环赋值。而如果把最大值定为0x3f3f3f3f，因为形式上是3f的循环，3f刚好占一个字节，所以直接memset(arr, 0x3f, sizeof arr)即可。（这也是为什么memset一般都用来初始化为0（16进制为4个00字节）或-1（16进制为4个FF字节）</li>
+</ol>
+<h2 id="1-3-字符串哈希"><a href="#1-3-字符串哈希" class="headerlink" title="1.3 字符串哈希"></a>1.3 字符串哈希</h2><p>简单来说，就是把每个字符串按照某种算法解释为一个数字，这个数字就是该字符串的哈希值。</p>
+<p><strong>将字符串的所有前缀进行哈希处理</strong></p>
+<blockquote>
+<p>如果已知某个字符串所有前缀的哈希值hash[i]，就可以在O(1)的时间内求出它子串(下标l与r之间)的哈希值: $result &#x3D; hash[r]-hash[l-1]* p^{r-l+1}$</p>
+</blockquote>
+<p><strong>求字符串某一前缀哈希值的栗子</strong></p>
+<p>假定字符串的某前缀为hello，把它看作是一个P进制的数，将它转化为10进制。（假定进制P&#x3D;131, 字母a~z映射到它们自己的ASCII码值）</p>
+<blockquote>
+<p>要注意不能把任意单个字母映射为0，否则假如把A映射为0，则A, AA, AAA…都相等了</p>
+</blockquote>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/3.png"></p>
+<p>$$<br>104*(131^4)+101*(131^3)+108*(131^2)+108*(131^1)+111*(131^0)&#x3D;30855091530<br>$$</p>
+<p>然后将这个十进制的结果对Q取余（这里Q我们取为$2^{64}$，也就是unsigned long long的自然溢出）<br>结果为30855091530，把它保存在哈希数组下标5的位置（字符串下标从1开始，hash[5]表示字符串下标1~5子串的哈希值）。要注意的是，这个哈希数组的数据类型应该为unsigned long long（下面简称ULL），因为我们是利用它的自然溢出来哈希的。</p>
+<p><strong>模板</strong></p>
+<blockquote>
+<p>根据经验，P取为131或13331，Q取为$2^{64}$，在这样的情况下99.99%不会发生冲突。</p>
+</blockquote>
+<p>Q取为$2^{64}$（ULL类型数据的最大值+1），也就是直接把ULL类型数据的自然溢出视为哈希运算，所以我们直接把哈希数组初始化为ULL类型。为了提高查询效率，我们可以预处理字符串每一位的权值，保存在数组w中（也是ULL类型）。</p>
+<p><img src="/images/datastructure_and_algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_%E5%93%88%E5%B8%8C%E8%A1%A8/4.png"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> ULL;</span><br><span class="line">ULL h[N],w[N];<span class="comment">//hash数组和权值数组</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> P = <span class="number">131</span>;</span><br><span class="line">w[<span class="number">0</span>] = <span class="number">1</span>;<span class="comment">//第一个前缀子串只有一个字符，它的权值为1</span></span><br><span class="line"><span class="comment">/*获取字符串的所有前缀哈希，初始化权值数组*/</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">&#123;</span><br><span class="line">    h[i] = h[i<span class="number">-1</span>]*P+s[i];<span class="comment">//s是一个用字符串表示的P进制数，这句的意思是把数组s的所有前缀都视为一个P进制数，然后把它们全部转换为十进制数存入h数组（也就是字符串前缀哈希的过程）</span></span><br><span class="line">    w[i] = w[i<span class="number">-1</span>]*P;<span class="comment">//预处理P进制数每一项的权值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*拿到字符串的前缀hash数组和预处理好的weigh数组后，我们就可以根据公式计算该字符串任意子串的哈希值了*/</span></span><br><span class="line"><span class="function">ULL <span class="title">get</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> h[r]-h[l<span class="number">-1</span>]*w[r-l+<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-two-sum"><a href="#2-two-sum" class="headerlink" title="2. two sum"></a>2. two sum</h1><p>【题目】</p>
+<p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
+<p>假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
+<p>示例:</p>
+<p>给定 nums &#x3D; [2, 7, 11, 15], target &#x3D; 9</p>
+<p>因为 nums[0] + nums[1] &#x3D; 2 + 7 &#x3D; 9<br>所以返回 [0, 1]</p>
+<p>【解析】：</p>
+<p>暴力解法（平方时间复杂度）不说了，主要讨论利用哈希表求解（线性时间复杂度）的方法。</p>
+<p>思路：遍历数组中的所有元素，每次遍历都检查hashtable中有没有target-nums[i]，如果存在，则哈希表中记录的target-nums[i]的下标与i就是答案，否则将（nums[i]，i）存到hashmap中，继续下一轮循环。</p>
+<p>这种方法每次搜索元素不用遍历数组，而是在哈希表中寻找，因为哈希表的查询速度极快（常数级），因此时间复杂度降低到线性。</p>
+<p>【ac代码】：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">twoSum</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; hashTable;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; re;</span><br><span class="line">        <span class="type">int</span> length = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">auto</span> another = hashTable.<span class="built_in">find</span>(target-nums[i]); <span class="comment">//在哈希表中寻找能与nums[i]相加等target的目标元素</span></span><br><span class="line">            <span class="keyword">if</span>(another != hashTable.<span class="built_in">end</span>())  <span class="comment">// 如果找到了，返回答案</span></span><br><span class="line">            &#123;</span><br><span class="line">                re.<span class="built_in">push_back</span>(another-&gt;second);</span><br><span class="line">                re.<span class="built_in">push_back</span>(i);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            hashTable[nums[i]] = i; <span class="comment">//如果没找到，把当前元素nums[i]及其下标i加入哈希表，开始下一轮循环</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-大餐计数"><a href="#3-大餐计数" class="headerlink" title="3. 大餐计数"></a>3. 大餐计数</h1><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/count-good-meals/">https://leetcode-cn.com/problems/count-good-meals/</a></p>
+<p><strong>大餐</strong> 是指 <strong>恰好包含两道不同餐品</strong> 的一餐，其美味程度之和等于 2 的幂。</p>
+<p>你可以搭配 <strong>任意</strong> 两道餐品做一顿大餐。</p>
+<p>给你一个整数数组 <code>deliciousness</code> ，其中 <code>deliciousness[i]</code> 是第 <code>i</code> 道餐品的美味程度，返回你可以用数组中的餐品做出的不同 <strong>大餐</strong> 的数量。结果需要对 <code>109 + 7</code> 取余。</p>
+<p>注意，只要餐品下标不同，就可以认为是不同的餐品，即便它们的美味程度相同。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：deliciousness = [1,3,5,7,9]</span><br><span class="line">输出：4</span><br><span class="line">解释：大餐的美味程度组合为 (1,3) 、(1,7) 、(3,5) 和 (7,9) 。</span><br><span class="line">它们各自的美味程度之和分别为 4 、8 、8 和 16 ，都是 2 的幂。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：deliciousness = [1,1,1,3,3,3,7]</span><br><span class="line">输出：15</span><br><span class="line">解释：大餐的美味程度组合为 3 种 (1,1) ，9 种 (1,3) ，和 3 种 (1,7) 。</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= deliciousness.length &lt;= 10^5</code></li>
+<li><code>0 &lt;= deliciousness[i] &lt;= 2^20</code></li>
+</ul>
+<p>【解析】</p>
+<p>本题简单来说就是寻找在数组中有多少个数对，这些数对的和是2的幂。</p>
+<p>注意题目给出数组中每一个元素的最大值为2^20，那么两个元素的和最大值为2^21，<strong>在[0 ~ 2^21]这个范围内2的幂并不多</strong>，因此在遍历数组时，对每一个元素x，遍历[0 ~ 2^21]这个范围内所有2的幂m，在哈希表中查找是否存在m-x，如果存在说明找到了一个和为2的幂的数对。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">countPairs</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; deli)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> re = <span class="number">0</span>;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; hash;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> length = deli.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">            <span class="type">int</span> val = deli[i];</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//遍历[0 ~ 2^21]这个范围内所有2的幂m</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j&lt;=<span class="number">21</span>;j++)&#123; </span><br><span class="line">                <span class="keyword">if</span>(hash.<span class="built_in">count</span>((<span class="number">1</span>&lt;&lt;j)-val))&#123; <span class="comment">//如果哈希表中存在(m-val)，则把数组中下标i之前所有值为(m-val)的元素出现次数加到答案中</span></span><br><span class="line">                    re = (re + hash[(<span class="number">1</span>&lt;&lt;j)-val]) % (<span class="number">1e9</span>+<span class="number">7</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            hash[val]++; <span class="comment">//将val记录到哈希表中</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/02/IT/datastructure_and_algorithm/%E3%80%8A%E9%98%9F%E5%88%97%E3%80%8B%E4%B8%93%E9%A2%98/" rel="prev" title="《队列》专题">
+                  <i class="fa fa-chevron-left"></i> 《队列》专题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/08/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BNetwork-Layer-ControlPlane/" rel="next" title="《计网》Network-Layer-ControlPlane">
+                  《计网》Network-Layer-ControlPlane <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

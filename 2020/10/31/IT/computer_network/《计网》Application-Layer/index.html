@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="TCP&#x2F;IP协议栈的最顶层：应用层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计网》Application Layer">
+<meta property="og:url" content="http://example.com/2020/10/31/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BApplication-Layer/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:description" content="TCP&#x2F;IP协议栈的最顶层：应用层">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/1.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/2.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/3.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/4.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/5.png">
+<meta property="og:image" content="http://example.com/images/network_ApplicationLayer/6.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/7.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/8.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/9.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/10.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/11.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/12.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/13.png">
+<meta property="og:image" content="http://example.com/images/computer_network/network_ApplicationLayer/14.png">
+<meta property="article:published_time" content="2020-10-31T10:15:45.000Z">
+<meta property="article:modified_time" content="2021-01-08T13:35:18.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/computer_network/network_ApplicationLayer/1.png">
+
+
+<link rel="canonical" href="http://example.com/2020/10/31/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BApplication-Layer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/10/31/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BApplication-Layer/","path":"2020/10/31/IT/computer_network/《计网》Application-Layer/","title":"《计网》Application Layer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《计网》Application Layer | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1-Principles-of-Network-Applications"><span class="nav-text">2.1 Principles of Network Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-1-Network-Application-Architectures"><span class="nav-text">2.1.1 Network Application Architectures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-2-Processes-Communicating"><span class="nav-text">2.1.2 Processes Communicating</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-1-Client-and-Server-Processes"><span class="nav-text">2.1.2.1 Client and Server Processes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-2-The-Interface-Between-the-Process-and-the-Computer-Network"><span class="nav-text">2.1.2.2 The Interface Between the Process and the Computer Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-3-Addressing-Processes"><span class="nav-text">2.1.2.3 Addressing Processes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-3-Transport-Services-Available-to-Applications"><span class="nav-text">2.1.3 Transport Services Available to Applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-4-Transport-Services-Provided-by-the-Internet"><span class="nav-text">2.1.4 Transport Services Provided by the Internet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-5-Application-Layer-Protocols"><span class="nav-text">2.1.5 Application-Layer Protocols</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-The-Web-and-HTTP"><span class="nav-text">2.2 The Web and HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-1-Overview-of-HTTP"><span class="nav-text">2.2.1 Overview of HTTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-2-Non-Persistent-and-Persistent-Connections"><span class="nav-text">2.2.2 Non-Persistent and Persistent Connections</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-1-HTTP-with-Non-Persistent-Connections"><span class="nav-text">2.2.2.1 HTTP with Non-Persistent Connections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-2-HTTP-with-Persistent-Connections"><span class="nav-text">2.2.2.2 HTTP with Persistent Connections</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-3-HTTP-Message-Format"><span class="nav-text">2.2.3 HTTP Message Format</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-1-HTTP-Request-Message"><span class="nav-text">2.2.3.1 HTTP Request Message</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-1-HTTP-Response-Message"><span class="nav-text">2.2.3.1 HTTP Response Message</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-4-User-Server-Interaction-Cookies"><span class="nav-text">2.2.4 User-Server Interaction: Cookies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-5-Web-Caching"><span class="nav-text">2.2.5 Web Caching</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-5-1-The-Conditional-GET"><span class="nav-text">2.2.5.1 The Conditional GET</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3-Electronic-Mail-in-the-Internet"><span class="nav-text">2.3 Electronic Mail in the Internet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-1-SMTP"><span class="nav-text">2.3.1 SMTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-2-Comparison-with-HTTP"><span class="nav-text">2.3.2 Comparison with HTTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-3-Mail-Access-Protocols"><span class="nav-text">2.3.3 Mail Access Protocols</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-1-POP3"><span class="nav-text">2.3.3.1 POP3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-2-IMAP"><span class="nav-text">2.3.3.2 IMAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-3-Web-Based-E-Mail"><span class="nav-text">2.3.3.3 Web-Based E-Mail</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-4-DNS%E2%80%94The-Internet%E2%80%99s-Directory-Service"><span class="nav-text">2.4 DNS—The Internet’s Directory Service</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-1-Services-Provided-by-DNS"><span class="nav-text">2.4.1 Services Provided by DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-2-Overview-of-How-DNS-Works"><span class="nav-text">2.4.2 Overview of How DNS Works</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-1-A-Distributed-Hierarchical-Database"><span class="nav-text">2.4.2.1 A Distributed, Hierarchical Database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-2-DNS-Caching"><span class="nav-text">2.4.2.2 DNS Caching</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-3-DNS-Records-and-Messages"><span class="nav-text">2.4.3 DNS Records and Messages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-1-DNS-Message"><span class="nav-text">2.4.3.1 DNS Message</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-2-Inserting-Records-into-the-DNS-Database"><span class="nav-text">2.4.3.2 Inserting Records into the DNS Database</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-4-Conclude"><span class="nav-text">2.4.4 Conclude</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-5-Peer-to-Peer-File-Distribution"><span class="nav-text">2.5 Peer-to-Peer File Distribution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-6-Video-Streaming-and-Content-Distribution-Networks"><span class="nav-text">2.6 Video Streaming and Content Distribution Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-1-Internet-Video"><span class="nav-text">2.6.1 Internet Video</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-2-HTTP-Streaming-and-DASH"><span class="nav-text">2.6.2 HTTP Streaming and DASH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-3-Content-Distribution-Networks"><span class="nav-text">2.6.3 Content Distribution Networks</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/31/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BApplication-Layer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《计网》Application Layer | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《计网》Application Layer
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-10-31 18:15:45" itemprop="dateCreated datePublished" datetime="2020-10-31T18:15:45+08:00">2020-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-08 21:35:18" itemprop="dateModified" datetime="2021-01-08T21:35:18+08:00">2021-01-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>TCP&#x2F;IP协议栈的最顶层：应用层</p>
+<span id="more"></span>
+
+<h1 id="2-1-Principles-of-Network-Applications"><a href="#2-1-Principles-of-Network-Applications" class="headerlink" title="2.1 Principles of Network Applications"></a>2.1 Principles of Network Applications</h1><h2 id="2-1-1-Network-Application-Architectures"><a href="#2-1-1-Network-Application-Architectures" class="headerlink" title="2.1.1 Network Application Architectures"></a>2.1.1 Network Application Architectures</h2><p>要写出一个网络应用，首先要选择一种架构，是<strong>CS</strong>（client-to-server）架构，还是<strong>P2P</strong>（peer-to-peer）架构。<br>所谓CS架构，就是整个网络应用生态是由server和client这种不对等关系组成（比如web应用），server必须长时间不关机来达到持续为client提供资源的效果，client专门访问资源。一般来说服务提供方都是服务器的集群，也称为<strong>data center</strong>，一个data center中包含了成千上万台服务器。因为就如今的网络吞吐量来看，一台server是远远无法为一个成熟的网络应用提供所需的服务的。甚至一个data center也不够，要多个data center才能满足需求（google有将近50data centers遍布全球）。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/1.png"></p>
+<p>P2P架构中，两两相连的hosts彼此对等，它们自己都既可以提供资源，也可以访问资源。这种架构方式在数据传输量较大的网络应用中经常被使用（比如点对点文件传输BitTorrent，网络电话，视频会议）。<br>P2P最大的好处就是<strong>self-scalability</strong>，因为一台host给它的所有peers发送文件A后，它的所有peers又能给它们各自的peers发送文件A，文件A在整个网络中被越来越多hosts所拥有，到了后期如果网络中某台新host要请求文件A，就可能会有N个已持有文件A的hosts一起传输给它，速度非常快。<br>另外P2P也不需要类似server等的一些基础架构，比较经济，方便。</p>
+<p>不过P2P也存在一些问题：安全，peers较少时性能很差，去中心化网络的可靠性较低。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/2.png"></p>
+<blockquote>
+<p>如今很多软件都同时采用了P2P和CS架构</p>
+</blockquote>
+<h2 id="2-1-2-Processes-Communicating"><a href="#2-1-2-Processes-Communicating" class="headerlink" title="2.1.2 Processes Communicating"></a>2.1.2 Processes Communicating</h2><p>一台机器上processes之间相互通信的内容是操作系统中需要探究的内容，在网络中，我们主要研究<strong>不同hosts上</strong>的process之间通信的过程：它们通过互相发送<strong>message</strong>来通信。</p>
+<h3 id="2-1-2-1-Client-and-Server-Processes"><a href="#2-1-2-1-Client-and-Server-Processes" class="headerlink" title="2.1.2.1 Client and Server Processes"></a>2.1.2.1 Client and Server Processes</h3><p>无论是CS架构还是P2P架构，不同<strong>hosts</strong>之间的processes都存在<strong>server&#x2F;client pair</strong>的关系（注意CS架构中的server和client指的是host，而不是此处的process）。<br>比如web应用中，客户端的浏览器就是一个client process，服务端为client提供内容的进程就是server process；P2P的文件传输服务中，请求文件内容的进程为client process，提供内容的进程为server process（所以P2P中的一个host可以同时充当client和server的角色）。</p>
+<p>更精确的定义：<br>In the context of a communication session between a pair of processes, the process that initiates the communication (that is, initially contacts the other process at the beginning of the session) is labeled as the client. The process that waits to be contacted to begin the session is the server.</p>
+<p>在web应用中，浏览器（client process）向服务端发起连接请求，一直在等待请求的服务端接收服务的进程（server process）接受（或拒绝）连接请求；P2P中请求文件的host向另一个host发起连接请求（client process），另一个host被动等待并接受（或拒绝）连接请求（server process）。</p>
+<h3 id="2-1-2-2-The-Interface-Between-the-Process-and-the-Computer-Network"><a href="#2-1-2-2-The-Interface-Between-the-Process-and-the-Computer-Network" class="headerlink" title="2.1.2.2 The Interface Between the Process and the Computer Network"></a>2.1.2.2 The Interface Between the Process and the Computer Network</h3><p>process通过【软件实现的接口——<strong>socket</strong> 】来接收或发送message。<br>如果把process比作房子，那么socket就是这个房子的门，process接收信息发送信息都要通过它的socket。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/3.png"></p>
+<p>（上图假定运输层协议为TCP），可以看出，socket其实就是一个host上<strong>应用层和传输层之间的接口</strong>，因此它也被称为【应用和网络】之间的<strong>Application Programming Interface (API)</strong> 。<br>应用程序的开发者对应用层这边的socket拥有<strong>完全控制权</strong>，而对传输层那边的socket的操作空间却非常少，只有如下两个方面：</p>
+<ol>
+<li>选择使用哪一个传输层协议</li>
+<li>填写一些传输层的参数（比如最大的segment size）</li>
+</ol>
+<h3 id="2-1-2-3-Addressing-Processes"><a href="#2-1-2-3-Addressing-Processes" class="headerlink" title="2.1.2.3 Addressing Processes"></a>2.1.2.3 Addressing Processes</h3><p>两个hosts之间互相通信需要知道彼此的IP地址，而一台host上会运行多个processes，两个processes之间通信的话，就需要知道对方是host上具体的哪一个进程。用<strong>port number</strong>来标识每一个进程，这样就可以通过【IP+port number】来精确的定位一个host上的某一个process了。</p>
+<p>一些著名的应用程序拥有固定的port number：HTTP（80），SMTP（25）等，</p>
+<h2 id="2-1-3-Transport-Services-Available-to-Applications"><a href="#2-1-3-Transport-Services-Available-to-Applications" class="headerlink" title="2.1.3 Transport Services Available to Applications"></a>2.1.3 Transport Services Available to Applications</h2><p>编写网络应用程序之前首先要选择一种传输层协议，传输层的协议有两个：TCP和UDP，它们提供了不同的服务类型。</p>
+<p><strong>Reliable Data Transfer</strong>，选择可靠传输可以保证数据完好无损的到达接收端，但是速度较慢。相对的，选择不可靠传输速度较快。</p>
+<p><strong>throughput</strong>，很多媒体应用（比如视频网站）要保证稳定的网络带宽，这时就要选择throughput guaranteed服务，而一些比如邮件服务，就不需要稳定的带宽，只要传输可靠就行。</p>
+<p><strong>timing</strong>，一些应用要求数据必须要给定的时间内传递到（比如网络会议，网络游戏），就要选择timing的协议。</p>
+<p><strong>Security</strong>，传输层协议还会提供一些数据加密，数据完整性校验等安全服务。</p>
+<h2 id="2-1-4-Transport-Services-Provided-by-the-Internet"><a href="#2-1-4-Transport-Services-Provided-by-the-Internet" class="headerlink" title="2.1.4 Transport Services Provided by the Internet"></a>2.1.4 Transport Services Provided by the Internet</h2><p><strong>TCP</strong><br>提供面向连接的可靠数据传输服务，具体来看：</p>
+<ol>
+<li>connection-oriented service<br>在传输数据之前，使用TCP连接的两个进程会先交换一些控制信息，这个过程就是著名的<strong>三次握手</strong>，三次握手完成后，两个进程的sockets之间就建立起了<strong>TCP connection</strong>，这种连接允许它们进行<strong>全双工</strong>通信。<br>通信结束后，两进程也会通过类似三次握手的方式挥手告别来中止TCP连接。</li>
+<li>reliable data transfer service<br>通过TCP connection传输的数据不会产生丢包或者数据重复、数据缺失等问题。</li>
+<li>congestion control<br>如果当前网络整体比较拥塞，TCP可以限制进程的数据发送速率</li>
+</ol>
+<p><strong>UDP</strong><br>UDP只提供最基本的数据传输服务，因为简单，所以它的特点是高效，但是不够可靠。<br>UDP是无连接的服务，通信之前不需要交换控制信息；UDP不可靠，这意味着数据传输过程中可能发生丢包、数据缺失、数据到达顺序错乱等问题。不仅如此，UDP也没有任何拥塞控制策略，这意味着它可能一次发送一大批数据到链路上，引发链路拥塞。</p>
+<blockquote>
+<p>视频通话这类一般都使用UDP实现，因为这类应用对数据完整性有一定容忍度，使用UDP能够避免TCP带来的额外开销。不过如今多数防火墙都会阻塞UDP数据，因此通常这类应用会将TCP作为第二选择以备不时之需。</p>
+</blockquote>
+<h2 id="2-1-5-Application-Layer-Protocols"><a href="#2-1-5-Application-Layer-Protocols" class="headerlink" title="2.1.5 Application-Layer Protocols"></a>2.1.5 Application-Layer Protocols</h2><p>使用相同两个应用层协议的终端可以互相发送message来实现对应的功能。<br>应用层协议通常定义了：</p>
+<ol>
+<li>message类型（是请求还是回应）</li>
+<li>message的语法（里面有多少个字段）</li>
+<li>message中每个字段的语义</li>
+<li>一个进程【何时】、【如何】发送和接收message</li>
+</ol>
+<p>注意区分【应用层协议application-layer protocols】和【网络应用network applications】，前者是后者的子集（十分重要的子集）。比如web应用包含了HTML、web browser、web servers以及应用层协议HTTP。</p>
+<h1 id="2-2-The-Web-and-HTTP"><a href="#2-2-The-Web-and-HTTP" class="headerlink" title="2.2 The Web and HTTP"></a>2.2 The Web and HTTP</h1><h2 id="2-2-1-Overview-of-HTTP"><a href="#2-2-1-Overview-of-HTTP" class="headerlink" title="2.2.1 Overview of HTTP"></a>2.2.1 Overview of HTTP</h2><p>web的核心是它的应用层协议：HTTP（TyperText Transfer Protocol）。HTTP包含两个程序：client program和server program，分别运行在客户端和服务端，通过交换HTTP messages来互相通信。HTTP定义了这些messages的结构以及client和server交换messages的方式。</p>
+<blockquote>
+<p>因为browser实现了客户端的HTTP，所以web应用中client可等同于browser</p>
+</blockquote>
+<p><strong>web page</strong>由base HTML file和多个objects（图片、视频等）组成，这些objects都被URL唯一标识。</p>
+<p><strong>URL（Uniform Resource Locator）</strong>包含两部分内容：</p>
+<ol>
+<li>提供网页内容（object）的服务器的域名</li>
+<li>object所在的路径名称<br>例如：<a target="_blank" rel="noopener" href="http://www.someschool.edu/someDepartment/picture.gif">http://www.someSchool.edu/someDepartment/picture.gif</a><br><a target="_blank" rel="noopener" href="http://www.someschool.edu就是提供objects访问的服务器域名/">www.someSchool.edu就是提供objects访问的服务器域名</a><br>&#x2F;someDepartment&#x2F;picture.gif就是当前访问的object的路径</li>
+</ol>
+<p>HTTP定义了client向server请求网页的方式，以及server向client传输网页的方式。web应用整体采用了CS架构，即一个server长期开机固定ip运行服务等待client请求，多个client可以在任意时间访问server提供的web资源。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/4.png"></p>
+<p>HTTP归根到底是一个应用，之前学过，网络应用都要选择一个传输层协议，<strong>HTTP选择的传输层协议是TCP</strong>，因此web应用是无损传输数据的。</p>
+<p>HTTP还是一个<strong>stateless protocol</strong>，即它不会记录client的状态信息。这一点体现在，即使一个client在极短的间隔内多次请求同一个object，每当server响应完一次请求，就会把它完全忘记，下一次请求对它来说就像以前从来没有发生过一样。</p>
+<h2 id="2-2-2-Non-Persistent-and-Persistent-Connections"><a href="#2-2-2-Non-Persistent-and-Persistent-Connections" class="headerlink" title="2.2.2 Non-Persistent and Persistent Connections"></a>2.2.2 Non-Persistent and Persistent Connections</h2><p>运行在TCP之上的应用程序，server和client之间会建立持久的连接来通信，这种情况下需要做一个重要的决定：只建立一条TCP连接，让request&#x2F;response同时在这个连接上传输；还是为request和response各自单独建立一条TCP连接？</p>
+<p>只建立一条TCP连接，让request&#x2F;response同时在这个连接上传输称为<strong>Non-persistent connection</strong>，<br>为request和response各自单独建立一条TCP连接称为<strong>Persistent connection</strong>。<br>HTTP可以在这两种方式中任选其一。</p>
+<h3 id="2-2-2-1-HTTP-with-Non-Persistent-Connections"><a href="#2-2-2-1-HTTP-with-Non-Persistent-Connections" class="headerlink" title="2.2.2.1 HTTP with Non-Persistent Connections"></a>2.2.2.1 HTTP with Non-Persistent Connections</h3><p>为了解释non-persistent connection，先来看看一个网页从server发送到client的过程是怎样的。</p>
+<p>假定网页的URL是: <a target="_blank" rel="noopener" href="http://www.someschool.edu/someDepartment/home.index">http://www.someSchool.edu/someDepartment/home.index</a></p>
+<ol>
+<li>HTTP client process首先向服务器<a target="_blank" rel="noopener" href="http://www.someschool.edu的80端口(http的默认端口)发起tcp连接请求,连接建立起来后,client和server两边各有一个socket口./">www.someSchool.edu的80端口（HTTP的默认端口）发起TCP连接请求，连接建立起来后，client和server两边各有一个socket口。</a></li>
+<li>HTTP client process通过socket向HTTP server process发送请求报文，该请求报文中包含请求的资源在server上的具体路径（如：&#x2F;someDepartment&#x2F;home.index）。</li>
+<li>HTTP server process通过自己这边的socket接收client发来的请求报文，然后根据报文的请求，到自己的硬盘上寻找相应的资源&#x2F;someDepartment&#x2F;home.index，然后将该资源打包成HTTP response报文的格式，从socket向client发出。</li>
+<li>资源传输完毕后，HTTP server process发出关闭TCP connection的请求（不过这时TCP连接不会真的被关闭，它会等到HTTP client process确认【完整的】收到资源报文后，才会关闭）</li>
+<li>HTTP client process（browser）接收到回复报文后，TCP连接断开，接着client将报文拆开，取出其中的资源显示在浏览器界面上</li>
+</ol>
+<p>使用不同的浏览器可能会看到并不完全相同的网页，因为HTTP只管发送和接收HTTP报文，至于报文中的信息是如何被解释然后呈现给用户则完全是由browser来控制的。</p>
+<p>以上整个过程就是典型的non-persistent connection，每传输一个资源就需要创建一次TCP连接（第1步），每一次传输完毕后都要断开连接（第4步），所以下一次传输网页又要重新建立TCP连接，注意【一次HTTP传输只能传输一个资源(object)，而非整个网页】，所以假如一个网页上有11张图片，那么这张网页就需要11次TCP传输。这就是所谓的面向无连接，无记忆，不会因为一个client要请求多个资源而为它保持TCP连接。</p>
+<p>不过现代的browser一般可以同时并行的维护多个TCP连接，所以网页连接的速度不至于很慢。</p>
+<p>现在来算算从client发起网页请求到它接收到完整的网页总共需要的时间。我们称一个简短的小报文从client发到server，然后从server发回到client总共花费的时间为 <strong>round-trip time（RTT）</strong> ，RTT包括了之前我们介绍过的packet-propagation delays、packet-queuing delays以及packet-processing delays。一个网页从请求到完整接收这整个过程其实远不止一个RTT的时间，一个重要的原因就是两个终端之间建立TCP连接必须要经过 <strong>三次握手（three-way handshaking）</strong> 。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/5.png"></p>
+<p>三次握手的前两次就用掉了一个RTT的时间，最后一次握手则将第三次握手的报文和HTTP request报文一起发出。</p>
+<h3 id="2-2-2-2-HTTP-with-Persistent-Connections"><a href="#2-2-2-2-HTTP-with-Persistent-Connections" class="headerlink" title="2.2.2.2 HTTP with Persistent Connections"></a>2.2.2.2 HTTP with Persistent Connections</h3><p>Non-persistent connection让server的负担过重。其实请求一次网页建立一次TCP连接还稍微可以接受，如果请求一个object就得新建一个TCP连接的话，一个现代网页至少也要创建十几个TCP连接，一个server可是要同时对成百上千个clients提供服务的。不仅如此，TCP连接创建还特别慢，要好几个RTT。</p>
+<p>为了解决这个问题，HTTP 1.1提供了persistent connection，它使得连接得以维持，可以对同一目标进行连续的objects传输（如果server收到【连续的】请求，它就会将这些请求的结果【连续地】发回给目标client），这下终于可以用一个TCP连接一次性传输整个网页而不需要为网页上的每一个object都创建一个全新的TCP链接了。当一条TCP链接在一定时间内（用户可定义）没有被使用后，该链接才会被关闭。</p>
+<p>HTTP 1.1的模式默认为persistent connection，之后在HTTP 1.1基础之上新做出来的HTTP&#x2F;2甚至允许多个不同的请求和应答报文同时在一条TCP链路上传输。</p>
+<h2 id="2-2-3-HTTP-Message-Format"><a href="#2-2-3-HTTP-Message-Format" class="headerlink" title="2.2.3 HTTP Message Format"></a>2.2.3 HTTP Message Format</h2><h3 id="2-2-3-1-HTTP-Request-Message"><a href="#2-2-3-1-HTTP-Request-Message" class="headerlink" title="2.2.3.1 HTTP Request Message"></a>2.2.3.1 HTTP Request Message</h3><p>一个典型的HTTP请求报文示例如下：</p>
+<p>【GET &#x2F;somedir&#x2F;page.html HTTP&#x2F;1.1】    &#x2F;&#x2F;第一行叫做 <strong>request line</strong> ，包含三个字段：方法（有GET、POST等）、URL、以及HTTP version。</p>
+<p>余下几行统称为 <strong>header lines</strong> </p>
+<p>【Host: <a target="_blank" rel="noopener" href="http://www.someschool.edu】/">www.someschool.edu】</a>   &#x2F;&#x2F;指明了请求的资源在哪台host上。既然已经建立了TCP链接，那么对方主机的IP已经是知道的，然而这条信息是否是多余的呢？其实到后面我们就会学到Web proxy caches会用到它。<br>【Connection: close 】      &#x2F;&#x2F;这代表browser并不希望建立persistent connection，这样在server发出response message后就会请求关闭TCP<br>【User-agent: Mozilla&#x2F;5.0】       &#x2F;&#x2F;说明了发出 resquest的browser类型，本例为火狐。这条信息其实很重要，因为server可以根据不同的browser类型发送不同版本的response message<br>【Accept-language: fr】   &#x2F;&#x2F;说明了client想接收法文版本的网页</p>
+<p>现在来学习HTTP resquest message的一般格式：</p>
+<p><img src="/images/network_ApplicationLayer/6.png"></p>
+<p>可以看到其中有一个特殊的字段叫做 Entity body，如果method字段使用GET，该字段就为空。只有当使用POST方法时，该字段可以被用户填写。要注意的是，不光是POST方法可以让用户写入数据，GET也可以，它们之间的区别在于，GET会把用户输入的数据展示在url上，而POST不会。</p>
+<p>也可以使用head方法，当server收到一个head方法的request message时，它会无视掉请求报文，直接返回一个response message，因此该方法通常用来debug；put方法使得用户可以上传object到web server；delete方法使得用户可以删除web server上的文件。</p>
+<h3 id="2-2-3-1-HTTP-Response-Message"><a href="#2-2-3-1-HTTP-Response-Message" class="headerlink" title="2.2.3.1 HTTP Response Message"></a>2.2.3.1 HTTP Response Message</h3><p>下面的示例就是上一小节示例的回复：</p>
+<p>HTTP&#x2F;1.1 200 OK     &#x2F;&#x2F; <strong>status line</strong> ，有三个字段：协议版本、status code、状态信息。本例server使用HTTP 1.1版本，一切正常。</p>
+<p>&#x2F;&#x2F;中间六行统称 <strong>header lines</strong></p>
+<p>Connection: close      &#x2F;&#x2F;&#x2F;告诉client这条消息发完我就要关TCP链接了<br>Date: Tue, 18 Aug 2015 15:44:04 GMT   &#x2F;&#x2F;server发送response message的时间<br>Server: Apache&#x2F;2.2.3 (CentOS)    &#x2F;&#x2F;指明了server的软件类型<br>Last-Modified: Tue, 18 Aug 2015 15:11:03 GMT  &#x2F;&#x2F;之后还会详细介绍，指明本object内容的最后修改时间<br>Content-Length: 6821  &#x2F;&#x2F;entity body的长度<br>Content-Type: text&#x2F;html  &#x2F;&#x2F;entity body中的数据类型</p>
+<p>&#x2F;&#x2F;最后是entity body</p>
+<p>(data data data data data …)</p>
+<p>具体看看status code</p>
+<table>
+<thead>
+<tr>
+<th>status code</th>
+<th>含义</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200 OK</td>
+<td>请求成功，response message也已经成功发送</td>
+<td></td>
+</tr>
+<tr>
+<td>301 Moved Permanently</td>
+<td>请求的object已经被永久移走了，新的网址在Location字段中给出，一般这时browser会自动重定位到新的网址</td>
+<td></td>
+</tr>
+<tr>
+<td>400 Bad Request</td>
+<td>400是一个通用的错误码，代表server无法理解本次request</td>
+<td></td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>请求的文件不在该server上</td>
+<td></td>
+</tr>
+<tr>
+<td>505 HTTP Version Not Supported</td>
+<td>本server不支持请求的HTTP协议版本</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2-2-4-User-Server-Interaction-Cookies"><a href="#2-2-4-User-Server-Interaction-Cookies" class="headerlink" title="2.2.4 User-Server Interaction: Cookies"></a>2.2.4 User-Server Interaction: Cookies</h2><p>虽然HTTP server是无状态协议（不会对用户有记忆），但大多数情况下web server需要去记住用户来实现某些功能（比如对会员用户提供特定的内容），基于这种需求，cookies技术出现了，使用cookie可以让网站持续的追踪用户，现在大多数网页都使用了cookie技术。</p>
+<p>cookie技术分为四个部分：</p>
+<ol>
+<li>在HTTP response message和request message中各有一行cookie header line</li>
+<li>browser会在客户端维护一个cookie file</li>
+<li>一个网站后端的数据库</li>
+</ol>
+<p>现在来根据案例学习下cookie的具体运作流程：</p>
+<p>假定Susan第一次访问亚马逊的网站，当它发送的HTTP resquest到达亚马逊的web服务器后，服务器会为它创建一个独一无二的身份验证码，并且在后端数据库中以该验证码为索引创建一个数据条目，接着亚马逊的web服务器会回应Susan的browser一个HTTP response  message，其中就包含了一个cookie的条目：【Set-cookie：1678】。当Susan的browser接收到亚马逊的response message后，发现其中有一个set-cookie字段，就会在自己维护的cookie文件中增添一行数据，这一行数据包括亚马逊服务器的主机名以及set-cookie字段中的身份验证码。随后Susan不断的访问亚马逊网站，他每一次访问的resquest message都会被browser加上cookie的身份验证码字段（即：Cookie：1678），这样一来亚马逊的web server就可以追踪Susan在网站上的行为，用户1678浏览了哪些网页，浏览的顺序，甚至打开网页的时间，收集这些数据并分析就可以做出一个推荐系统。如果Susan在亚马逊上注册了自己账号，那么亚马逊的web server就会将用户1678和Susan填写的个人信息（姓名、性别、银行卡号和密码）关联起来，综合分析1678的访问偏好以及Susan的个人信息，精准的推荐首页商品或者投放广告，并且Susan每次购买商品无需重复输入自己的卡号密码。</p>
+<p>用户第一次访问某网站后，网站服务器会用一个独一无二的身份码标识他，并将其写入数据库，该身份码同时会保存在用户本地端，之后如果再次访问该网站，用户的browser每次发出的HTTP resquest message中就会在cookie字段包含自己的身份码，server根据身份码来记住用户。</p>
+<p>虽然cookie方便了用户，但是由于它能够获取用户大量的敏感信息，因此不太安全。</p>
+<h2 id="2-2-5-Web-Caching"><a href="#2-2-5-Web-Caching" class="headerlink" title="2.2.5 Web Caching"></a>2.2.5 Web Caching</h2><p><strong>web cache</strong> 也称为 <strong>proxy server</strong> ，可以【代替原web server满足一些HTTP resquests】。web cache拥有自己的存储系统，里面保存了原web server中最近被访问过的一些数据，用户可以在browser中进行设置所有请求都优先发送到web cache。现假定browser请求<a target="_blank" rel="noopener" href="http://www.someschool.edu/campus.gif%EF%BC%9A">http://www.someschool.edu/campus.gif：</a></p>
+<ol>
+<li>browser先与web cache建立TCP链接，并向其发送HTTP request</li>
+<li>web cache接收到resquest后，检查自己是否缓存了resquest要求的目标资源，如果有，就将目标资源打包到HTTP response message中发送给client browser</li>
+<li>如果web cache没有缓存目标资源，就会转而与原web server建立TCP链接，然后向其发送请求目标资源的HTTP resquest，等收到原web server的response后，就会将其中的目标资源存储到自己的硬盘中，并将一份该资源的复制打包成HTTP response message发送给client browser</li>
+</ol>
+<p><img src="/images/computer_network/network_ApplicationLayer/7.png"></p>
+<p>从上述过程可以看出【web cache既是client也是server】。</p>
+<p>一般web cache是由ISP购买并安装的，比如大学就可能购买一个web cache，然后配置让校园中所有的browser都优先访问web cahce。</p>
+<p>使用web cache的理由有二：</p>
+<ol>
+<li>极大的降低客户端请求网页的时延，尤其是当client和原服务器之间的带宽远小于client和web cache之间的的带宽时（通常情况下client和web cache之间都会建立高速连接）</li>
+<li>web cache可以极大的减轻接入层的拥塞状况，使得接入层的机构不需要很频繁的升级带宽，节省了很多费用。不仅如此，从整体上看web cache减轻了整个互联网的拥塞状况，提升了整个互联网的性能。</li>
+</ol>
+<h3 id="2-2-5-1-The-Conditional-GET"><a href="#2-2-5-1-The-Conditional-GET" class="headerlink" title="2.2.5.1 The Conditional GET"></a>2.2.5.1 The Conditional GET</h3><p>web cache可能会带来一个问题：一个资源刚刚被缓存后，原服务器上该资源的内容被更新了。幸好HTTP提供了验证一个object是否是最新的机制 <strong>conditional GET</strong> ，当一个HTTP request message【使用GET方法】并且【存在If-Modified-Since字段】它就叫conditional GET。</p>
+<p>依然通过第一个例子来看看conditional GET的工作方式：</p>
+<ol>
+<li><p>client browser向web cache发出请求，web cache本地没有缓存目标资源，转而向原web server发出请求。</p>
+</li>
+<li><p>原web server将目标资源发回给web cached</p>
+<p>HTTP&#x2F;1.1 200 OK<br>Date: Sat, 3 Oct 2015 15:39:29<br>Server: Apache&#x2F;1.3.0 (Unix)<br>Last-Modified: Wed, 9 Sep 2015 09:23:24<br>Content-Type: image&#x2F;gif<br>(data data data data data …)</p>
+</li>
+<li><p>web cache将目标资源【以及Last-Modified字段】存储在本地硬盘，并将一份复制发给client browser</p>
+</li>
+<li><p>一周后，一个browser向该web cache请求同一份资源，虽然这份资源被缓存在了web cache中，但是可能已经过期了，因此它要发出conditional GET来确认该资源是否是最新的，即向原web server发送：</p>
+<p>GET &#x2F;fruit&#x2F;kiwi.gif HTTP&#x2F;1.1<br>Host: <a target="_blank" rel="noopener" href="http://www.exotiquecuisine.com/">www.exotiquecuisine.com</a><br>If-modified-since: Wed, 9 Sep 2015 09:23:24</p>
+</li>
+<li><p>conditional GET的作用是让原server对比目标资源的modified字段，如果不同就传一份最新的，如果相同就按兵不动。本例中两modified字段值相同，表明该资源没有被修改过。</p>
+</li>
+<li><p>原web server将response message传输给cache：</p>
+<p>HTTP&#x2F;1.1 304 Not Modified<br>Date: Sat, 10 Oct 2015 15:39:29<br>Server: Apache&#x2F;1.3.0 (Unix)<br>(empty entity body)</p>
+</li>
+<li><p>web cache知道了该资源是最新的，就直接将其发送给client browser</p>
+</li>
+</ol>
+<h1 id="2-3-Electronic-Mail-in-the-Internet"><a href="#2-3-Electronic-Mail-in-the-Internet" class="headerlink" title="2.3 Electronic Mail in the Internet"></a>2.3 Electronic Mail in the Internet</h1><p>电子邮件在互联网诞生之初就已经存在了，直到现在它仍然是互联网中不可缺少的一环</p>
+<p>电子邮件的三个主要组成部分：</p>
+<ol>
+<li><strong>user agent</strong> (如Outlook、sina mail等)</li>
+<li><strong>mail servers</strong></li>
+<li><strong>Simple Mail Transfer Protocol (SMTP)</strong></li>
+</ol>
+<p><img src="/images/computer_network/network_ApplicationLayer/8.png"></p>
+<p>电邮写好后，发送端通过user agent将其发送到mail server上，接收端通过user agent获取mail server上的邮件。每一个用户都在某一个mail server上拥有自己的 <strong>mailbox</strong> ，里面装着待收取的邮件。如果接收端的mail server出现问题，发送端的mail server可以察觉到并且将发送失败的邮件保存到自己的 <strong>message queue</strong> 中，过一段时间后再次尝试发送，如果失败次数过多，发送端mail server就会通知用户是否要将邮件删除。</p>
+<p>SMTP是电邮使用的标准应用层协议，它下层使用TCP可靠传输，提供将邮件从发送端mail server传输到接收端mail server的服务。SMTP有两个端，一个运行在发送端mail server上的客户端，一个运行在接收端mail server上的服务端，不过每一个mail server都会同时运行SMTP的两种端，因为它要同时扮演发送端和接收端两种角色。</p>
+<h2 id="2-3-1-SMTP"><a href="#2-3-1-SMTP" class="headerlink" title="2.3.1 SMTP"></a>2.3.1 SMTP</h2><p>假设Alice想要给Bob发送一个纯ASCII字符文件：</p>
+<ol>
+<li>Alice打开她的user agent，输入Bob的电邮地址，然后将已经写好的邮件发送</li>
+<li>Alice的user agent将邮件发送到她的mail server处，mail server接收到后将该邮件存储在待发送队列中</li>
+<li>Alice这边的mail server上运行的SMTP发现待发送队列中有新邮件，就会开始申请与Bob的mail server上的SMTP（port 25）进行TCP连接</li>
+<li>待双方的SMTP连接成功后，Alice端（即SMTP客户端）就会将Alice的邮件放到TCP信道上发送</li>
+<li>邮件传输到Bob端的mail server后，其上运行的SMTP会接收该邮件，然后买了server将该邮件放到Bob的mailbox中</li>
+<li>Bob的user agent会给他发出一个新邮件提示，Bob有空时即可阅读</li>
+</ol>
+<p><img src="/images/computer_network/network_ApplicationLayer/9.png"></p>
+<p>值得注意的一点是，SMTP传输不使用中继服务器，也就是说，【即使邮件通信双方处在地球的南北极，邮件也会直接在双方的mail server之间通过SMTP传输，不会因为距离太远而在中途被中继发送】。不仅如此，电子邮件要么发送成功——在接收端手中，要么发送失败——在发送端手中等待重新发送，绝不可能因为传输中途失败而留存在某一个发送端和接收端之外的服务器中。</p>
+<h2 id="2-3-2-Comparison-with-HTTP"><a href="#2-3-2-Comparison-with-HTTP" class="headerlink" title="2.3.2 Comparison with HTTP"></a>2.3.2 Comparison with HTTP</h2><p>HTTP和SMTP有相同之处，他们都用于在服务器和客户端之间传送数据，都使用persistent connection。它们的不同之处在于：</p>
+<ol>
+<li><p>HTTP是一种 <strong>pull protocol</strong> ，比如用户通过HTTP去web server上主动pull下来自己想要的信息。【在HTTP建立的TCP连接中，通常是想要主动获取数据的一方先发起TCP请求】</p>
+<p>SMTP是一种 <strong>push protocol</strong> ，比如电邮发送端的mail server将邮件主动push到接收端mail server。【在SMTP建立的TCP连接中，通常是想要主动发送数据的一方先发起TCP请求】</p>
+</li>
+<li><p>SMTP要求邮件内容全是ASCII格式的，如果有非ASCII格式的内容，要先将这部分内容转成ASCII格式才能发送，而HTTP没有这个要求</p>
+</li>
+<li><p>HTTP会将每一个object封装到HTTP response message中逐个发送，而SMTP会将所有的objects封装到一个message中一次全部发送</p>
+</li>
+</ol>
+<h2 id="2-3-3-Mail-Access-Protocols"><a href="#2-3-3-Mail-Access-Protocols" class="headerlink" title="2.3.3 Mail Access Protocols"></a>2.3.3 Mail Access Protocols</h2><p>我们之前讨论的内容中，只说了mail server之间消息的传输需要SMTP，但其实从发送端user agent将消息发送到他的mail server这一步也是需要SMTP来push的，那么接收端该如何从他的mail server中获取邮件数据呢？SMTP只能push不能用，因此必须要想其他方法。</p>
+<p>事实上可以完成把邮件从接收端mail server给pull到user agent这一任务协议有很多：<strong>Post Office Protocol——Version 3（POP3），Internet Mail Access Protocol（IMAP），以及HTTP</strong>   </p>
+<p><img src="/images/computer_network/network_ApplicationLayer/10.png"></p>
+<h3 id="2-3-3-1-POP3"><a href="#2-3-3-1-POP3" class="headerlink" title="2.3.3.1 POP3"></a>2.3.3.1 POP3</h3><p>POP3是一个极其简单的协议，因为它太简单了以至于它的许多功能都受限了。</p>
+<p>接收端的user agent对它的mail server的110端口（POP3端口）发起TCP连接，POP3的运行有三个阶段：authorization、transaction以及update。</p>
+<ol>
+<li>authorization。这一阶段user agent会发送用户名和密码来验证用户身份</li>
+<li>transaction。这一阶段user agent将消息内容pull到本地，并标记邮件状态（是否要删除，标为已读等）</li>
+<li>update。用户在user agent发出 quit指令后，本次POP3对话结束，与此同时mail server将标记为删除的邮件删除。</li>
+</ol>
+<h3 id="2-3-3-2-IMAP"><a href="#2-3-3-2-IMAP" class="headerlink" title="2.3.3.2 IMAP"></a>2.3.3.2 IMAP</h3><p>POP3只能把邮件取回到用户本地，而IMAP可以将邮件取到用户指定的云存储器中，它比POP3要复杂的多。IMAP server可以通过IMAP session持续维护用户的状态信息，IMAP还允许用户一次获取部分邮件信息，比如只获取邮件头部信息，或者部分邮件内容，当用户网络状况不好时，用户可以通过该方法仅仅获取邮件中的文字内容，等到网络状况较好时再收取其中的媒体内容。</p>
+<h3 id="2-3-3-3-Web-Based-E-Mail"><a href="#2-3-3-3-Web-Based-E-Mail" class="headerlink" title="2.3.3.3 Web-Based E-Mail"></a>2.3.3.3 Web-Based E-Mail</h3><p>如今越来越多用户通过web browser来获取电邮，使用Web-Based Email时，user agent就是一个web browser，用户通过HTTP来与远程的mail box通信。发送端将邮件发送到mail server使用HTTP协议，当接收端想要从mail server中获取邮件时，邮件内容也会通过HTTP协议pull到接收端主机上，不过两个mail servers之间的数据传输依然使用SMTP。</p>
+<h1 id="2-4-DNS—The-Internet’s-Directory-Service"><a href="#2-4-DNS—The-Internet’s-Directory-Service" class="headerlink" title="2.4 DNS—The Internet’s Directory Service"></a>2.4 DNS—The Internet’s Directory Service</h1><p>虽然人类可以同时被身份证号、姓名、学生证号所标识，但通常情况下我们更愿意用好记的方式——姓名，去记住一个人。计算机网络中的主机也一样，用ip地址去标识一个主机对机器来说轻而易举，但对人类来说却十分痛苦，DNS的出现就是为了解决人类记忆up地址难的问题。</p>
+<h2 id="2-4-1-Services-Provided-by-DNS"><a href="#2-4-1-Services-Provided-by-DNS" class="headerlink" title="2.4.1 Services Provided by DNS"></a>2.4.1 Services Provided by DNS</h2><p>利用字符串来标识网络实体方便了人类，但却几乎不可能为机器（如路由器）所用，因为字符串长短不一，如果统一字符串格式又会造成限制过多，在加上字符串相关算法一般复杂度较高，所以路由器等设备在工作时仍然以IP地址来标识网络实体。</p>
+<p>所以每一个网络实体都同时被IP地址和字符串hostname所标识，为了同时满足机器处理方便和人类记忆方便，就得提供一种机制快速对IP地址和hostname进行转换，<strong>domain name system（DNS）</strong> 提供了这个转换的服务。</p>
+<p>DNS的定义：首先它是【由一组划分等级的DNS servers组成的分布式数据库】，也是【一个应用层协议，使得主机可以向DNS数据库发起域名转换请求】。</p>
+<p>大多数应用层协议都离不开DNS，假设某一个browser想要请求baidu的主页， 它能够把HTTP request正确发送到百度web服务器的前提就是拿到<a href="http://www.baidu.com的IP地址：">www.baidu.com的IP地址：</a></p>
+<ol>
+<li>browser所在的主机上同时运行着DNS client进程</li>
+<li>browser将用户在URL中输入的<a target="_blank" rel="noopener" href="http://www.baidu/com%E6%8F%90%E5%8F%96%E5%87%BA%E6%9D%A5%E5%B9%B6%E5%8F%91%E9%80%81%E7%BB%99DNS">www.baidu/com提取出来并发送给DNS</a> client进程</li>
+<li>DNS client向DNS server发起对<a target="_blank" rel="noopener" href="http://www.baidu.com的域名转换请求(请求报文基于udp传输)/">www.baidu.com的域名转换请求（请求报文基于UDP传输）</a></li>
+<li>正常情况下，一段时间后DNS client会收到DNS server的回复，其中包含了<a target="_blank" rel="noopener" href="http://www.baidu.com的ip地址/">www.baidu.com的IP地址</a></li>
+<li>browser拿到了目标IP地址后，就开始向该IP主机发起TCP请求</li>
+</ol>
+<p>除了能够进行域名转换，DNS还提供了其他的重要功能：</p>
+<ol>
+<li>Host aliasing。一个IP地址可以申请多个域名，DNS能够将任何域名都映射到正确的IP</li>
+<li>Mail server aliasing。 DNS还可以为电子邮箱地址提供别名转换服务</li>
+<li>Load distribution。为了降低服务器的压力，很多机构会将服务器分布在各个地方，但这些服务器都提供相同的服务（如web），DNS可以将这样一组功能相同但IP不同的服务器映射到同一个域名上</li>
+</ol>
+<h2 id="2-4-2-Overview-of-How-DNS-Works"><a href="#2-4-2-Overview-of-How-DNS-Works" class="headerlink" title="2.4.2 Overview of How DNS Works"></a>2.4.2 Overview of How DNS Works</h2><h3 id="2-4-2-1-A-Distributed-Hierarchical-Database"><a href="#2-4-2-1-A-Distributed-Hierarchical-Database" class="headerlink" title="2.4.2.1 A Distributed, Hierarchical Database"></a>2.4.2.1 A Distributed, Hierarchical Database</h3><p>互联网中，没有任何一个DNS server是全能的——能够提供所有的地址转换，整个DNS生态其实是遍布世界各地的分布式服务器集群，它们之间有严格的等级划分。一般情况下DNS server可以被划分为四种：</p>
+<ol>
+<li><p>root DNS servers</p>
+<p>总共有400多台遍布世界各地，提供TLD的IP地址</p>
+</li>
+<li><p>top-level domain（TLD）DNS servers</p>
+<p>每一个顶级域名（com、org、edu等）都对应了一个TLD，Verisign Global Registry Services公司维护com，Educause公司维护edu。TLD提供authoritative servers的IP地址</p>
+</li>
+<li><p>authoritative DNS servers</p>
+<p>想在互联网上让别人使用自己的服务器，就必须要将服务器的【域名–IP 】记录到authoritative DNS server中。可以选择实现自己的authoritative DNS server，把服务器的【域名–IP】记录上去，也可以选择付钱把自己的【域名–IP】记录到别人authoritative DNS server上，一般大学和大公司都拥有自己的authoritative DNS server。</p>
+</li>
+<li><p>local DNS server</p>
+<p>严格来说它不属于DNS hierarchy中的一种。一般每一个ISP都有一个local DNS server，client连接上ISP后，所有DNS请求会先发到local DNS server，它作为代理将client的DNS请求发送给root DNS server，一般local DNS server距离client只有几个路由器的距离。</p>
+</li>
+</ol>
+<p><img src="/images/computer_network/network_ApplicationLayer/11.png"></p>
+<p>假如某个client想要请求<a href="http://www.baidu.com的IP地址：">www.baidu.com的IP地址：</a></p>
+<ol>
+<li>client将DNS请求发送给local DNS server，由它将请求代理转发给root server</li>
+<li>一段时间后，root server将对应TLD的IP地址回复给local DNS server</li>
+<li>local DNS server与TLD联络，TLD返回对应authoritative server的IP地址</li>
+<li>接着local DNS server与authoritative server联络，authoritative server返回<a target="_blank" rel="noopener" href="http://www.baidu.com的ip地址/">www.baidu.com的IP地址</a></li>
+<li>最后local DNS server把百度的ip地址发送给client</li>
+</ol>
+<p>这就是典型的DNS lookup过程。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/12.png"></p>
+<p>以上这种DNS请求过程中，从requesting host到local DNS server是 <strong>recursive query</strong> （请求是以递归的方式进行的），而接下来local DNS sersver的三个请求都是 <strong>iterative query</strong> （请求的结果直接返回请求方）</p>
+<h3 id="2-4-2-2-DNS-Caching"><a href="#2-4-2-2-DNS-Caching" class="headerlink" title="2.4.2.2 DNS Caching"></a>2.4.2.2 DNS Caching</h3><p>DNS转换的过程太耗时间了，需要与好几个server通信才能进行一次转换。因此为了减少转换过程中时间的消耗，现在普遍采用DNS Caching机制，它的原理如下：</p>
+<p>在DNS请求链中所有涉及到的DNS servers，它们只要收到一个DNS reply（已经转换好的结果），就会把这个reply结果缓存在本地，这样之后如果收到一个对相同域名的请求就可以立即将结果返回，DNS server大概每两天会对本地的DNS reply条目进行更新。</p>
+<p>在DNS caching机制的作用下，大多数DNS请求根本无法到达root DNS server，因此节省了巨量的DNS转换时间，也节省了巨量的网络资源。</p>
+<h2 id="2-4-3-DNS-Records-and-Messages"><a href="#2-4-3-DNS-Records-and-Messages" class="headerlink" title="2.4.3 DNS Records and Messages"></a>2.4.3 DNS Records and Messages</h2><p>DNS中存储的条目叫做 <strong>resource records（RRs）</strong> ，它给出了域名到IP地址的映射关系。每一个DNS reply message可以携带多个RRs。</p>
+<p>RRs是一个四元组（Name，Value，Type，TTL），其中TTL规定了本条RRs应该多久时候被更新，Name和Value字段的意义取决于Type：</p>
+<ol>
+<li>当【Type&#x3D;A】时，Name字段代表hostname，Value字段代表Name对应的IP address，所以Type A的RRs提供了标准的hostname-to-IP映射。比如RRs（<a target="_blank" rel="noopener" href="http://www.funwithcode.com/">www.funwithcode.com</a>, 145.37.93.126, A, 30）</li>
+<li>当【Type&#x3D;NS】时，Name字段代表domain name（如baidu.com），Value字段代表一个authoritative DNS server的hostname，它知道如何获取domain name中任意hosts的IP地址。Type&#x3D;NS的RRs用来把当前的DNS query送到DNS query chain中的下一个server处。比如RRs（funwithcode.com, dns.funwithcode.com. NS, 30）</li>
+<li>当【Type&#x3D;CNAME】时，Name字段是alias hostname，Value字段是alias hostname的本名，这种类型的RRs是用来将别名转换为原名的。比如RRs（funwithcode.com, relay1.bar.funwithcode.com, CNAME）</li>
+<li>当【Type&#x3D;MX】时，Name字段是mail server的alias hostname，Value字段是本名。比如（funwithcode.com, mail.bar.funwithcode.com, MX, 30）。MX RRs使得人们可以给mail servers的hostname起更好记的别名。要注意的是一个机构可以给mail server和其他server（如web server）起一样的别名，这时只能靠DNS message中的Type来区别client请求的是哪个server的域名</li>
+</ol>
+<p>某一个hostname（比如A）的authoritative DNS server中存储了A对应的type A RRs，利用它可以直接对A进行域名转换；然而这个DNS server可能对其他的hostname（比如B）来说可能不是authoritative DNS server，此时这个server中存储了hostname B对应的type NS RRs，该条目提供了hostname B所处的域名，以及一个type A条目——提供能对NS RRs域名中所有host进行域名转换的authoritative DNS server的IP地址（包含在value字段中）。</p>
+<p>比如某DNS server 不是<a target="_blank" rel="noopener" href="http://www.baidu.com的authoritative/">www.baidu.com的authoritative</a> DNS server，则它会包含一个type NS的条目（baidu.com, dns.baidu.com, NS, 30）提供了知道如何域名转换<a target="_blank" rel="noopener" href="http://www.baidu.com的authoritative/">www.baidu.com的authoritative</a> DNS server的hostname，以及一个type A条目（dns.baidu.com, 123.123.123.123, A, 20）对NS RRs中hostname进行域名转换。</p>
+<h3 id="2-4-3-1-DNS-Message"><a href="#2-4-3-1-DNS-Message" class="headerlink" title="2.4.3.1 DNS Message"></a>2.4.3.1 DNS Message</h3><p>DNS reply和DNS request报文【格式相同】。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/13.png"></p>
+<p>【header section】</p>
+<p>最上方的12 bytes是 <strong>header section</strong> 。</p>
+<p>Identification：在DNS处理的过程中client可能还会不断的发送DNS请求，该字段帮助client弄清楚哪个请求对应哪个回应</p>
+<p>Flags：其中包含了几个标志位。</p>
+<table>
+<thead>
+<tr>
+<th align="left">flag name</th>
+<th>flag meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">query&#x2F;reply flag</td>
+<td>标识DNS报文类型，1为回复，0为请求</td>
+</tr>
+<tr>
+<td align="left">authoritative flag</td>
+<td>当请求转换的hostname到达authoritative DNS server时，其回复报文中该字段为1</td>
+</tr>
+<tr>
+<td align="left">recursion-desired flag</td>
+<td>client想要递归式的DNS解析时，该字段为1</td>
+</tr>
+<tr>
+<td align="left">recursion-available flag</td>
+<td>当DNSserver支持递归式解析时，该字段为1</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>四个number-of：不同RRs的数量</p>
+<p>【question section】</p>
+<p>在client发送给DNS server的询问报文中，包含了client的DNS请求信息。</p>
+<p>【answer section】</p>
+<p>在DNS server发回给client的回复报文中，其中包含了DNS server对query的回复信息。</p>
+<p>【authority section】</p>
+<p>包含其他authoritative server的记录</p>
+<p>【additional section】</p>
+<p>其他的补充信息</p>
+<p>可以直接通过nslookup程序向附近的DNS server发送DNS请求，比如在命令行中输入nslookup后，当接收到DNS server的回复后，nslookup就会将回复的信息（answer section中的数据）转译成人话并打印在屏幕上</p>
+<h3 id="2-4-3-2-Inserting-Records-into-the-DNS-Database"><a href="#2-4-3-2-Inserting-Records-into-the-DNS-Database" class="headerlink" title="2.4.3.2 Inserting Records into the DNS Database"></a>2.4.3.2 Inserting Records into the DNS Database</h3><p>假设我们刚刚成立了一家互联网业务公司（假设叫networkutopia），则我们要做的第一件事就是去 <strong>registrar</strong> 注册networkutopia.com这个域名，registrar是一类商业公司，它们的主营业务就是让客户注册【独一无二】的域名，并把这个域名写入到 <strong>DNS database</strong> 中。1999年Network Solutions垄断了com, net, org这些顶级域名，之后涌现了很多registrars与其竞争，所有的accredits都可在ICANN中查到。</p>
+<p>当我们在某个registrar注册networkutopia.com域名时，还需要提供【主&#x2F;次authoritative DNS servers】的域名和IP地址，registrar会将这两个DNS server对应的Type NS和Type A条目存入顶级DNS servers（TLD server），即下列两个条目：</p>
+<p>(networkutopia.com, dns1.networkutopia,com, NS)</p>
+<p>(dns1.networkutopia.com, 212,212,212,1, A)</p>
+<p>与此同时，还得确保我们公司web server（<a target="_blank" rel="noopener" href="http://www.networkutopia.com)的type/">www.networkutopia.com）的Type</a> A和mail server（mail.networkutopia.com）的Type MX记录存入了我们的主&#x2F;次authoritative DNS server中（现在这一过程通常动态的完成）</p>
+<h2 id="2-4-4-Conclude"><a href="#2-4-4-Conclude" class="headerlink" title="2.4.4 Conclude"></a>2.4.4 Conclude</h2><p>最后通过一个例子来把DNS这节的知识总结一下。</p>
+<p>假如A想要访问<a target="_blank" rel="noopener" href="http://www.networkutopia.com网站./">www.networkutopia.com网站。</a></p>
+<ol>
+<li>首先她的主机会发送DNS query给local DNS server，</li>
+<li>接着local DNS server将请求转发到TLD com server（如果TLD server中没有缓存networkutopia的条目，则TLD server会把root server的信息发给local DNS server，然后local DNS server再将DNS请求发送给root DNS server），不过由于我们已经成功在TLD server中注册了我们的域名，所以query走到TLD com server时命中了</li>
+<li>然后TLD将authoritative DNS server信息（一条Type A，一条Type NS）回复给local DNS server</li>
+<li>local DNS server提取Type A中提供的authoritatvie DNS server的IP地址212.212.212.1，并将DNS请求发给它</li>
+<li>authoritative DNS server将<a target="_blank" rel="noopener" href="http://www.networkutopia.com对应的ip地址212.212.212.4发给local/">www.networkutopia.com对应的IP地址212.212.212.4发给local</a> DNS server，然后local DNS server将其发送给client</li>
+<li>至此A的DNS请求完成，现在A可以与212.212.212.4建立TCP连接并发送HTTP request来获取网页内容了</li>
+</ol>
+<h1 id="2-5-Peer-to-Peer-File-Distribution"><a href="#2-5-Peer-to-Peer-File-Distribution" class="headerlink" title="2.5 Peer-to-Peer File Distribution"></a>2.5 Peer-to-Peer File Distribution</h1><p>之前我们讨论的所有协议都是基于C&#x2F;S架构的，需要一台不停工作的S来为C提供服务，而在P2P架构中，任意两台主机可以直接配对并互相通信，任意两台终端都互为彼此的 <strong>peer</strong> ，所有在P2P中的实体都即可作为server也可作为client，因此P2P架构中所有的实体都可以称为peer。</p>
+<p>本章我们将讨论P2P的一个最基本的应用：某一个节点将一个大文件发送给其他多个节点。试想如果用C&#x2F;S架构来完成这件事，server的负担将会非常重——它必须把这一个巨大的文件逐个传输给所有其他的client，但如果使用P2P架构，网络中每一个peer都可以把自己当前已经接收到的文件的任意部分发给其他peers，其他peers又把自己已接收文件的任意部分发送给它们的peers，这样就将文件分发的任务均摊给了每一个网络中的节点，提高传输效率同时，避免了单点网络负担过重。</p>
+<p><img src="/images/computer_network/network_ApplicationLayer/14.png"></p>
+<p>截止2016年，最流行的P2P文件分发协议是BitTorrent。在BitTorrent协议中，对某一个文件，所有参与该文件传输的节点（peer）组成一个 <strong>torrent</strong> ，该文件被划分为一个个的chunks（固定大小，一般为256Kb），每一对peers互相下载对方的chunks。</p>
+<p>一个刚参与进来的peer没有chunk，不过随着它不断的与其他peer结对，其他peer会给它传输（它缺失的）chunks，同时它也会不断给其他节点传输（对方缺失的）chunks。当一个节点获取到了完整文件后，它可以选择直接离开，也可以选择继续留下作为server给别人传输文件。</p>
+<p>每一个torrent中都包含一个 <strong>tracker</strong>，每当一个peer加入torrent时，它会在tracker上注册并周期性的告知tracker自己仍然在当前torrent中，这就相当于tracker可以一直监视本torrent内的情况。</p>
+<p>当一个peer A加入torrent时，tracker会在本torrent中随机选择一些peers并将它们的IP地址发送给A，拿到这个peers列表后，A就会并行的与该列表上所有的peers建立TCP连接。现在假定所有与A建立了连接的peers叫做neighboring peers，随着时间的推移，A的neighboring peers中有一些会退出，也会有一些新加入peers与A建立连接，因此A的neighboring peers list是 <strong>动态变化的</strong> 。</p>
+<p>与所有neighboring peers建立连接后，A就会周期性的询问它所有的邻居：你们手上都有哪些trunk？列好清单发给我看看。A收到清单后，就会根据清单上的内容，向所有邻居请求它缺少的trunks（优先请求最稀缺的trunk，以此来尽力保持每个trunk数量的平衡）。</p>
+<h1 id="2-6-Video-Streaming-and-Content-Distribution-Networks"><a href="#2-6-Video-Streaming-and-Content-Distribution-Networks" class="headerlink" title="2.6 Video Streaming and Content Distribution Networks"></a>2.6 Video Streaming and Content Distribution Networks</h1><h2 id="2-6-1-Internet-Video"><a href="#2-6-1-Internet-Video" class="headerlink" title="2.6.1 Internet Video"></a>2.6.1 Internet Video</h2><p>首先我们来了解一下什么是video。</p>
+<p>video本质上是一系列图片，这些图片以每秒24~30张的速度显示在屏幕上。一张数码图片由一组pixels组成，每一个pixel以比特的形式编码，这个编码的值就代表了亮度和颜色。</p>
+<p>video的一个重要特性就是其比特率可以被压缩，比特率越低，画质越差，所占硬盘空间越小。现在一般视频网站都会为一个视频提供不同清晰度的版本，方便用户根据自己的网络状况进行选择。</p>
+<h2 id="2-6-2-HTTP-Streaming-and-DASH"><a href="#2-6-2-HTTP-Streaming-and-DASH" class="headerlink" title="2.6.2 HTTP Streaming and DASH"></a>2.6.2 HTTP Streaming and DASH</h2><p>使用HTTP Streaming的话，视频就存储在HTTP server上。当client想要观看视频时，只需要与HTTP server建立TCP连接，并发送HTTP GET请求指定视频（用URL标识），之后server就会把视频打包在HTTP回复中发送给client。client这边视频播放器会有一个buffer，当接收数据达到一定阈值时就会开始播放视频。</p>
+<p>一开始很多视频公司（比如YouTube）都是采用HTTP Streaming方式提供服务，但它的缺点在于所有的用户只能观看同一种清晰度的视频，为了提高灵活性，现在一般一种新的基于HTTP的streaming方式：<strong>Dynamic Adaptive Streaming over HTTP（DASH）</strong> ，它为每一个视频提供了多个不同清晰度的版本。</p>
+<h2 id="2-6-3-Content-Distribution-Networks"><a href="#2-6-3-Content-Distribution-Networks" class="headerlink" title="2.6.3 Content Distribution Networks"></a>2.6.3 Content Distribution Networks</h2><p>试想像Youtube这样的公司，每秒钟都要为全世界的网友传输巨量的视频数据，这个任务该如何完成呢？</p>
+<p>利用<strong>Content Distribution Networks(CDNs)</strong> 技术，它可以管理多个分布在不同地理位置的服务器集群（cluster），在这些服务器中存储视频（可能还有音频和文件），并指引用户去距离最近的cluster请求视频数据。如果请求的视频并未存储在当前cluster中，则当前cluster会去其他cluster请求该视频，并在将该视频存储在本地的同时发送给用户。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/06/24/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BIntroduction/" rel="prev" title="《计网》Introduction">
+                  <i class="fa fa-chevron-left"></i> 《计网》Introduction
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/21/IT/datastructure_and_algorithm/%E3%80%8A%E6%8E%92%E5%BA%8F%E3%80%8B%E4%B8%93%E9%A2%98/" rel="next" title="《排序》专题">
+                  《排序》专题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

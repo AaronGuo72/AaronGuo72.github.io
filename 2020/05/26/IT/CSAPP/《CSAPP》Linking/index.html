@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="《CSAPP》Linking">
+<meta property="og:url" content="http://example.com/2020/05/26/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BLinking/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/6.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/1.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/2.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/3.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/4.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/5.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/6.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/7.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/8.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/9.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_7/10.png">
+<meta property="article:published_time" content="2020-05-26T03:21:15.000Z">
+<meta property="article:modified_time" content="2021-01-01T08:34:00.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/CSAPP/CSAPP_7/6.png">
+
+
+<link rel="canonical" href="http://example.com/2020/05/26/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BLinking/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/05/26/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BLinking/","path":"2020/05/26/IT/CSAPP/《CSAPP》Linking/","title":"《CSAPP》Linking"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《CSAPP》Linking | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#7-1-Introduction"><span class="nav-text">7.1 Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-1-Compiler-Drivers"><span class="nav-text">7.1.1 Compiler Drivers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-2-%E6%A0%97%E5%AD%90%EF%BC%88%E5%A4%9A%E4%B8%AA%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E2%86%92%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%EF%BC%89"><span class="nav-text">7.1.2 栗子（多个文本文件→一个可执行文件）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-2-Static-Linking"><span class="nav-text">7.2 Static Linking</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-1-linker%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%8A%9F%E8%83%BD"><span class="nav-text">7.2.1 linker最基本的两个功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-1-symbol-resolution%EF%BC%88linking%E9%98%B6%E6%AE%B5%E5%8F%91%E7%94%9F%EF%BC%89"><span class="nav-text">7.2.1.1 symbol resolution（linking阶段发生）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-2-relocation%EF%BC%88linking%E6%97%B6%E6%88%96load%E8%BF%9B%E5%86%85%E5%AD%98%E6%97%B6%E5%8F%91%E7%94%9F%EF%BC%89"><span class="nav-text">7.2.1.2 relocation（linking时或load进内存时发生）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-3-%E5%B0%8F%E7%BB%93"><span class="nav-text">7.2.1.3 小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-3-Object-File"><span class="nav-text">7.3 Object File</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-1-Relocatable-Object-Files"><span class="nav-text">7.3.1 Relocatable Object Files</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-1-1-%E5%85%B8%E5%9E%8B%E7%9A%84ELF-relocatable-object-file%E6%A0%BC%E5%BC%8F"><span class="nav-text">7.3.1.1 典型的ELF relocatable object file格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-1-2-ELF-relocatabl-object-file%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90"><span class="nav-text">7.3.1.2 ELF relocatabl object file格式解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-2-symbols-and-Object-Files"><span class="nav-text">7.3.2 symbols and Object Files</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-2-1-symbol-table"><span class="nav-text">7.3.2.1 symbol table</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-4-Symbol-Resolution"><span class="nav-text">7.4 Symbol Resolution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-1-%E8%A7%A3%E6%9E%90%E6%9C%AC%E6%A8%A1%E5%9D%97%E4%B8%AD%E5%AE%9A%E4%B9%89%E7%9A%84%E7%AC%A6%E5%8F%B7"><span class="nav-text">7.4.1 解析本模块中定义的符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-2-%E8%A7%A3%E6%9E%90%E5%AE%9A%E4%B9%89%E4%B8%8D%E5%9C%A8%E6%9C%AC%E6%A8%A1%E5%9D%97%E7%9A%84%E7%AC%A6%E5%8F%B7"><span class="nav-text">7.4.2 解析定义不在本模块的符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-3-linkers%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E6%9E%90%E9%87%8D%E5%90%8D%E7%AC%A6%E5%8F%B7%E7%9A%84"><span class="nav-text">7.4.3 linkers是如何解析重名符号的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-5-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-text">7.5 静态链接库的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-5-1-%E6%A0%97%E5%AD%90"><span class="nav-text">7.5.1 栗子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-5-2-linker%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%AB%E6%8F%8F%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E8%A7%A3%E6%9E%90%E5%A4%96%E9%83%A8%E7%AC%A6%E5%8F%B7%E7%9A%84"><span class="nav-text">7.5.2 linker是如何扫描静态链接库解析外部符号的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-6-Relocation"><span class="nav-text">7.6 Relocation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-6-1-load%E9%98%B6%E6%AE%B5%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="nav-text">7.6.1 load阶段重定位的两个步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-6-1-1-%E9%87%8D%E5%AE%9A%E4%BD%8Dsections%E5%92%8Csymbol-definitions"><span class="nav-text">7.6.1.1 重定位sections和symbol definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-6-1-2-%E9%87%8D%E5%AE%9A%E4%BD%8D%E6%AF%8F%E4%B8%80%E4%B8%AAsection%E4%B8%AD%E7%9A%84symbol-references"><span class="nav-text">7.6.1.2 重定位每一个section中的symbol references</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-6-2-%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8"><span class="nav-text">7.6.2 重定位表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-7-Executable-Object-Files"><span class="nav-text">7.7 Executable Object Files</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-7-1-ELF-executable-object-file%E6%A0%BC%E5%BC%8F"><span class="nav-text">7.7.1 ELF executable object file格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-7-2-Program-Header-Table"><span class="nav-text">7.7.2 Program Header Table</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-8-Loading-%E7%A8%8B%E5%BA%8F%E8%A2%AB%E5%8A%A0%E8%BD%BD%E8%BF%9B%E5%86%85%E5%AD%98%E5%B9%B6%E8%BF%90%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-text">7.8 Loading 程序被加载进内存并运行的过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-9-Dynamic-Linking-with-shared-libraries"><span class="nav-text">7.9 Dynamic Linking with shared libraries</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-9-1-shared-libraries%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E7%82%B9"><span class="nav-text">7.9.1 shared libraries的两个特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-9-2-dynamic-linking%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%88load%E9%98%B6%E6%AE%B5%EF%BC%89"><span class="nav-text">7.9.2 dynamic linking的过程（load阶段）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-9-3-dynamic-linking%EF%BC%88running%E9%98%B6%E6%AE%B5%EF%BC%89"><span class="nav-text">7.9.3 dynamic linking（running阶段）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/26/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BLinking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《CSAPP》Linking | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《CSAPP》Linking
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-26 11:21:15" itemprop="dateCreated datePublished" datetime="2020-05-26T11:21:15+08:00">2020-05-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-01 16:34:00" itemprop="dateModified" datetime="2021-01-01T16:34:00+08:00">2021-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/CSAPP/CSAPP_7/6.png"></p>
+<span id="more"></span>
+
+<h1 id="7-1-Introduction"><a href="#7-1-Introduction" class="headerlink" title="7.1 Introduction"></a>7.1 Introduction</h1><p><strong>linking实际上就是把多个文件链接起来合并成一个文件的操作。</strong><br>Linking<strong>不光是在编译阶段存在</strong>，在load time（loader把程序加载进内存时）也存在，甚至在程序的运行阶段也存在。我们把执行linking功能的程序叫<strong>linker</strong>。</p>
+<p><strong>linker对程序开发最大的贡献是它使整个程序模块化了</strong>，试想如果没有linking机制，则所有的代码都得写在本程序文件中，像打印和读取类的几乎每个程序都会用到的函数，也得每个程序都复制一份，很麻烦不说，如果之后这些函数更新了，则所有使用了它们的程序都得被手动更新。为了解决这些问题，linking技术诞生了。</p>
+<p>理解linking的过程有啥用？</p>
+<ol>
+<li><p>可以解决不同文件中全局变量重名造成的bug</p>
+</li>
+<li><p>帮助理解局部变量和全局变量的区别，static关键字的底层意义</p>
+</li>
+<li><p>利用shared libraries机制完成一些特定的任务</p>
+</li>
+</ol>
+<h2 id="7-1-1-Compiler-Drivers"><a href="#7-1-1-Compiler-Drivers" class="headerlink" title="7.1.1 Compiler Drivers"></a>7.1.1 Compiler Drivers</h2><p>Compiler Driver的作用是<strong>启动</strong>preprocessor（预处理器），compiler（编译器，程序文本转汇编代码），assembler（汇编器，汇编代码转二进制，这一步生成【object_file】，即.o文件），linker（链接器）这些编译过程中需要用到的程序。</p>
+<h2 id="7-1-2-栗子（多个文本文件→一个可执行文件）"><a href="#7-1-2-栗子（多个文本文件→一个可执行文件）" class="headerlink" title="7.1.2 栗子（多个文本文件→一个可执行文件）"></a>7.1.2 栗子（多个文本文件→一个可执行文件）</h2><p>main.c函数中include了sum.h头文件</p>
+<p><img src="/images/CSAPP/CSAPP_7/1.png"></p>
+<h1 id="7-2-Static-Linking"><a href="#7-2-Static-Linking" class="headerlink" title="7.2 Static Linking"></a>7.2 Static Linking</h1><h2 id="7-2-1-linker最基本的两个功能"><a href="#7-2-1-linker最基本的两个功能" class="headerlink" title="7.2.1 linker最基本的两个功能"></a>7.2.1 linker最基本的两个功能</h2><h3 id="7-2-1-1-symbol-resolution（linking阶段发生）"><a href="#7-2-1-1-symbol-resolution（linking阶段发生）" class="headerlink" title="7.2.1.1 symbol resolution（linking阶段发生）"></a>7.2.1.1 symbol resolution（linking阶段发生）</h3><p>Object file中其实全是symbols（变量名和函数名以及一些重载机制只是方便我们开发者，到了真正的可执行文件中这些对象都被转为符号形式了），每一个symbol都对应了<strong>一个函数或一个全局变量或一个static变量</strong>的<strong>引用</strong>（注意只是引用，而非定义）。因此所谓符号解析就是建立symbol和symbol definition之间一对一的映射。</p>
+<blockquote>
+<p>比如函数void foo();是声明，调用foo()就是引用，而foo()的定义可能在本文件中或其他文件中。普通变量同理。</p>
+</blockquote>
+<h3 id="7-2-1-2-relocation（linking时或load进内存时发生）"><a href="#7-2-1-2-relocation（linking时或load进内存时发生）" class="headerlink" title="7.2.1.2 relocation（linking时或load进内存时发生）"></a>7.2.1.2 relocation（linking时或load进内存时发生）</h3><p><strong>load进内存时</strong><br>Compiler和assembler从文件地址0处开始生成程序的代码和数据。然而这些代码和数据被加载进内存后不可能依然从0开始存放（内存有自己的格式），所以linker要对它们进行relocation操作，首先将每一个symbol definition（开始存放在逻辑地址空间）放入内存中适当的地址（物理地址空间），然后修改所有symbols，使它们指向symbol definition在内存中的地址。这些relocation操作都是根据assembler生成的重定位表来进行的。<br><strong>linking时</strong><br>合并多个relocatable object files必然会有地址冲突，此时就需要用重定位来解决。</p>
+<h3 id="7-2-1-3-小结"><a href="#7-2-1-3-小结" class="headerlink" title="7.2.1.3 小结"></a>7.2.1.3 小结</h3><p>总之，linker要做的两件事是<strong>符号解析</strong>和<strong>重定位</strong>，前者将文件中的每个全局符号与其唯一的定义绑定；后者决定每个符号最终在内存中的地址，并将这些符号的引用修正。</p>
+<h1 id="7-3-Object-File"><a href="#7-3-Object-File" class="headerlink" title="7.3 Object File"></a>7.3 Object File</h1><p>Object files分为三种类型</p>
+<ol>
+<li>Relocatable object file：包含编译阶段<strong>可与其他Relocatable object file链接</strong>成为可执行文件（executable object file）的二进制的代码和数据，</li>
+<li>Executabe object file：包含<strong>可以直接被加载到内存中并运行</strong>的二进制代码和数据。</li>
+<li>Shared object file：一种特殊的relocatable object file，它可以被加载进内存并动态的链接（在程序<strong>被加载进内存时</strong>或者<strong>运行时</strong>）</li>
+</ol>
+<p>compiler和assembler对文件加工生成relocatable object files（包括shared object files），linker对所有的relocatable object files加工生成executable object files。</p>
+<p>object file是根据<strong>object file formats</strong>生成的，不同系统的formats是不同的。比如bell实验室的第一个unix系统用a.out格式，Windows中的<strong>PE格式</strong>，linux中的<strong>ELF格式</strong>。但它们的结构和原理其实是差不多的。</p>
+<h2 id="7-3-1-Relocatable-Object-Files"><a href="#7-3-1-Relocatable-Object-Files" class="headerlink" title="7.3.1 Relocatable Object Files"></a>7.3.1 Relocatable Object Files</h2><h3 id="7-3-1-1-典型的ELF-relocatable-object-file格式"><a href="#7-3-1-1-典型的ELF-relocatable-object-file格式" class="headerlink" title="7.3.1.1 典型的ELF relocatable object file格式"></a>7.3.1.1 典型的ELF relocatable object file格式</h3><p><img src="/images/CSAPP/CSAPP_7/2.png"></p>
+<h3 id="7-3-1-2-ELF-relocatabl-object-file格式解析"><a href="#7-3-1-2-ELF-relocatabl-object-file格式解析" class="headerlink" title="7.3.1.2 ELF relocatabl object file格式解析"></a>7.3.1.2 ELF relocatabl object file格式解析</h3><table>
+<thead>
+<tr>
+<th>section name</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.text</td>
+<td>存放程序汇编处理后的机器码</td>
+</tr>
+<tr>
+<td>.rodata</td>
+<td>存放只读数据（如switch的跳转表）</td>
+</tr>
+<tr>
+<td>.data</td>
+<td>存放赋了非0初值的全局和static变量</td>
+</tr>
+<tr>
+<td>.bss</td>
+<td>存放<strong>未赋初值的</strong>static变量和<strong>赋了初值为0</strong>的全局和static变量（未赋初值的全局变量存在符号表的COMMON区中），这个section在object file中只是一个占位符（不占用实际空间）。把数据区分为.data和.bss的目的就是为了降低硬盘中object file的体积，因为没有赋初值或初值为0的变量可以等到程序跑起来时再在内存中（全局数据区）给它们赋初值0。经常用.bss来指带未赋初值的数据，可以这样记忆“Better Save Space”</td>
+</tr>
+<tr>
+<td>.symtab</td>
+<td>存放了一个符号表，里面有程序中引用和定义的全局变量和函数的信息。不过它和编译器的符号表不一样（编译原理中有详细介绍），注意.symtab中不包含局部变量</td>
+</tr>
+<tr>
+<td>.rel.text</td>
+<td>本区包含一个列表，存储着.text区的一些地址，这些地址都是在link阶段合并object files时要被修改的。一般来说，所有要调用外部函数或者全局变量的指令都要被修改，调用局部变量的指令不用修改。</td>
+</tr>
+<tr>
+<td>.rel.data</td>
+<td>存储所有被引用或定义的全局变量的relocation信息，一般来说，所有初值为全局变量地址的全局变量，或者外部定义的函数都需要被修改</td>
+</tr>
+<tr>
+<td>.debug</td>
+<td>存储debug information</td>
+</tr>
+<tr>
+<td>.line</td>
+<td>原C语言文件和.text中二进制文件之间<strong>行号</strong>的映射表</td>
+</tr>
+<tr>
+<td>.strtab</td>
+<td>字符串表，存储节表名称和其他信息</td>
+</tr>
+<tr>
+<td>note：relocation信息在文件被编译为<strong>可执行文件后</strong>已经无用了，所以在<strong>executable object file</strong>的ELF格式中没有.rel.text和.rel.data区。</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="7-3-2-symbols-and-Object-Files"><a href="#7-3-2-symbols-and-Object-Files" class="headerlink" title="7.3.2 symbols and Object Files"></a>7.3.2 symbols and Object Files</h2><blockquote>
+<p>每一个relocatable object file都有一个符号表，里面存储了它内部定义的或者引用自其他文件的符号。</p>
+</blockquote>
+<p>符号分为三类：</p>
+<table>
+<thead>
+<tr>
+<th>Symbols</th>
+<th>explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Global linker symbols</td>
+<td>在本模块中定义，<strong>可以被其他模块引用</strong>。比如非静态函数和全局变量</td>
+</tr>
+<tr>
+<td>Externals</td>
+<td>引用自其他模块的global linker symbols</td>
+</tr>
+<tr>
+<td>Local linker symbols</td>
+<td>在本模块中定义，且只能被本模块引用。比如static函数和static全局变量</td>
+</tr>
+</tbody></table>
+<p>static全局变量或函数只在本模块中可见，non-static全局变量或函数则对外可见。因此可通过static来让全局变量或函数变为私有的。</p>
+<blockquote>
+<p><strong>程序中的局部变量和local linker symbols是不同的</strong>。<br>—符号表中是不会存储局部变量的（局部变量又不给别人用，而且定义在本文件中，不需要做符号解析）<br>—<strong>程序中的局部变量</strong>是在运行时才会被初始化和引用的。<br>—而<strong>local linker symbols</strong>（即静态全局变量或函数）在编译阶段编译器就会在.data或者.bss中给他分配空间，并且为它创建一个local linker symbol并放入assembler创建的符号表中，用一个单独的名字来标识它。</p>
+</blockquote>
+<h3 id="7-3-2-1-symbol-table"><a href="#7-3-2-1-symbol-table" class="headerlink" title="7.3.2.1 symbol table"></a>7.3.2.1 symbol table</h3><p>符号表是<strong>由assemblers创建</strong>的，里面的<strong>所有信息都是由compiler提供</strong>的。。</p>
+<p>ELF符号表在.symtab节中，它的格式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="type">int</span> name;</span><br><span class="line">    <span class="comment">/* String table offset */</span></span><br><span class="line">    <span class="type">char</span> type: <span class="number">4</span>, <span class="comment">/* Function or data (4 bits) */</span> </span><br><span class="line">          binding: <span class="number">4</span>; <span class="comment">/* Local or global (4 bits) */</span></span><br><span class="line">    <span class="type">char</span> reserved; <span class="comment">/* Unused */</span> </span><br><span class="line">    <span class="type">short</span> section; <span class="comment">/* Section header index */</span></span><br><span class="line">    <span class="type">long</span> value; <span class="comment">/* Section offset or absolute address */</span> <span class="comment">/* Object size in bytes */</span></span><br><span class="line">    <span class="type">long</span> size; </span><br><span class="line">&#125; Elf64_Symbol;</span><br></pre></td></tr></table></figure>
+<p>其中的section属性指向节表（section header），节表是用来表述节（ELF header和Section header table中间的那些区块）的。<br><img src="/images/CSAPP/CSAPP_7/3.png"></p>
+<p>除了图上的这些section，还有一些“伪section”，节表并没有描述他们（它们只存在于relocatable object files）</p>
+<table>
+<thead>
+<tr>
+<th>伪section</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ABS</td>
+<td>存储不能被relocate的符号</td>
+</tr>
+<tr>
+<td>UNDEF</td>
+<td>存储在其他模块中定义的，在本模块中引用的符号</td>
+</tr>
+<tr>
+<td>COMMON</td>
+<td>存储还没有被初始化的（没被分配资源的）数据对象</td>
+</tr>
+</tbody></table>
+<p><strong>COMMON与.bss的区别</strong><br>COMMON中存储未赋初值的全局变量。<br>.bss中存储未赋初值的static变量，或赋了初值0的全局变量和static变量。<br>这样划分的原因在下一小节中。</p>
+<h1 id="7-4-Symbol-Resolution"><a href="#7-4-Symbol-Resolution" class="headerlink" title="7.4 Symbol Resolution"></a>7.4 Symbol Resolution</h1><p>解析符号的方法是通过<strong>该符号</strong>与<strong>该符号本身所属的relocatable object file中的符号表</strong>进行比对匹配解析的。</p>
+<h2 id="7-4-1-解析本模块中定义的符号"><a href="#7-4-1-解析本模块中定义的符号" class="headerlink" title="7.4.1 解析本模块中定义的符号"></a>7.4.1 解析本模块中定义的符号</h2><p>compiler直接拿它在本模块的符号表比对匹配即可，因为定义就在本模块的符号表中。</p>
+<h2 id="7-4-2-解析定义不在本模块的符号"><a href="#7-4-2-解析定义不在本模块的符号" class="headerlink" title="7.4.2 解析定义不在本模块的符号"></a>7.4.2 解析定义不在本模块的符号</h2><p>compiler会在符号表中生成一个新的条目，把寻找该符号定义的任务交给linker。<br>如果linker在其他模块中也找不到某个symbol的定义，就会报错。举例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="built_in">foo</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br><span class="line">error：undefined reference to ‘foo’</span><br></pre></td></tr></table></figure>
+<p>另外，解析global symbols还可能遇到不同模块但同名的global symbols，这时linker该怎么办呢？</p>
+<h2 id="7-4-3-linkers是如何解析重名符号的"><a href="#7-4-3-linkers是如何解析重名符号的" class="headerlink" title="7.4.3 linkers是如何解析重名符号的"></a>7.4.3 linkers是如何解析重名符号的</h2><p>N个relocatable模块作为参数被传入linker中，每一个模块中都有一些符号，这些符号被分为两大类，第一类是local的，他们只能在本模块中被使用；另一类是global的，他们能被其他模块调用。这时如果出现两个模块的global符号是重复的情况，linux编译系统会采取如下策略：</p>
+<p>在compiler把符号导出到assembler的符号表的过程中，就把global symbol分为强和弱两种状态。<br><strong>函数或者赋了初值的全局变量都为strong</strong>，<strong>未赋初值的全局变量都为weak</strong>。</p>
+<blockquote>
+<p>global symbol重名情况下采用这样的策略：强弱同名选强，弱弱同名随机选，强强同名报错。</p>
+</blockquote>
+<p>这也是为啥变量要分装在COMMON和.bss的原因，假如compiler碰到一个weak（未赋初值）的global symbol，此时它并不知道其他模块是否有与它重名的symbol，即使有，它也无法确定linker是否会选择自己模块中的这个weak符号。所以compiler会先把这个变量放到COMMON中，等待linker做进一步选择，把最终选择的那个变量放入.bss区。<br>反之假如compiler碰到的是strong（赋了初值）的global symbol，则可以确定linker一定会选择它（否则报错），因此compiler可以直接把这个symbol放到.bss中。</p>
+<h1 id="7-5-静态链接库的原理"><a href="#7-5-静态链接库的原理" class="headerlink" title="7.5 静态链接库的原理"></a>7.5 静态链接库的原理</h1><p>静态链接库使程序初步模块化。<br>我们写程序时一般都要include标准头文件，来使用一些已经定义好的基本功能函数。假设没有静态链接库，要使用基本功能函数我们还得手动从别处copy一份代码到我们的程序中。这样做一来是很麻烦，二个是可能会浪费大量空间（如果想省事把一个类的轮子全部copy），再者是当轮子的内容需要更新时，每一个copy了它的程序都要被一一手动修改，这是无法容忍的。<br>静态链接库的诞生就是为了解决这个问题，它把某一类轮子合并在一起生成.lib文件后放入目标工程文件中，之后程序中想要用lib中的啥函数，就include对应的头文件。在之后的linking阶段linker只会去lib中link那个库中被使用到的函数，没用到就不link，在节省资源的同时也方便了程序开发。而且之后要修改库文件内容只需要更新.lib中的文件，再重新编译整个工程即可，不需要去逐一手动修改。</p>
+<h2 id="7-5-1-栗子"><a href="#7-5-1-栗子" class="headerlink" title="7.5.1 栗子"></a>7.5.1 栗子</h2><p>比如我们在.lib中实现了两个函数，addvec和multvec。把该lib粘贴到某工程文件目录下，工程文件的main2.c文件include了该lib，但只调用了addvec函数（以及标准库的printf用于打印结果），过程如下。<br><img src="/images/CSAPP/CSAPP_7/4.png"><br>只用了lib中的addvec，则linking时也只link了lib中的addvec函数（另一个函数multvec就与main2.c无关了），另外还要link标准lib中的printf函数。</p>
+<h2 id="7-5-2-linker是如何扫描静态链接库解析外部符号的"><a href="#7-5-2-linker是如何扫描静态链接库解析外部符号的" class="headerlink" title="7.5.2 linker是如何扫描静态链接库解析外部符号的"></a>7.5.2 linker是如何扫描静态链接库解析外部符号的</h2><p>在符号解析阶段，linker会顺序扫描relocatable object files和链接库，在这个过程中，linker维护了三个sets（初始为空）</p>
+<table>
+<thead>
+<tr>
+<th>set name</th>
+<th>function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E</td>
+<td>要被合并的relocatable object files]</td>
+</tr>
+<tr>
+<td>U</td>
+<td>unresolved symbols, 被引用了但是找不到定义的符号</td>
+</tr>
+<tr>
+<td>D</td>
+<td>在本次扫描前被找到定义的符号</td>
+</tr>
+</tbody></table>
+<p><img src="/images/CSAPP/CSAPP_7/5.png"></p>
+<p><strong>所有扫描结束后，如果U非空则报错（error：unresolved symbols）。反之则开始对E中的内容执行linking。</strong></p>
+<p>这种策略会因为linker的参数传入顺序产生依赖性问题。<br>比如在最开始就先传给linker一个链接库，那这个链接库相当于废了，因为这时U set为空，但是链接库中内容的选取是基于U的，所以整个库都会被丢掉。<br>同理，如果有两个静态链接库，库a调用了库b的函数，那么库a一定要比库b先传入linker。因为如果b先传入的话，它根本不知道a调用了它的哪个函数，就可能会把a要用的函数定义当垃圾扔掉。肯定要先提出需求（使U非空），才能解决需求嘛（删除U的某项内容，把它放入D）。</p>
+<h1 id="7-6-Relocation"><a href="#7-6-Relocation" class="headerlink" title="7.6 Relocation"></a>7.6 Relocation</h1><p>当linker完成了符号解析后，它就已经知道整个代码以及数据区域的大小，现在要做的就是把所有的模块合并，并且赋予每一个symbol<strong>运行时的地址</strong>。</p>
+<h2 id="7-6-1-load阶段重定位的两个步骤"><a href="#7-6-1-load阶段重定位的两个步骤" class="headerlink" title="7.6.1 load阶段重定位的两个步骤"></a>7.6.1 load阶段重定位的两个步骤</h2><h3 id="7-6-1-1-重定位sections和symbol-definitions"><a href="#7-6-1-1-重定位sections和symbol-definitions" class="headerlink" title="7.6.1.1 重定位sections和symbol definitions"></a>7.6.1.1 重定位sections和symbol definitions</h3><p>linker把所有的sections的数据区和代码区合并，（比如陆续传入linker的所有模块的.data区域最后会被合并为一个.data区），然后把这些合并后的sections，以及每个section中的每一个symbol都“贴”到内存中（给它们分配内存的物理地址）。这些过程结束后，<strong>每一个指令</strong>和<strong>全局变量</strong>都在内存中有了自己独一无二的地址。<br><img src="/images/CSAPP/CSAPP_7/6.png"><br>（该图取自<a target="_blank" rel="noopener" href="https://wdxtub.com/csapp/thin-csapp-4/2016/04/16/%EF%BC%89">https://wdxtub.com/csapp/thin-csapp-4/2016/04/16/）</a></p>
+<h3 id="7-6-1-2-重定位每一个section中的symbol-references"><a href="#7-6-1-2-重定位每一个section中的symbol-references" class="headerlink" title="7.6.1.2 重定位每一个section中的symbol references"></a>7.6.1.2 重定位每一个section中的symbol references</h3><p>linker把所有symbols指向其definition被重定位到内存后的物理地址。</p>
+<p>完成这个过程要用到一个数据结构：<strong>重定位表</strong></p>
+<h2 id="7-6-2-重定位表"><a href="#7-6-2-重定位表" class="headerlink" title="7.6.2 重定位表"></a>7.6.2 重定位表</h2><p>当assembler生成一个object file时，它并不知道这个文件中的数据区和代码区最终会被放到内存的哪个位置，更不会知道它引用的外部模块中数据和代码最终会被放到内存的哪个位置，它会为这些最终位置不确定的数据生成一个重定位表（其中记录这些数据的地址），来告诉linker当合并这个文件时，这些不确定位置的数据的地址应该被怎样修改。</p>
+<blockquote>
+<p>代码的重定位表在.rel.text中，数据的重定位表在.rel.data中</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">long</span> offset; <span class="comment">/* Offset of the reference to relocate */</span> </span><br><span class="line">    <span class="type">long</span> type:<span class="number">32</span>, <span class="comment">/* Relocation type */</span>              </span><br><span class="line">           symbol:<span class="number">32</span>; <span class="comment">/* Symbol table index */</span></span><br><span class="line">    <span class="type">long</span> addend; <span class="comment">/* Constant part of relocation expression */</span> </span><br><span class="line">&#125; Elf64_Rela;</span><br></pre></td></tr></table></figure>
+
+<p>重定位的详细讨论可以参看【PE重定位表】</p>
+<h1 id="7-7-Executable-Object-Files"><a href="#7-7-Executable-Object-Files" class="headerlink" title="7.7 Executable Object Files"></a>7.7 Executable Object Files</h1><h2 id="7-7-1-ELF-executable-object-file格式"><a href="#7-7-1-ELF-executable-object-file格式" class="headerlink" title="7.7.1 ELF executable object file格式"></a>7.7.1 ELF executable object file格式</h2><p><img src="/images/CSAPP/CSAPP_7/7.png"><br>可以看到executable object file的结构与relocatable object file是十分类似的。除了几个特别的地方：</p>
+<ol>
+<li><p>.init section中定义了一个函数_init，是用来初始化程序的。</p>
+</li>
+<li><p>executable object file已经是full linked了，不需要再进行<strong>linking阶段的重定位了</strong>，因此不存在.rel section。</p>
+</li>
+</ol>
+<h2 id="7-7-2-Program-Header-Table"><a href="#7-7-2-Program-Header-Table" class="headerlink" title="7.7.2 Program Header Table"></a>7.7.2 Program Header Table</h2><p>ELF格式的可执行文件与内存有直接映射关系（文件中<strong>一整块连续的内容</strong>会被映射到内存中<strong>一整块连续的区域</strong>），这种<strong>可执行文件</strong>与其<strong>运行时内存</strong>之间的映射关系反映在一张<strong>program header table</strong>上，其结构如下。<br><img src="/images/CSAPP/CSAPP_7/8.png"></p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>off</td>
+<td>可执行文件中的offset</td>
+</tr>
+<tr>
+<td>vaddr&#x2F;paddr</td>
+<td>内存地址</td>
+</tr>
+<tr>
+<td>align</td>
+<td>对齐</td>
+</tr>
+<tr>
+<td>filesze</td>
+<td>可执行文件的大小</td>
+</tr>
+<tr>
+<td>memsz</td>
+<td>内存大小</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>运行时权限</td>
+</tr>
+<tr>
+<td>这个table中只涉及了两个区域，<strong>code区和data 区</strong>。</td>
+<td></td>
+</tr>
+<tr>
+<td>其中<strong>code区是只读的</strong>，且可以被执行（r-x）</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>data区是可读可写</strong>，但不可执行的（rw-）</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>note：注意到本例中data区的filesz和memsz并不相等，这是因为文件中存在<strong>未赋初值</strong>的全局变量（在文件中表现为占位符，存储在.bss），它在运行时才会被分配空间。</p>
+<p>至于这两个区会被映射到内存的哪个位置（vaddr&#x2F;paddr，也就是他们在内存中的起始地址），则是由linker指派。这个地址必须满足：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(vaddr) mod (align) = (off)mod(align)</span><br></pre></td></tr></table></figure>
+<p>（其中off是可执行<strong>文件</strong>中某segment相对于文件开头的offset）</p>
+<blockquote>
+<p>例如本例的data segment中，vaddr mod align &#x3D; off mod align &#x3D; 0xdf8</p>
+</blockquote>
+<p>这样<strong>对齐的好处是能提升文件被加载进内存的效率,</strong> 具体原因在虚拟内存章节中会详细描述。</p>
+<h1 id="7-8-Loading-程序被加载进内存并运行的过程"><a href="#7-8-Loading-程序被加载进内存并运行的过程" class="headerlink" title="7.8 Loading 程序被加载进内存并运行的过程"></a>7.8 Loading 程序被加载进内存并运行的过程</h1><p>当loader运行时，它会首先生成一个内存镜像，如下：<br><img src="/images/CSAPP/CSAPP_7/9.png"><br>接着根据程序的header table提供的映射关系，loader把可执行文件中的code和data从disk复制到内存中的相应位置（该过程叫loading），然后loader跳转到程序的第一条指令处（entry point，它指向一个函数_start），它会调用这个_start函数，_start函数又会调用系统函数__libc_start_main，这个函数的作用是初始化运行环境，并调用用户层的main函数（至此程序本体开始执行），处理main函数的返回值，并在程序执行完后将控制交还给kernel。</p>
+<blockquote>
+<p>生成虚拟内存镜像时，linker会使用一种ASLR（Address-space layout randomization 地址空间随机化）的策略来决定stack、shared library和heap segments在内存中的位置（为了保护内存数据）。所以同一个程序每次运行时的stack、shared library和heap segments在内存中的位置都不一样。</p>
+</blockquote>
+<h1 id="7-9-Dynamic-Linking-with-shared-libraries"><a href="#7-9-Dynamic-Linking-with-shared-libraries" class="headerlink" title="7.9 Dynamic Linking with shared libraries"></a>7.9 Dynamic Linking with shared libraries</h1><p>静态链接库其实还不够方便，因为只要它里面的内容改变了，使用了它的程序就必须先获得它最新的库文件，然后重新编译链接。当然这一切的前提还是程序员要时刻关注静态链接库的更新情况。另外，几乎每一个C程序都要用到stdio.h这个包（一般至少要用到printf或者scanf），使用静态链接库会依然会造成巨大的空间浪费（每个文件都存有一份stdio.h的副本）。</p>
+<p>为了解决这个问题，shared libraries诞生了，它可以在程序的<strong>load阶段或运行时</strong>被加载进内存，与程序进行<strong>动态</strong>链接（由dynamic linker完成）。也就是说，在程序被加载进内存之前，<strong>它在磁盘上躺着时所占的空间是不包含shared libraries的</strong>，这就解决了静态链接库空间浪费的问题。同时因为shared libraries每次只有在程序运行时才会被动态的加载，因此无论库文件怎么改动，程序也不需要重新编译。</p>
+<blockquote>
+<p>windows上的dll文件就是动态链接库文件。</p>
+</blockquote>
+<h2 id="7-9-1-shared-libraries的两个特点"><a href="#7-9-1-shared-libraries的两个特点" class="headerlink" title="7.9.1 shared libraries的两个特点"></a>7.9.1 shared libraries的两个特点</h2><ol>
+<li><p>动态链接库文件在一个文件系统中只有一个， 不会存在复制（除非刻意为之），因为<strong>一份dll中的code和data是可以被所有引用了它的exe文件所共享的</strong>。</p>
+</li>
+<li><p>dll中的.text节<strong>在内存中</strong>可以被不同的运行程序访问（原因将在虚拟内存章节中揭晓）。</p>
+</li>
+</ol>
+<h2 id="7-9-2-dynamic-linking的过程（load阶段）"><a href="#7-9-2-dynamic-linking的过程（load阶段）" class="headerlink" title="7.9.2 dynamic linking的过程（load阶段）"></a>7.9.2 dynamic linking的过程（load阶段）</h2><p><img src="/images/CSAPP/CSAPP_7/10.png"></p>
+<ol>
+<li><p>—在linking阶段，动态链接库的一些信息（重定位，符号表等）会被linker合并（作为之后运行时加载动态链接库的依据），由此生成的exe文件被称为Partially linked exe文件。（这一步也是dll和静态链接库主要的区别了，静态链接库此时是会全部被linker链接的，而dll只是一些信息被linker链接）</p>
+</li>
+<li><p>—当Partially linked exe文件运行被加载进内存后，系统检测发现这个文件中存在.interp节，这个节中包含了dynamic linker（它本身也是一个dll）的路径信息，这时系统不会像往常（无dll情况）一样把control传给程序本体了，而是先把dynamic linker加载进内存并执行，dynamic linker执行的工作如下：</p>
+</li>
+</ol>
+<ul>
+<li><pre><code>重定位dll文件的text和data（dll中原本的地址一般会和exe文件冲突，且多个dll文件必然冲突，所以必须要重定位，详细请参考PE解析重定位表的内容）
+</code></pre>
+</li>
+<li><pre><code>b. 重定位所有**程序中引用的dll内容**（程序中引用，dll中定义的内容）。
+</code></pre>
+</li>
+</ul>
+<ol start="3">
+<li>最后dynamic linker再把control传给程序本身。程序开始执行，这时所有dll在内存中的位置已经固定不再改变了，动态链接完成。</li>
+</ol>
+<h2 id="7-9-3-dynamic-linking（running阶段）"><a href="#7-9-3-dynamic-linking（running阶段）" class="headerlink" title="7.9.3 dynamic linking（running阶段）"></a>7.9.3 dynamic linking（running阶段）</h2><p>在程序运行时可以<strong>调用函数</strong>请求dynamic linker加载并连接某dll。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/05/11/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BMemory_Hierarchy/" rel="prev" title="《CSAPP》Memory Hierarchy">
+                  <i class="fa fa-chevron-left"></i> 《CSAPP》Memory Hierarchy
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/06/17/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BException-Control-Flow/" rel="next" title="《CSAPP》Exception Control Flow">
+                  《CSAPP》Exception Control Flow <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

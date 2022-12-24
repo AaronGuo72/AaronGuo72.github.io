@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="《CSAPP》Virtual_Memory">
+<meta property="og:url" content="http://example.com/2020/12/07/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BVirtual-Memory/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/4.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/1.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/2.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/3.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/4.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/5.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/6.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/7.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/8.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/9.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/10.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/11.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/12.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/13.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/14.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/15.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/16.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/17.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/18.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/19.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/20.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/21.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/22.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/23.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/24.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/25.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/26.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/27.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/28.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/29.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/30.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/31.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/32.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/33.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_9/34.png">
+<meta property="article:published_time" content="2020-12-07T05:46:52.000Z">
+<meta property="article:modified_time" content="2021-01-01T08:27:30.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/CSAPP/CSAPP_9/4.png">
+
+
+<link rel="canonical" href="http://example.com/2020/12/07/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BVirtual-Memory/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/12/07/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BVirtual-Memory/","path":"2020/12/07/IT/CSAPP/《CSAPP》Virtual-Memory/","title":"《CSAPP》Virtual_Memory"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《CSAPP》Virtual_Memory | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#9-0-Introduction"><span class="nav-text">9.0 Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-1-Physical-and-Virtual-Addressing"><span class="nav-text">9.1 Physical and Virtual Addressing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-1-Physical-Addressing"><span class="nav-text">9.1.1 Physical Addressing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-2-Virtual-Addressing"><span class="nav-text">9.1.2 Virtual Addressing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-2-Address-Spaces"><span class="nav-text">9.2 Address Spaces</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-3-VM-as-a-Tool-for-Caching"><span class="nav-text">9.3 VM as a Tool for Caching</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-1-DRAM-Cache-Organization"><span class="nav-text">9.3.1 DRAM Cache Organization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-2-Page-Tables"><span class="nav-text">9.3.2 Page Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-3-Page-Hits"><span class="nav-text">9.3.3 Page Hits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-4-Page-Faults"><span class="nav-text">9.3.4 Page Faults</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-5-Allocating-Pages"><span class="nav-text">9.3.5 Allocating Pages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-6-Locality-to-the-Rescue-Again"><span class="nav-text">9.3.6 Locality to the Rescue Again</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-4-VM-as-a-Tool-for-Memory-Management"><span class="nav-text">9.4 VM as a Tool for Memory Management</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-5-VM-as-a-Tool-for-Memory-Protection"><span class="nav-text">9.5 VM as a Tool for Memory Protection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-6-Address-Translation"><span class="nav-text">9.6 Address Translation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-6-1-Integrating-Caches-and-VM"><span class="nav-text">9.6.1 Integrating Caches and VM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-6-2-Speeding-Up-Address-Translation-with-a-TLB"><span class="nav-text">9.6.2 Speeding Up Address Translation with a TLB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-6-2-1-TLB-hit"><span class="nav-text">9.6.2.1 TLB hit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-6-2-2-TLB-miss"><span class="nav-text">9.6.2.2 TLB miss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-6-3-Multi-Level-Page-Tables"><span class="nav-text">9.6.3 Multi-Level Page Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-6-4-Sum-Up%EF%BC%81%E5%AE%8C%E6%95%B4%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="nav-text">9.6.4 Sum Up！完整的地址转换过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-7-Memory-Mapping"><span class="nav-text">9.7 Memory Mapping</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-7-1-Shared-Objects-Revisited"><span class="nav-text">9.7.1 Shared Objects Revisited</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-7-2-The-execve-Function-Revisited"><span class="nav-text">9.7.2 The execve Function Revisited</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-8-Dynamic-Memory-Allocation"><span class="nav-text">9.8 Dynamic Memory Allocation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-1-The-malloc-and-free-Functions"><span class="nav-text">9.8.1 The malloc and free Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-2-Allocator-Requirements-and-Goals"><span class="nav-text">9.8.2 Allocator Requirements and Goals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-3-Fragmentation"><span class="nav-text">9.8.3 Fragmentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-4-Implementation-Issues"><span class="nav-text">9.8.4 Implementation Issues</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-5-Implicit-Free-Lists"><span class="nav-text">9.8.5 Implicit Free Lists</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-6-Placing-Allocated-Blocks"><span class="nav-text">9.8.6 Placing Allocated Blocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-7-Splitting-Free-Blocks"><span class="nav-text">9.8.7 Splitting Free Blocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-8-Coalescing-Free-Blocks"><span class="nav-text">9.8.8 Coalescing Free Blocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-9-Coalescing-with-Boundary-Tags"><span class="nav-text">9.8.9 Coalescing with Boundary Tags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-10-Explicit-Free-Lists"><span class="nav-text">9.8.10 Explicit Free Lists</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-11-Segregated-Free-Lists"><span class="nav-text">9.8.11 Segregated Free Lists</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-9-Garbage-Collection"><span class="nav-text">9.9 Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-9-1-Mark-amp-Sweep-Garbage-Collectors"><span class="nav-text">9.9.1 Mark&amp;Sweep Garbage Collectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-9-2-Conservative-Mark-amp-Sweep-for-C-Programs"><span class="nav-text">9.9.2 Conservative Mark&amp;Sweep for C Programs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-10-Common-Memory-Related-Bugs-in-C-Programs"><span class="nav-text">9.10 Common Memory-Related Bugs in C Programs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/07/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BVirtual-Memory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《CSAPP》Virtual_Memory | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《CSAPP》Virtual_Memory
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-07 13:46:52" itemprop="dateCreated datePublished" datetime="2020-12-07T13:46:52+08:00">2020-12-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-01 16:27:30" itemprop="dateModified" datetime="2021-01-01T16:27:30+08:00">2021-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/CSAPP/CSAPP_9/4.png"></p>
+<span id="more"></span>
+
+<h1 id="9-0-Introduction"><a href="#9-0-Introduction" class="headerlink" title="9.0 Introduction"></a>9.0 Introduction</h1><p>现代计算机可以同时运行很多进程，在我们看来，这些进程就像各自拥有自己独立的内存空间一样，这种感觉是如何被抽象出来的，正是我们这一章要关注的问题。这些进程的数据被加载到内存中后是如何被组织的？多个进程之间的读写冲突问题（一个进程往内存中写入数据，可能把其他进程的有用数据覆盖了）又该如何解决？<br>为了解答这些问题，我们将要学习计算机系统中最伟大的技术之一：<strong>virtual memory（VM）</strong>，它是多种技术共同交互作用下的产物，<strong>为每一个进程提供了巨大且统一的私有地址空间</strong>。<br>总的来看，VM提供了三种重要的功能：</p>
+<ol>
+<li>将主存作为disk的cache</li>
+<li>为每个进程提供了统一的地址空间格式，简化了内存管理</li>
+<li>私有化进程的地址空间，从而杜绝了进程之间的读写冲突</li>
+</ol>
+<p>VM的伟大之处在于我们根本感觉不到它的存在，似乎每个进程本来就拥有自己的独立地址空间一样。</p>
+<h1 id="9-1-Physical-and-Virtual-Addressing"><a href="#9-1-Physical-and-Virtual-Addressing" class="headerlink" title="9.1 Physical and Virtual Addressing"></a>9.1 Physical and Virtual Addressing</h1><h2 id="9-1-1-Physical-Addressing"><a href="#9-1-1-Physical-Addressing" class="headerlink" title="9.1.1 Physical Addressing"></a>9.1.1 Physical Addressing</h2><p>主存就像一个巨大的byte数组，它的“下标”叫做<strong>physical address（PA）</strong>。对于这种结构，CPU访问内存最自然的方式就是直接通过PA来寻址，这种寻址方式叫做<strong>physical addressing</strong>。</p>
+<p><img src="/images/CSAPP/CSAPP_9/1.png"></p>
+<p>早期的计算机寻址方式都是physical addressing，而现在基本都是用<strong>virtual addressing</strong>了。</p>
+<h2 id="9-1-2-Virtual-Addressing"><a href="#9-1-2-Virtual-Addressing" class="headerlink" title="9.1.2 Virtual Addressing"></a>9.1.2 Virtual Addressing</h2><p>CPU向主存发送的指令一开始为 <strong>virtual address（VA）</strong> ，<strong>VA在到达主存之前（MMU上）会被转换为对应的PA</strong>。这种将VA转换为PA的过程叫 <strong>address translation</strong>。地址转换基于CPU上的特定部件（memory management unit【MMU】），它通过查page table（存在主存中，被操作系统维护）来获取VA对应的PA。</p>
+<p><img src="/images/CSAPP/CSAPP_9/2.png"></p>
+<h1 id="9-2-Address-Spaces"><a href="#9-2-Address-Spaces" class="headerlink" title="9.2 Address Spaces"></a>9.2 Address Spaces</h1><p>如果地址空间是连续的，它就被称为<strong>linear address space</strong>。</p>
+<p>CPU从【n-bit】<strong>虚拟地址空间</strong>（$0\sim 2^n$）中生成VA，现代计算机的n通常为32（4个G）。<br>系统中同样存在一个<strong>物理地址空间</strong>（$0\sim 2^m$）。</p>
+<blockquote>
+<p>其实物理地址空间不一定是2的指数倍，但为了方便讨论假定它是。</p>
+</blockquote>
+<p><strong>主存中存储的每一个page都同时具有一个VA和一个PA</strong></p>
+<h1 id="9-3-VM-as-a-Tool-for-Caching"><a href="#9-3-VM-as-a-Tool-for-Caching" class="headerlink" title="9.3 VM as a Tool for Caching"></a>9.3 VM as a Tool for Caching</h1><p>从概念上来看，<strong>虚拟内存就是disk的某一子集（连续的，单位为byte）的映射</strong>。主存（物理内存）充当一个cache的作用，缓存了虚拟内存中最近被CPU访问过的数据。和我们之前讨论过的cache一样，它们之间的数据交换也是以<strong>块</strong>（block）为单位的，虚拟内存被划分为一个个的块，叫做<strong>virtual pages（VPs）</strong>，物理内存也被划分一个个的块，叫做<strong>physical pages（PPs）</strong>，很显然VPs和PPs的大小必然是相等的。<br>在任何时刻，VPs可被划分为三大阵营：</p>
+<table>
+<thead>
+<tr>
+<th>阵营</th>
+<th>为何加入此阵营</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Unallocated</td>
+<td>该页还没有被创建（haven’t been allocated），它现在没有任何数据，不映射到任何disk空间</td>
+</tr>
+<tr>
+<td>Cached</td>
+<td>该页已经被创建了（allocated），并且被缓存到物理内存中了</td>
+</tr>
+<tr>
+<td>Uncached</td>
+<td>该页已经被创建了（allocated），但还没有被缓存到物理内存中</td>
+</tr>
+</tbody></table>
+<p><img src="/images/CSAPP/CSAPP_9/3.png"></p>
+<h2 id="9-3-1-DRAM-Cache-Organization"><a href="#9-3-1-DRAM-Cache-Organization" class="headerlink" title="9.3.1 DRAM Cache Organization"></a>9.3.1 DRAM Cache Organization</h2><p>回忆之前的讨论，DRAM通常用作主存。SRAM通常用作主存与CPU之间的缓存，我们知道DRAM的速度比SRAM至少慢十倍，而disk又至少比DRAM慢100000倍，因此DRAM的设计结构就非常重要了，要尽量在DRAM这一级多命中，否则就得花费非常多的时间去disk取数据。</p>
+<blockquote>
+<p>不仅如此，从disk中开始读取的第一个数据要比之后顺序读取的数据慢100000倍</p>
+</blockquote>
+<p>下面用DRAM表示主存，SRAM表示CPU与主存之间的cache以方便讨论。</p>
+<p>我们的目标是要尽量降低DRAM发生cache miss的概率（否则就要去disk取数据）</p>
+<ol>
+<li>把Virtual Page的设置的大一些（通常4KB~2MB）</li>
+<li>DRAM采用全相联映射：即任一Virtual page可以被映射到任一Physical page</li>
+<li>对cache miss的情况使用相对于SRAM中cache miss更加复杂的replacement policy（每次换页都要深思熟虑，否则就得去disk取数据了）</li>
+<li>同样为了减少访问disk的次数，DRAM总是使用write-back而非write-through（参看《Memory Hierarchy-3.3 写》）</li>
+</ol>
+<h2 id="9-3-2-Page-Tables"><a href="#9-3-2-Page-Tables" class="headerlink" title="9.3.2 Page Tables"></a>9.3.2 Page Tables</h2><p>系统如何判断某个virtual page是否被缓存了呢？换句话说，如何判断数据在DRAM这一层cache hit了？如果cache hit了，那么它被缓存在哪一个physical page中呢？如果cache miss了，这个virtual page存储在disk的哪个位置呢？</p>
+<p>这些问题是由<strong>操作系统、MMU中的地址转换部件和一个特殊的数据结构</strong>共同协作解决的，这个存储在<strong>物理内存中</strong>的特殊数据结构就是<strong>page table</strong>，它提供了virtual page与physical page之间的映射关系。<br>MMU中地址转换部件的职责：通过查page table得到VP对应的PP<br>操作系统的职责：维护page table，并负责disk和主存之间的page传输</p>
+<p>以下是（某进程）page table的基本结构：</p>
+<p><img src="/images/CSAPP/CSAPP_9/4.png"></p>
+<p>一个page table由一系列的PTE（Page Table Entries）组成，每一个VP都对应了page table中一个<strong>对应位置</strong>的PTE（如VP3对应PTE3）。page table中每一项都有一个valid bit，如果它为1，就表示该项对应的VP已经被cache在了物理内存中（如图中VP1, VP2, VP4, VP7）；如果它为0，则若该项的地址为NULL，说明这个页还没有被allocate（如图中VP0, VP5），若该项的地址不为NULL，则它就是该VP在disk中的地址（如图中VP3, VP6）</p>
+<p><img src="/images/CSAPP/CSAPP_9/5.png"></p>
+<p>要注意的是此例中DRAM是全相联映射，VP可映射到任一PP（因此本例物理内存中VP7在VP4上面），而page table和Virtual memory则是<strong>顺序的一一映射</strong>。</p>
+<h2 id="9-3-3-Page-Hits"><a href="#9-3-3-Page-Hits" class="headerlink" title="9.3.3 Page Hits"></a>9.3.3 Page Hits</h2><p>在上例的基础上，假如现在CPU要访问VP2。<br>MMU用CPU访问指令的virtual address定位到page table中对应的PTE（此例为PTE2），发现PTE2的valid bit为1（说明该page已经被cached了），就将该PTE中的物理地址发回给MMU，MMU再将刚才CPU访问指令的虚拟地址改为取回的物理地址（即该page在物理内存中的首地址），将指令重新发送一遍（这次直接发到PM中），完成一次page hit。</p>
+<h2 id="9-3-4-Page-Faults"><a href="#9-3-4-Page-Faults" class="headerlink" title="9.3.4 Page Faults"></a>9.3.4 Page Faults</h2><p>在使用VM技术的计算机系统上，在DRAM上发生的cache miss被称为 <strong>page fault</strong> 。</p>
+<p><img src="/images/CSAPP/CSAPP_9/6.png"></p>
+<p>假如上图为访问前的内存状态，假定我们这次要访问的是VP3。</p>
+<ol>
+<li><p>MMU先去page table查询，发现对应VP3的项PTE3中valid bit为0（表示VP3还没有被cache），这时就会触发一个page fault exception</p>
+</li>
+<li><p>page fault exception会调用内核中的page fault exception handler，该handler会选择一个PM中的一个PP作为victim page（此例中选择PP3，其中存储了VP4），先检测该victim page在被cache后是否被改动过：若被改动过，就会把它更新到disk；若没被改动过，则直接进入下一步。</p>
+</li>
+<li><p>将victim page对应在page table中的PTE标识为uncached</p>
+</li>
+<li><p>内核将VP3从disk中取出，用其覆盖PM中的victim page（VP4），然后更新PTE3，将其标识为cached</p>
+</li>
+<li><p>这时handler执行完毕，他会在return的同时重新调用引起page fault的那条指令（访问VP3），这次page hit<br> 以下为处理完page fault后的状态：</p>
+</li>
+</ol>
+<p>  <img src="/images/CSAPP/CSAPP_9/7.png"></p>
+<p>上面的讨论中，发生page fault后操作系统在PM与disk之间进行page<strong>交换</strong>的行为称为<strong>swapping</strong>或<strong>paging</strong>，Pages are <strong>swapped in (paged in)</strong> from disk to DRAM, and <strong>swapped out (paged out)</strong> from DRAM to disk.</p>
+<p>某VP被cached并保存在PM中的这段时间内，即使发生更新也不会立即把更新写到disk中，而是等到它被置换之前（被选为victim page），才不得不将其内容更新到disk。这种发生page fault时，victim page将其内容更新到disk的行为叫做<strong>demand paging</strong>。（类似于之前讨论过的write-back写更新策略，参看《memory hierarchy》）</p>
+<h2 id="9-3-5-Allocating-Pages"><a href="#9-3-5-Allocating-Pages" class="headerlink" title="9.3.5 Allocating Pages"></a>9.3.5 Allocating Pages</h2><p>malloc函数的作用就是allocating pages。</p>
+<p><img src="/images/CSAPP/CSAPP_9/8.png"></p>
+<p>比如在上图的基础上，调用了malloc函数，系统为它申请了VP5。</p>
+<p><img src="/images/CSAPP/CSAPP_9/9.png"></p>
+<h2 id="9-3-6-Locality-to-the-Rescue-Again"><a href="#9-3-6-Locality-to-the-Rescue-Again" class="headerlink" title="9.3.6 Locality to the Rescue Again"></a>9.3.6 Locality to the Rescue Again</h2><p>和我们之前讨论过的SRAM的Locality一样，DRAM同样遵循Locality。因此虽然DRAM与disk之间的paging耗费巨量时间，但DRAM中总是会存在一个<strong>working set</strong>，CPU的大部分时间都在访问这个set中的pages，因此整体速度还是比较快的。<br>也有可能会出现不幸的状况：thrashing（在《memory hierarchy》中讨论过），反复的进行paging，极大的影响计算机的性能，因此在编写程序时要尽可能的使其具有良好的locality。</p>
+<h1 id="9-4-VM-as-a-Tool-for-Memory-Management"><a href="#9-4-VM-as-a-Tool-for-Memory-Management" class="headerlink" title="9.4 VM as a Tool for Memory Management"></a>9.4 VM as a Tool for Memory Management</h1><p>之前我们的讨论假定了整个系统中只有一个page table。然而事实并非如此，系统会为每一个进程分配一个独立的虚拟地址空间，所有进程的虚拟地址空间<strong>格式</strong>和<strong>起止地址</strong>完全相同，但是它们所对应的disk上的地址空间却不相同（不过也可能存在交叉部分，如下图进程i的VP2和进程j的VP1映射disk上的同一段地址），因此系统要为每一个进程都维护一个page table。</p>
+<p><img src="/images/CSAPP/CSAPP_9/10.png"></p>
+<p>可以看到，实际情况下每一个进程的<strong>VM空间中实际cache到PM中的VP数量是远小于整个PM空间</strong>的。另外还能观察到，两个进程的VP映射到PM上可能离的很远（如图PP2和PP10），一个进程的两个VP也可能离得很远（如图PP2和PP7），可以看出某VP具体映射到PM上的哪个位置是不确定的，同时<strong>两个进程的VP还可能映射到同一个PP上</strong>（如图PP7）。</p>
+<p>在 <strong>demand paging</strong> 和 <strong>每个进程拥有独立的虚拟地址空间</strong> 的共同作用下，VM技术极大的简化了内存管理：</p>
+<ol>
+<li><strong>简化linking</strong><br> 分离虚拟地址空间使得每一个进程都身处于同一格式的内存镜像中，这样一来，它们只需要沉浸在自己的小世界里，组织好自己的结构，而不需要去纠结自己在PM中的组织问题，因为那是VM机制要管的事。这样一来，linker的工作也被极大的简化了，因为在它眼中，内存就长这个样子</li>
+</ol>
+<p>  <img src="/images/CSAPP/CSAPP_9/11.png"></p>
+<p>  我们知道【executable file的结构】与【运行中的程序在内存中的结构】是存在映射关系的（提供映射关系的是header table，在《Linking》-loading中有详细介绍），也就是说linker只需要按照上面这个<strong>统一的格式</strong>来生成与其对应的executable file就行了。（想想如果没有VM抽象出上面这个统一的虚拟内存地址空间，linker要多做多少事？）</p>
+<ol start="2">
+<li><strong>简化loading</strong><br>假定我们现在已经有一个executable文件，想要把它load到一个刚创建的进程中。<br>首先loader会去allocate一组<strong>连续的</strong>virtual pages（足够装下程序的整个code和data字段），再将这个变化更新到该process的page table中（对每个刚申请的VP所对应的PTE：valid&#x3D;0，VP指向<strong>disk上该page对应的地址段</strong>）就OK了，注意<strong>loader此时并不会将任何一个virtual page给cache（page in）到PM中</strong>（即不会对PM进行初始化），是否cache某个page完全是看之后程序是否访问了这个page，且page in的行为总是由VM系统来完成。</li>
+</ol>
+<blockquote>
+<p>上述：loader先申请一组连续的virtual pages，然后建立这些pages与disk上一组地址段的映射，这一过程叫做<strong>memory mapping</strong>，之后还会详细介绍。</p>
+</blockquote>
+<ol start="3">
+<li><p><strong>简化sharing</strong><br>前面我们已经知道到分属于两个进程的两个VP可以映射到同一个PP。<br>这样一来某些常用函数（比如printf）就不需要每个进程都copy一份了，而是只需要有一个进程将常用函数cache到PM中，之后让所有使用它的其他VP都指向那个PP即可。</p>
+</li>
+<li><p><strong>简化内存分配</strong><br>使用malloc函数后，操作系统会创建一组连续的VPs（足以容纳我们申请的内存大小），<strong>每当一个VP被访问，它就会被cache到PM中的随机位置</strong>，这就像是把这些VPs打散，随机的映射到PM中一样。因为根据page table的原理，根本<strong>没有必要把连续VPs映射到连续的PPs</strong>。</p>
+</li>
+</ol>
+<h1 id="9-5-VM-as-a-Tool-for-Memory-Protection"><a href="#9-5-VM-as-a-Tool-for-Memory-Protection" class="headerlink" title="9.5 VM as a Tool for Memory Protection"></a>9.5 VM as a Tool for Memory Protection</h1><p>必须内存加以保护，用户态进程<strong>不能</strong>：</p>
+<ol>
+<li>修改它的只读区域数据</li>
+<li>访问内核中的任何数据</li>
+<li>访问其他进程的私有空间</li>
+<li>修改共享给其他进程的VP（除非其他进程明确允许）</li>
+</ol>
+<p>给每一个进程抽象出独立的虚拟内存空间已经能够一定程度上保护内存了，为了提供更好的内存保护，我们可以改进一下page table，让它具有额外的访问控制能力。</p>
+<p><img src="/images/CSAPP/CSAPP_9/12.png"></p>
+<p>我们为每一个PTE增加了几个<strong>permission bits</strong></p>
+<table>
+<thead>
+<tr>
+<th>permission bit</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SUP</td>
+<td>访问这个VP是否需要内核权限</td>
+</tr>
+<tr>
+<td>READ</td>
+<td>该VP是否<strong>不</strong>能被读</td>
+</tr>
+<tr>
+<td>WRITE</td>
+<td>该VP是否<strong>不</strong>能被写</td>
+</tr>
+</tbody></table>
+<p>举例：假如进程 i 跑在用户态，则它不能读取VP0，不能对VP1读或者写，不能访问VP2.</p>
+<p>如果某个进程对内存进行了违规访问，就会触发一个<strong>general protection fault</strong>，它会把控制转交给内核中的一个exception handler，该handler会发送一个SIGSEGV信号（默认动作为中止进程）给违例的进程，这种exception就是大名鼎鼎的<strong>segmentation fault</strong>。</p>
+<h1 id="9-6-Address-Translation"><a href="#9-6-Address-Translation" class="headerlink" title="9.6 Address Translation"></a>9.6 Address Translation</h1><p><img src="/images/CSAPP/CSAPP_9/13.png"></p>
+<p><strong>PTBR</strong>是一个CPU内部的控制寄存器，它总是指向当前进程的page table。<br>可以看到CPU发出的<strong>virtual address分为两个部分：VPN和VPO</strong>，MMU会根据它的VPN来选择page table中对应的PTE（VPN与PTE之间是一一对应的，VPN0对应PTE0、VPN1对应PTE1），如果该PTE的valid bit为0，则产生page fault，否则读取PTE中的PPN（Physical page number，即物理内存中对应的page number），然后把Virtual address的VPN改为PPN后，重新发送指令，这次直接将其发送给物理内存。</p>
+<p>最后的效果是指令可以通过PPN在PM中找到对应的physical page，然后通过offset（注意VPO和PPO是相同的）定位具体数据。</p>
+<p>下面再讨论的具体一些:<br><strong>page hit</strong></p>
+<p><img src="/images/CSAPP/CSAPP_9/14.png"></p>
+<ol>
+<li>处理器把VA发送到MMU</li>
+<li>MMU拿到VA中的VPN，将这个VPN发送给常驻于物理内存中的page table</li>
+<li>page table把查表的结果（PPN）返回给MMU</li>
+<li>MMU使用这个PPN生成物理地址，直接发送到PM，这就完成了一个page hit。</li>
+</ol>
+<p>不同于完全由硬件完成的page hit，page fault需要由硬件和内核协作完成。<br><strong>page fault</strong></p>
+<p><img src="/images/CSAPP/CSAPP_9/15.png"></p>
+<ol>
+<li>CPU把VA发送到MMU</li>
+<li>MMU拿到VA中的VPN，将这个VPN发送给常驻于物理内存中的page table</li>
+<li>查询发现VPN对应的PTE的valid bit为0，就直接触发exception，CPU调用内核的page fault handler</li>
+<li>page fault handler在PM中选择一个victim page，检查这个page在PM中缓存期间有没有被改动过，如果被改动过，就将这个page更新到disk中，若没被改动过，则直接进入下一步</li>
+<li>page fault handler将需要访问的page从disk中page in到PM中，覆盖刚才选中的victim page</li>
+<li>更新page table对应的PTEs</li>
+<li>page fault handler执行结束，将控制交还给引发page fault的指令，重新从它开始执行</li>
+<li>这次目标page已经被缓存了，同page hit的完整流程</li>
+</ol>
+<h2 id="9-6-1-Integrating-Caches-and-VM"><a href="#9-6-1-Integrating-Caches-and-VM" class="headerlink" title="9.6.1 Integrating Caches and VM"></a>9.6.1 Integrating Caches and VM</h2><p>讨论了这么多，都是假定CPU的下一级直接就是主存，如果它们之间存在SRAM，那么数据在SRAM上cache是用Virtual address还是Physical address呢？<br>答案是：Physical address，在指令把VA发离CPU之前就把它转换为PA。</p>
+<p><img src="/images/CSAPP/CSAPP_9/16.png"><br>在SRAM中，每一个进程都有一个属于自己的小区域，并且与两个VP可以指向一个PP一样，SRAM中的进程也可共享数据。因为指令地址脱离CPU后就以物理地址的形式存在了，因此<strong>每一个SRAM都可以被看作是一个小型的PM</strong>，前面讨论的关于PM的性质在SRAM中都适用。</p>
+<h2 id="9-6-2-Speeding-Up-Address-Translation-with-a-TLB"><a href="#9-6-2-Speeding-Up-Address-Translation-with-a-TLB" class="headerlink" title="9.6.2 Speeding Up Address Translation with a TLB"></a>9.6.2 Speeding Up Address Translation with a TLB</h2><p>其实上面我们讨论的地址转换，相当于每条指令都得先被发送到PM一次，然后PM把返回值发送给MMU，接着MMU再发送一次转换后的地址到PM，这其实要消耗非常多的时间。<br>为了提速，CPU设计者在MMU中加上了一个小的cache，专用于缓存page table，叫做 <strong>translation lookaside buffer (TLB)</strong> ，TLB的每一个项都是用虚拟地址标识的，格式如下：</p>
+<p><img src="/images/CSAPP/CSAPP_9/17.png"></p>
+<p>与我们之间讨论的SRAM cache matching相同（《memory hierarchy -&gt; cache hit原理》），携带VA的指令先通过TLB index选择set，再通过TLB tag选择line，如果前两步都match了，这次就算是cache hit，最后通过VPO定位具体数据，拿到对应的PA。</p>
+<h3 id="9-6-2-1-TLB-hit"><a href="#9-6-2-1-TLB-hit" class="headerlink" title="9.6.2.1 TLB hit"></a>9.6.2.1 TLB hit</h3><p><img src="/images/CSAPP/CSAPP_9/18.png"></p>
+<ol>
+<li>CPU生成virtual address，发送给MMU</li>
+</ol>
+<p>2&amp;3.  MMU从TLB中取到对应的PTE</p>
+<ol start="4">
+<li><p>MMU把VA转换为PA，然后发送给PM</p>
+</li>
+<li><p>PM执行指令的内容，将结果返回给CPU</p>
+</li>
+</ol>
+<h3 id="9-6-2-2-TLB-miss"><a href="#9-6-2-2-TLB-miss" class="headerlink" title="9.6.2.2 TLB miss"></a>9.6.2.2 TLB miss</h3><p><img src="/images/CSAPP/CSAPP_9/19.png"></p>
+<ol>
+<li>CPU生成virtual address</li>
+<li>MMU先去TLB中找对应的PTE，但没找到</li>
+<li>MMU只好自己拿着VPN去PM中查物理地址了</li>
+<li>查到后，将这次查询的结果缓存到TLB中</li>
+<li>MMU进行地址转换，然后将物理地址发送到PM</li>
+<li>PM执行指令的内容，将结果返回给CPU</li>
+</ol>
+<h2 id="9-6-3-Multi-Level-Page-Tables"><a href="#9-6-3-Multi-Level-Page-Tables" class="headerlink" title="9.6.3 Multi-Level Page Tables"></a>9.6.3 Multi-Level Page Tables</h2><p>page table是常驻在物理内存中的，且大多数情况下，page table的绝大部分都是unallocated，这就造成了很大的资源浪费，毕竟物理内存是寸土寸金啊。<br>为了节省PM的资源，大神们发明了多级page tables</p>
+<p><img src="/images/CSAPP/CSAPP_9/20.png"></p>
+<p>显然，我们只要让level 1的page table常驻在物理内存中即可，level 2的page tables则通过page in与page out的方式在需要时创建，这极大的减轻了物理内存的压力，也节省出了很多空间，但相应的会增加时间？</p>
+<p><strong>在多层page tables的背景下如何进行地址转换呢？</strong></p>
+<p><img src="/images/CSAPP/CSAPP_9/21.png"></p>
+<p>有小朋友就会问了，这VPN转换这么多层，是不是会太慢了？<br>其实不然，<strong>有了TLB技术，大多数情况下根本不需要去进行地址转换</strong>，在实际情况中，多级page tables与单个page table的效率几乎没有区别，Locality真是一个神奇的性质。TLB+多级页表，完美的配合，既节省了PM空间，又提升了地址转换的效率！</p>
+<h2 id="9-6-4-Sum-Up！完整的地址转换过程"><a href="#9-6-4-Sum-Up！完整的地址转换过程" class="headerlink" title="9.6.4 Sum Up！完整的地址转换过程"></a>9.6.4 Sum Up！完整的地址转换过程</h2><p>现在把上面的内容合并起来讨论</p>
+<p><img src="/images/CSAPP/CSAPP_9/22.png"></p>
+<p>其中CT、CI、CO分别代表cache tag、cache index、cache offset</p>
+<p>现在我们可以看到更加详细的虚拟内存图了</p>
+<p><img src="/images/CSAPP/CSAPP_9/23.png"></p>
+<h1 id="9-7-Memory-Mapping"><a href="#9-7-Memory-Mapping" class="headerlink" title="9.7 Memory Mapping"></a>9.7 Memory Mapping</h1><p>将disk中一段内容映射到虚拟内存中一串连续的页中，这个过程就叫<strong>memory mapping</strong>，disk上能够与虚拟内存映射的object分为两种：</p>
+<ol>
+<li><p>普通文件<br>比如executable object file等，这个file会被分为N个pages，<strong>每一个page都是其对应VP的初始内容</strong>。因为<strong>demand paging</strong>技术，在CPU真正“触碰“到某一个页之前（即CPU请求的virtual address落在某一个未被cache的VP区域内之前），这个页是不会被page in到物理内存中的。</p>
+<blockquote>
+<p>如果申请的虚拟内存空间大于其对应文件，多出的虚拟内存空间会用0填充</p>
+</blockquote>
+</li>
+<li><p>匿名文件（Anonymous file）<br>匿名文件是由内核所创建的，它的内容为全0。<br>如果CPU“触摸”了匿名文件中的某个VP所属的区域，内核就会去PM中寻找一个victim page，如果这个victim page is dirty（即这个页面在被缓存后数据被改动过，《memory hierarchy》-写策略中有详述），就会把它更新到disk上，然后再用全0覆盖这个victim page；否则就直接用全0（匿名文件任何一页的内容）覆盖这个victim page，并更新page table中对应的PTE。<br>因此匿名文件存在就是为了把一个已经被cached的页给uncache掉。<br>这些映射到匿名文件的VP被称为<strong>demand-zero pages</strong>。</p>
+</li>
+</ol>
+<p>无论是以上的哪种文件，一旦属于它的VPs被初始化了，它就会通过一个内核维护的文件：<strong>swap file</strong>，在disk和memory之间被来回传输。swap file中总是维护着当前进程所能够申请的最大数量的VPs。因此，<strong>swap file的大小决定了VM的空间大小</strong>。</p>
+<h2 id="9-7-1-Shared-Objects-Revisited"><a href="#9-7-1-Shared-Objects-Revisited" class="headerlink" title="9.7.1 Shared Objects Revisited"></a>9.7.1 Shared Objects Revisited</h2><p>前面我们已经介绍过，如果多个进程各自的某一块空间映射同一片disk区域，<strong>只要它们都将这块区域标识为shared</strong>，则在物理内存中只需要缓存一份这片disk区域的数据，之后所有进程都共享物理内存的这一片区域即可。</p>
+<p><img src="/images/CSAPP/CSAPP_9/24.png"></p>
+<p>事实上，当多个进程各自的某一块空间映射到同一片disk区域，但<strong>是它们都将这块区域标识为私有</strong>时，物理内存中一开始仍然只需要缓存<strong>一份</strong>这片区域的数据，然后让所有进程共享这一片物理内存块。</p>
+<p>可是这样做不就相当于数据非私有的了？<br>别急，我们先不考虑写入的情况，也就是说<strong>只要没有任何一个进程对这块区域进行写操作，它们完全可以share这一块区域</strong>。</p>
+<p>那如果有进程对这区域write怎么办呢？<br>答案是使用<strong>copy-on-write</strong>技术。<br>这些存在共享区域的进程都会在自己的page table中把属于自己共享区域的所有PTEs都标为<strong>只读</strong>，并且会给整个共享区域做一个标识：private copy-on-write。<br>当这些进程中的任意一个对自己的共享区域进行写操作时，因为是写只读数据，会触发一个protection fault，fault handler觉察到这个写操作是在private copy-on-write区域中的，就不会报错，而是:<br>它先去PM中找到该共享区域的缓存，把<strong>写操作目标地址所属的整个page</strong>（注意只是一个page）<u>从中</u>复制一份放到PM的其他位置，然后更新该进程的page table：让写操作目标地址对应的PTE指向刚复制的新page，并将该page的写操作开放，接着CPU重新执行一次写操作，这次就把数据写到了刚生成的私有page上了。这样就抽象出了进程私有内存空间的感觉。</p>
+<p><img src="/images/CSAPP/CSAPP_9/25.png"></p>
+<p>这种多个进程，当它们各自的某一块<strong>私有</strong>区域都映射到同一块disk区域上时，可以先把这一块区域视为公有，只将一份该区域的数据缓存到PM中。如果所有进程都只是读取该区域的内容，那么完美运行；只有当某一个进程对该区域write时，才会利用内存保护的handler把该write目标地址所属的page从共享区域复制出来一份，然后重新执行一次对该复制出的<strong>副本page</strong>的write，从而把这次write操作给私有化。这种<strong>copy-on-write</strong>策略极大的节省了珍贵的物理内存空间。</p>
+<p>事实上<strong>fork函数</strong>的实现就是基于<strong>copy-on-write</strong>，调用它时，系统只需要创建一个当前进程的副本进程（当然要赋予新的PID），然后把副本进程的全部空间设为private copy-on-write，所有pages设为只读，这就抽象出了两个独立的进程。<br>有了虚拟内存合memory mapping的基础，我们还可以完善execve()的原理。</p>
+<blockquote>
+<p>execve()的功能是先创建一个当前进程的子进程，然后在子进程中执行另一个程序</p>
+</blockquote>
+<h2 id="9-7-2-The-execve-Function-Revisited"><a href="#9-7-2-The-execve-Function-Revisited" class="headerlink" title="9.7.2 The execve Function Revisited"></a>9.7.2 The execve Function Revisited</h2><p>假如execve()在当前进程中被调用，它的参数为a.out，那么先要执行一个fork()，然后系统会对新进程进行如下动作：</p>
+<ol>
+<li><strong>初始化进程的虚拟内存</strong>。因为fork()创建的新进程是原进程的副本，因此要先把新进程中的数据给清空</li>
+<li><strong>建立私有区域的映射</strong>。以将要加载的程序a.out为蓝本，在新进程中创建对应的数据结构（code区、data区、bss以及栈），并将进程中所有的区域都标识为private copy-on-write。<br>将disk上程序文件的data部分和code部分映射到VM的data区和text区。<br>将VM的bss、stack和heap区映射到disk上的anonymous file上（即映射为全0）</li>
+<li><strong>建立共享区域的映射</strong>。如果程序使用了dll，则这些dll被动态链接的过程，就是<strong>系统找到它们在disk上的位置，然后将它们映射到VM中共享区域的过程</strong>。</li>
+<li><strong>控制交还</strong>。将program counter指向子进程代码的入口点。</li>
+</ol>
+<p>最终子进程内存如下图所示</p>
+<p><img src="/images/CSAPP/CSAPP_9/26.png"></p>
+<h1 id="9-8-Dynamic-Memory-Allocation"><a href="#9-8-Dynamic-Memory-Allocation" class="headerlink" title="9.8 Dynamic Memory Allocation"></a>9.8 Dynamic Memory Allocation</h1><p>假如我们要创建一个数组，它的大小为n，而这个n在写程序时是不确定的（比如要从键盘读入n，或n是在程序运行时才被计算出来的），有两种方案可供使用：</p>
+<ol>
+<li>申请一个固定长度的超长全局数组（浪费巨量空间）</li>
+<li>使用动态内存分配</li>
+</ol>
+<p>我们可以很方便的借助<strong>allocator</strong>来实现动态内存分配，内核为每一个进程维护了一个指针brk，它总是指向本进程中heap的首地址。allocator借助它来定位heap的位置。</p>
+<p>allocator总是将heap视为一个个<strong>大小不一</strong>的块，每一个块都是其VM中一段连续的地址空间，它有两种状态：<strong>allocated or free</strong>。<br><strong>如果某一个块被allocated了</strong>，说明应用程序已经占用这个块，它之后可以往里面写入数据了（注意某个block被allocate后其中可能已经有上次使用留下的垃圾数据，也可能是全0，我们无法确定，因此<strong>动态分配内存后一定要对空间初始化</strong>）。<br><strong>若某一个块是free的</strong>，说明它还没有被占用。</p>
+<p>有两种allocators，它们之间的区别只在于负责执行free的实体不同。</p>
+<ol>
+<li><p><strong>explicit allocator</strong>。它要求应用程序<strong>显式的</strong>free内存，比如C中的malloc，用完后必须显式的free掉申请的内存；比如C++的new，用完后必须要用delete来释放内存。</p>
+</li>
+<li><p><strong>implicit allocator</strong>。 这种allocator会不停地寻找不再被使用的动态内存，将它们free掉，因此它还有一个别名：<strong>garbage collector</strong>，java就使用了这种allocator。</p>
+</li>
+</ol>
+<blockquote>
+<p>其实allocator不光能管理heap，还有其他作用。</p>
+</blockquote>
+<h2 id="9-8-1-The-malloc-and-free-Functions"><a href="#9-8-1-The-malloc-and-free-Functions" class="headerlink" title="9.8.1 The malloc and free Functions"></a>9.8.1 The malloc and free Functions</h2><p>假设每个格子存放一个字（4 bytes）的数据，块之间用粗线隔开，示例如下：</p>
+<p><img src="/images/CSAPP/CSAPP_9/27.png"></p>
+<p>要注意的是(d)步骤，把p2给free掉后，p2依然指向原来的位置，但这时它已经是垃圾了，且如果之后不小心使用了它，会产生难以修复的bug，这也是为什么<strong>free掉指针后要将它置为NULL</strong>的原因。</p>
+<h2 id="9-8-2-Allocator-Requirements-and-Goals"><a href="#9-8-2-Allocator-Requirements-and-Goals" class="headerlink" title="9.8.2 Allocator Requirements and Goals"></a>9.8.2 Allocator Requirements and Goals</h2><p>Allocator在设计上有很多要求，比如数据对齐（为了能处理任意类型的变量），不能为了节省空间（填补block之间的空隙）而移动allocated block。<br>所有的这些要求都是为了实现两个目标：</p>
+<ol>
+<li>最大化吞吐量（maximize throughput）<br>比如一个allocator能在1s内完成500次allocate和500次free，它的吞吐量就是1000&#x2F;s。为了提高吞吐量，可以降低每一次allocate和free操作所需要的时间。</li>
+<li>最大化内存利用（maximize memory utilization）<br>allocator本身也是程序，那么利用好每一点内存当然也是它的设计目标。</li>
+</ol>
+<p><strong>这两个目标是互相制约的，因此应该尽最大努力在它们之间寻找一个平衡点</strong>。</p>
+<h2 id="9-8-3-Fragmentation"><a href="#9-8-3-Fragmentation" class="headerlink" title="9.8.3 Fragmentation"></a>9.8.3 Fragmentation</h2><p>heap在经过多次的allocate&amp;free后，必然会有很多夹在两块allocated blocks之间的free block，由于它们占有的空间太小了，以至于几乎每一次申请内存都不会轮到它们。这些位置尴尬的free blocks就被称为<strong>Fragmentations</strong>，它们就是实现最大化内存利用的绊脚石。</p>
+<p>fragmentation被分为两种：</p>
+<ol>
+<li><p>Internal fragmentation<br>比如allocator为了空间对齐，会在申请的实际空间后追加一点空白区；或者申请的heap空间小于allocator规定的最小值，也会在其后追加空白区以满足最小值要求。这两种情况产生的内存空隙称为<strong>internal fragmentation</strong>。</p>
+</li>
+<li><p>External fragmentation<br>比如我们要动态申请大小为n的数组，此时整个heap中<strong>所有的free blocks加起来&gt;n</strong>，但<strong>没有任何一个单独的block是大于n的</strong>，在这种情况下heap中所有的free blocks都改名叫做<strong>external fragmentation</strong>。</p>
+</li>
+</ol>
+<p>可以看出量化External fragmentation是非常困难的，因为它相比internal fragmentation的计算（申请后实际空间的大小 - 申请的空间大小），还多了一个参数: <strong>未来</strong>，如果之后的每一次申请内存的大小都小于任何一个free block，那它就根本不存在External fragmentations了，但问题是，我们步可能预知未来。</p>
+<h2 id="9-8-4-Implementation-Issues"><a href="#9-8-4-Implementation-Issues" class="headerlink" title="9.8.4 Implementation Issues"></a>9.8.4 Implementation Issues</h2><p>为了在提高吞吐量和提高内存利用之间寻找一个平衡，实现allocator时必须考虑以下问题：</p>
+<ol>
+<li>Free block organization。如何动态维护所有的free blocks？</li>
+<li>Placement。我们应该把刚申请的内存放在哪个free block中？</li>
+<li>Splitting。完成Placement之后，如果该free block中多出了很大空间怎么办？</li>
+<li>Coalescing。如何处理一个刚刚被free的block，它旁边有没有free的block，能否把它们合为一个大的block？</li>
+</ol>
+<p>为了解决上述问题，我们先来了解一下free block的结构。</p>
+<h2 id="9-8-5-Implicit-Free-Lists"><a href="#9-8-5-Implicit-Free-Lists" class="headerlink" title="9.8.5 Implicit Free Lists"></a>9.8.5 Implicit Free Lists</h2><p>这是一种heap中简单的block结构</p>
+<p><img src="/images/CSAPP/CSAPP_9/28.png"></p>
+<p>进而根据这样的结构，heap就可以被分为一系列free和allocated块的组合了。（block之间以粗线分隔）</p>
+<p><img src="/images/CSAPP/CSAPP_9/29.png"></p>
+<p>为啥叫这样的block为implicit free lists呢？<br>因为以此block结构组成的heap中，所有的free blocks都可以被<strong>隐式的</strong>追踪到（方法是遍历所有blocks，通过它们的header的最低一个位判断是否未free block，遍历结束的标志是某个block size为0）。</p>
+<p>这种结构最大的优点就是简单，缺点也很明显，每次追踪free block都要消耗大量的时间。</p>
+<blockquote>
+<p>无论是基于alignment还是allocator本身设计的要求，<strong>minimum block size</strong>是allocator设计中一个必然存在的条件，没有任何一个block能够小于这个size。</p>
+</blockquote>
+<h2 id="9-8-6-Placing-Allocated-Blocks"><a href="#9-8-6-Placing-Allocated-Blocks" class="headerlink" title="9.8.6 Placing Allocated Blocks"></a>9.8.6 Placing Allocated Blocks</h2><p>每次程序动态申请内存时，假定为k bytes，allocator会在heap中寻找大于k bytes的free block，然后把它明确为allocated状态。问题是free block不一定只有一个，当有多个时，该选择哪一个free block呢？<br>有三种<strong>placement policy</strong>：</p>
+<ol>
+<li>first fit<br>顾名思义，直接选择第一个满足要求的free block。<br>优点: 会在list尾部留出大块的free block<br>缺点: 会在list的前部留下许多小的fragmentations，导致之后的搜索时间变长（因为每次都会从头开始搜索）</li>
+<li>next fit<br>与first fit类型，区别在于每次搜索完成后，下一次搜索从上次的结束位置开始。<br>优点: 每次不用从头开始搜索，即使list前部有很多细碎的fragmentations也不会影响其之后的搜索时间<br>缺点：内存利用率低</li>
+<li>best fit<br>搜索最小的满足要求的free blck。<br>优点: 比first fit和next fit的内存利用率都要高<br>缺点: 如果应用在implicit free list结构上，它的搜索时间会非常久</li>
+</ol>
+<p>内存空间非常珍贵，因此使用best fit比较合理。为了降低它的搜索时间，大神们为它量身定做了一种block格式。<br>《9.9.11 Segregated Free Lists》</p>
+<h2 id="9-8-7-Splitting-Free-Blocks"><a href="#9-8-7-Splitting-Free-Blocks" class="headerlink" title="9.8.7 Splitting Free Blocks"></a>9.8.7 Splitting Free Blocks</h2><p>当allocator定位到了一个free block时，这个free block有可能远大于申请的内存，这时它可以选择不管不顾直接用这块free block，这样虽然实现起来简单了，却会留下许多的internal fragmentations。因此碰到这样的情况，allocator可以选择把free block多出的那部分切掉，让它自立门户，剩余的部分则刚好与要申请的内存大小匹配（稍微大一点作为padding）。</p>
+<h2 id="9-8-8-Coalescing-Free-Blocks"><a href="#9-8-8-Coalescing-Free-Blocks" class="headerlink" title="9.8.8 Coalescing Free Blocks"></a>9.8.8 Coalescing Free Blocks</h2><p>有时候会碰到这样的情况</p>
+<p><img src="/images/CSAPP/CSAPP_9/30.png"></p>
+<p>一段连续的free space被划分成了多个free blocks，这会引发<strong>false fragmentation</strong>问题。因为完全有可能这个连续的free space很大，但其中的free blocks却都很小，进而都变成fragmentations了。<br>在这种情况下，allocator会对这些free blocks进行<strong>coalescing</strong>，即将它们合并为一个大的free block。<br>coalescing可能发生在两个时刻：</p>
+<ol>
+<li><strong>immidiate coalescing</strong>。<br>每当对某个block进行free时，就将它与其相邻的free block合并。<br>优点：执行速度快<br>缺点：容易造成thrashing（一个free space被反复的splitting和coalescing）</li>
+<li><strong>deferred coalescing</strong>。<br>滞后的合并，有多种选择。比如在某次allocation fail时，触发中断把整个heap中所有的free blocks能合并的全部合并，然后重新尝试一次allocation。<br>优点：不会引起thrashing<br>缺点：实现复杂</li>
+</ol>
+<blockquote>
+<p>一般allocator都是采用deferred coalescing</p>
+</blockquote>
+<p>当某次allocation fail时，如果进行了deferred coalescing之后空间还是不够，<strong>allocator就会向内核请求扩大heap的空间</strong>（调用sbrk()），然后把新空间加入到自己的block list中。</p>
+<h2 id="9-8-9-Coalescing-with-Boundary-Tags"><a href="#9-8-9-Coalescing-with-Boundary-Tags" class="headerlink" title="9.8.9 Coalescing with Boundary Tags"></a>9.8.9 Coalescing with Boundary Tags</h2><p>回忆我们讨论过的implicit free list结构。<br>每一个block只知道自己的size $\Leftrightarrow$ 每一个block只知道其下一个block的起始地址，不知道其上一个block的起始地址。<br>这样我们就可以把该list结构视为链表了。</p>
+<p>要将某个block B与其相邻的两个blocks合并，显然将B与其下一个block合并是非常简单的（直接找到其下一个block起始地址，判断其tag是否为free，若是，则B直接将自己的size+下一个block的size即可）。<br>然而合并B和其上一个block怎么办呢？根据链表的特性，难道我们每次都要遍历嘛？</p>
+<p>神人们又想出一个方法，在block的结构尾部加上一个footer，它是header的复制。</p>
+<p><img src="/images/CSAPP/CSAPP_9/31.png"></p>
+<p>这样B就可以直接通过<strong>自己的首地址减去 4 bytes</strong>定位到它上一个block的footer。<br>这样一来，coalescing这个动作就完全变成常数级的了。</p>
+<p>看起来很美好，但实际上<strong>block的结构一定要精打细算</strong>。比如有些应用程序会大量的申请释放小块的内存，在这种情况下footer多出的这一个字的空间就是一笔非常大的开销了。<br>不过我们发现<strong>只有当一个block是free状态时，才需要footer</strong>。因此我们可以在每一个block中用一个bit（free&#x2F;allocated校验）来表示它的上一个block是否为free，这样一来<strong>所有allocated blocks都不需要footer字段了</strong>。当一个block是free状态时，照常按header和footer的结构来存储；而当这个block被allocate时，就可以直接当footer字段不存在，直接拿来存payload，然后把它下一个block中的校验bit设置为allocate状态即可。<br>用于校验的bit被称为<strong>boundary tags</strong>。</p>
+<blockquote>
+<p>加上了footer后, 整个heap就从原来的单链表变成双链表了。<br>payload：有效载荷，实际数据量</p>
+</blockquote>
+<h2 id="9-8-10-Explicit-Free-Lists"><a href="#9-8-10-Explicit-Free-Lists" class="headerlink" title="9.8.10 Explicit Free Lists"></a>9.8.10 Explicit Free Lists</h2><p>事实上程序本身并不关注free blocks，那是allocator的事，因此我们可以<strong>把所有的free blocks全给单拎出来组成一个list</strong>，并将它以某种数据结构表示，比如双链表：</p>
+<p><img src="/images/CSAPP/CSAPP_9/32.png"></p>
+<p>维护free list有两种方法：</p>
+<ol>
+<li><strong>last-in first-out (LIFO)</strong><br>整个list就像栈一样pop&#x2F;push新的free block。</li>
+<li><strong>address order</strong><br>将所有的free blocks按照地址从大到小的顺序拜访。</li>
+</ol>
+<p>这种结构的缺点也很明显，所有free block必须能够放下所有的维护信息，因此block的最小size变大。</p>
+<h2 id="9-8-11-Segregated-Free-Lists"><a href="#9-8-11-Segregated-Free-Lists" class="headerlink" title="9.8.11 Segregated Free Lists"></a>9.8.11 Segregated Free Lists</h2><p>为了降低allocation的时间，<strong>segregated free list</strong>诞生了，它的作用是维护多个free lists，每一个list中维护size相近的free blocks。这样free lists就被称为<strong>size classes</strong>。allocator需要维护的是所有的free lists，把它们按照size从小到大放置，申请内存时直接定位到某个size class中寻找合适的free block，如果该class中没有合适的，就跑到下一个class中寻找。</p>
+<p>segregated free list有很多种，它们的区别就在于如何定义size class。下面我们介绍一种基本的实现：</p>
+<p><strong>Simple Segregated Storage</strong><br>这种基本的lists结构中任意size class中所有的blocks大小都是<strong>相等</strong>的（而非大小相近），因为它会把一个size class中所有的blocks的size都变成最大的那个block的size（比如list{16，3，4，51，8}会把所有值都变为51）。</p>
+<blockquote>
+<p>因为每次都会直接定位到与申请的内存大小相符的size class，并最终在里面选择一个大小相符的block，因此根本不需要使用split技术了</p>
+</blockquote>
+<p><strong>执行allocation时</strong>，只需要找到对应size class，如果该class不空，就直接选择第一个block作为allocate的对象，并把它从free list中删除；如果该class为空，则allocator会发起中断后直接向操作系统申请额外的空间（通常是此次申请内存大小的倍数），然后把这个额外的空间分为几个与此次申请内存大小相等的blocks，把这些blocks连起来组成一个新的free list，然后重新执行一遍allocation。<br><strong>执行free时</strong>，只需要找到对应的size class，然后把此次free掉的block放在该class的最前面即可。</p>
+<p>这样一来，<strong>allocation和free都是常数级</strong>的操作了；而且这种结构中已经不存在splitting和coalescing的概念（仅simple版无），且size class直接就表示了它其中所有blocks的大小，因此每个block的header和footer都可以不要了，这样<strong>每个block用于存储信息的开销更小了</strong>；又因为allocate和free操作都只对list的第一个元素进行操作，因此<strong>不需要使用双链表</strong>浪费空间了，单链表完全可以胜任，现在block中唯一需要留下的信息属性就是其后继指针。<br>该结构的缺点就是非常容易产生internal fragmentation。</p>
+<h1 id="9-9-Garbage-Collection"><a href="#9-9-Garbage-Collection" class="headerlink" title="9.9 Garbage Collection"></a>9.9 Garbage Collection</h1><p>garbage collection（之后简称GC）会自动的扫描heap中的垃圾内存，并free它们。<br>在GC的眼中，内存是这样的</p>
+<p><img src="/images/CSAPP/CSAPP_9/33.png"></p>
+<p>它总是把内存视为有向图，图中的节点被分为root nodes和heap nodes。</p>
+<ol>
+<li><strong>每一个heap node对应了一个allocated block</strong></li>
+<li>每一条有向边 a$\Rightarrow$b 表示block a中某个位置存在一个pointer指向block b中的某一个位置</li>
+<li>root node表示heap之外的位置，则root node $\Rightarrow$ heap node代表一个heap之外的pointer指向了heap之内的某个block的任意位置。<blockquote>
+<p>root node代表的位置可能是registers，或栈内的变量，或VM中的全局变量</p>
+</blockquote>
+</li>
+</ol>
+<p>在任何时候，只要某个节点与root是连通的，说明这个节点<strong>reachable</strong>，它仍在使用中；所有与root不连通的<strong>unreachable</strong>节点都是垃圾。GC的作用就是周期性的找到这些垃圾节点，把它们free掉。</p>
+<h2 id="9-9-1-Mark-amp-Sweep-Garbage-Collectors"><a href="#9-9-1-Mark-amp-Sweep-Garbage-Collectors" class="headerlink" title="9.9.1 Mark&amp;Sweep Garbage Collectors"></a>9.9.1 Mark&amp;Sweep Garbage Collectors</h2><p>这种GC的执行分为两个阶段。<br><strong>第一阶段Mark</strong>，把所有与root连通的heap nodes标识为Marked nodes。<br><strong>第二阶段Sweep</strong>，free掉所有unmarked heap nodes。</p>
+<blockquote>
+<p>通常用block中header的某个bit来标识其是否被mark</p>
+</blockquote>
+<p>用图来表示这两个阶段的效果（每个小格代表一个字，每个block之间以粗线隔开，箭头表示引用）</p>
+<p><img src="/images/CSAPP/CSAPP_9/34.png"></p>
+<h2 id="9-9-2-Conservative-Mark-amp-Sweep-for-C-Programs"><a href="#9-9-2-Conservative-Mark-amp-Sweep-for-C-Programs" class="headerlink" title="9.9.2 Conservative Mark&amp;Sweep for C Programs"></a>9.9.2 Conservative Mark&amp;Sweep for C Programs</h2><p>为C设计的collector必须为<strong>conservative collector</strong>，它的特点是会遗漏处理一些垃圾内存，为什么会这样设计呢？</p>
+<p>因为C不会对指针变量加上任何的标识，这就意味着如果我们定义了某个int变量它的值刚好是一个有效的地址，系统根本无法分辨它到底是值还是指针，因此基于地址搜索的collector同样也无法分辨，它只能把这些模棱两可的地址保留，这样至少不会出错。</p>
+<h1 id="9-10-Common-Memory-Related-Bugs-in-C-Programs"><a href="#9-10-Common-Memory-Related-Bugs-in-C-Programs" class="headerlink" title="9.10 Common Memory-Related Bugs in C Programs"></a>9.10 Common Memory-Related Bugs in C Programs</h1><ol>
+<li><p>scanf写错<br>把scanf(“%d”, &amp;val)写成scanf(“%d”,val)，程序就直接把val当地址读取了。</p>
+</li>
+<li><p>认为动态申请的内存初始值为0<br>在大多数情况下，heap中塞满了垃圾数据，用之前一定要手动对它们初始化</p>
+</li>
+<li><p>栈溢出<br>在栈中开辟空间后，如果往里面塞的数据比空间本身要大，就会发生栈溢出。因此往栈中写入数据时一定要检查其长度。</p>
+</li>
+<li><p>认为指针类型长度总是等于int类型长度<br>有些机器的指针类型并不是一个字长，为了移植性应该注意这个问题。另外指针类型长度我们在《逆向-C反汇编-指针基础》中已经详细讨论过了。</p>
+</li>
+<li><p>优先级<br>比如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">sub</span><span class="params">(<span class="type">int</span>* size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *size--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不对的，要记住“*”的优先级是很低的，注意加括号。应该改为:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">sub</span><span class="params">(<span class="type">int</span>* size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    (*size)--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>局部变量不初始化直接使用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> *<span class="title">stackref</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> val; </span><br><span class="line">    <span class="keyword">return</span> &amp;val; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们直接拿到了该函数局部变量val在栈中的地址，假设为p。然而我们知道栈只是一块临时的区域，是会被多个函数轮流使用的。当stackref函数return后p依然指向刚刚栈中的位置，但这时该位置可能属于另一个函数了，如果现在不小心给p赋了一个值，那就相当于直接改动当前函数栈的数据，程序直接崩溃。</p>
+</li>
+<li><p>使用已经被free掉的函数指针<br>养成习惯在free掉函数指针后，将其置为NULL</p>
+</li>
+<li><p>内存泄漏<br>某函数中动态申请内存后忘记释放。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">leak</span><span class="params">(<span class="type">int</span> n)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> *x = (<span class="type">int</span> *)<span class="built_in">Malloc</span>(n * <span class="built_in">sizeof</span>(<span class="type">int</span>)); </span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">/* x is garbage at this point */</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果这个函数不断的被使用，heap就会被不断的塞满，最终爆掉，需要长时间运行的程序尤其要注意这个问题。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/07/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BTransport-Layer/" rel="prev" title="《计网》Transport-Layer">
+                  <i class="fa fa-chevron-left"></i> 《计网》Transport-Layer
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/07/IT/operating_system/%E3%80%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%8BProcesses-and-Threads/" rel="next" title="《操作系统》Processes_and_Threads">
+                  《操作系统》Processes_and_Threads <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

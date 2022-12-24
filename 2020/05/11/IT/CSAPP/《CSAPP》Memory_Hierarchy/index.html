@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="《CSAPP》Memory Hierarchy">
+<meta property="og:url" content="http://example.com/2020/05/11/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BMemory_Hierarchy/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/8.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/1.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/2.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/3.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/4.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/5.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/flow1.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/flow2.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/flow3.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/flow4.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/6.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/flow5.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/7.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_6/8.png">
+<meta property="article:published_time" content="2020-05-11T09:24:47.000Z">
+<meta property="article:modified_time" content="2021-01-01T08:37:10.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/CSAPP/CSAPP_6/8.png">
+
+
+<link rel="canonical" href="http://example.com/2020/05/11/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BMemory_Hierarchy/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/05/11/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BMemory_Hierarchy/","path":"2020/05/11/IT/CSAPP/《CSAPP》Memory_Hierarchy/","title":"《CSAPP》Memory Hierarchy"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《CSAPP》Memory Hierarchy | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#6-1-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF"><span class="nav-text">6.1 存储技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-1-%E6%98%93%E5%A4%B1%E6%80%A7%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%88random-access-memory%EF%BC%89"><span class="nav-text">6.1.1 易失性存储器（random access memory）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-2-%E9%9D%9E%E6%98%93%E5%A4%B1%E6%80%A7%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%88non-volatile-memory%EF%BC%89"><span class="nav-text">6.1.2 非易失性存储器（non-volatile memory）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-1-ROM%EF%BC%88read-only-memory%EF%BC%89"><span class="nav-text">6.1.2.1 ROM（read-only memory）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-2-flash-memory"><span class="nav-text">6.1.2.2 flash memory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-3-CPU%E3%80%81%E4%B8%BB%E5%AD%98%E5%92%8C%E7%A1%AC%E7%9B%98%E9%80%9A%E4%BF%A1"><span class="nav-text">6.1.3 CPU、主存和硬盘通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-4-SSD"><span class="nav-text">6.1.4 SSD</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-2-%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86%EF%BC%88locality%EF%BC%89"><span class="nav-text">6.2 局部性原理（locality）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-1-Spatial-locality"><span class="nav-text">6.2.1 Spatial locality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-2-Temporal-locality"><span class="nav-text">6.2.2 Temporal locality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-3-%E6%A0%97%E5%AD%90"><span class="nav-text">6.2.3 栗子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-3-cache"><span class="nav-text">6.3 cache</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-1-%E4%B8%89%E7%A7%8Dcache-miss"><span class="nav-text">6.3.1 三种cache miss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-2-cache-hit%E5%8E%9F%E7%90%86"><span class="nav-text">6.3.2 cache hit原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-2-1-%E6%A0%97%E5%AD%90"><span class="nav-text">6.3.2.1 栗子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-3-%E5%86%99%EF%BC%88%E5%BF%85%E9%A1%BB%E5%88%B6%E5%AE%9A%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5%EF%BC%89"><span class="nav-text">6.3.3 写（必须制定数据更新策略）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-3-1-cache-hit%E6%97%B6%E7%9A%84%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="nav-text">6.3.3.1 cache hit时的更新策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-3-2-cache-miss%E6%97%B6%E7%9A%84%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="nav-text">6.3.3.2 cache miss时的更新策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-3-3-%E4%BE%8B%E5%AD%90"><span class="nav-text">6.3.3.3 例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-4-cache%E6%80%A7%E8%83%BD"><span class="nav-text">6.3.4 cache性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-4-1-cache%E5%8F%AF%E6%A0%B9%E6%8D%AE%E5%85%B6%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%88%86%E4%B8%BA%E4%B8%89%E7%A7%8D"><span class="nav-text">6.3.4.1 cache可根据其存储的数据类型分为三种</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-4-2-%E5%86%B3%E5%AE%9Acache%E6%80%A7%E8%83%BD%E7%9A%84%E5%87%A0%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="nav-text">6.3.4.2 决定cache性能的几个参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-4-3-%E5%BD%B1%E5%93%8Dcache%E6%80%A7%E8%83%BD%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9B%A0%E7%B4%A0"><span class="nav-text">6.3.4.3 影响cache性能的几个因素</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-4-%E5%88%A9%E7%94%A8cache%E5%8E%9F%E7%90%86%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="nav-text">6.4 利用cache原理优化代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-1-make-the-common-case-go-fast"><span class="nav-text">6.4.1 make the common case go fast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-2-%E6%A0%B9%E6%8D%AElocality%E8%BF%9B%E8%A1%8C%E4%BC%98%E5%8C%96"><span class="nav-text">6.4.2 根据locality进行优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-3-memory-mountain"><span class="nav-text">6.4.3 memory mountain</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-5-%E6%80%BB%E7%BB%93"><span class="nav-text">6.5 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/11/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BMemory_Hierarchy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《CSAPP》Memory Hierarchy | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《CSAPP》Memory Hierarchy
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-11 17:24:47" itemprop="dateCreated datePublished" datetime="2020-05-11T17:24:47+08:00">2020-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-01 16:37:10" itemprop="dateModified" datetime="2021-01-01T16:37:10+08:00">2021-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/CSAPP/CSAPP_6/8.png"></p>
+<span id="more"></span>
+
+<h1 id="6-1-存储技术"><a href="#6-1-存储技术" class="headerlink" title="6.1 存储技术"></a>6.1 存储技术</h1><h2 id="6-1-1-易失性存储器（random-access-memory）"><a href="#6-1-1-易失性存储器（random-access-memory）" class="headerlink" title="6.1.1 易失性存储器（random access memory）"></a>6.1.1 易失性存储器（random access memory）</h2><p>   易失性存储器（random access memory）DRAM一般用作main memory，因为存在漏电现象所以必须周期性的刷新以保存数据。相比于SRAM集成度高，功耗较低，价格便宜，但缺点是访问速度较慢，SRAM，因为其访问速度较快，所以一般用作cache。而且只要处于通电状态，信息就不会消失，因此不需要像DRAM一样定时刷新。但相比之下SRAM的集成度较低，功耗较高，价格贵。他们都是<strong>易失性存储器</strong>，也就是说<strong>只要电源关闭，他们保存的数据就会丢失</strong>。</p>
+<p><img src="/images/CSAPP/CSAPP_6/1.png"></p>
+<p>   之所以DRAM chip设计为一个矩形，就是为了节省访问的元素需要的地址线个数，缺点是取数据的地址要分两次发（第一次选行，第二次选列）。比如，图中矩形DRAM芯片只需要两根地址线（可表示0、1、2、3四个值），发送两次就可以取到矩阵中的任意地址。而如果设计成线性数组，虽然取数据只需要发送一次地址，但要用四根地址线来囊括所有（0~15）范围的地址。</p>
+<h2 id="6-1-2-非易失性存储器（non-volatile-memory）"><a href="#6-1-2-非易失性存储器（non-volatile-memory）" class="headerlink" title="6.1.2 非易失性存储器（non-volatile memory）"></a>6.1.2 非易失性存储器（non-volatile memory）</h2><p>与RAM相反，非易失性存储器中的数据<strong>在断电的状态下不会消失</strong>。<br>分为两大类，ROM和flash memory。</p>
+<h3 id="6-1-2-1-ROM（read-only-memory）"><a href="#6-1-2-1-ROM（read-only-memory）" class="headerlink" title="6.1.2.1 ROM（read-only memory）"></a>6.1.2.1 ROM（read-only memory）</h3><p>顾名思义，只能往里面存一次数据，之后就不能修改只能读取了。一般用来存储不需要变更的数据，比如BIOS与一些firmware都存储在ROM中。</p>
+<h3 id="6-1-2-2-flash-memory"><a href="#6-1-2-2-flash-memory" class="headerlink" title="6.1.2.2 flash memory"></a>6.1.2.2 flash memory</h3><p>特点是断电数据不会丢失，且可擦写。U盘，手机内存卡使用的就是flash memory。</p>
+<h2 id="6-1-3-CPU、主存和硬盘通信"><a href="#6-1-3-CPU、主存和硬盘通信" class="headerlink" title="6.1.3 CPU、主存和硬盘通信"></a>6.1.3 CPU、主存和硬盘通信</h2><p><img src="/images/CSAPP/CSAPP_6/2.png"><br>   I&#x2F;O桥的作用是转译信号。<br>   system bus和memory bus根据厂家不同，型号也不同，因此适配性较差，但速度较快；I&#x2F;O bus则不同，它适配几乎所有厂家生产的外设，但速度较慢。<br>   <strong>访问主存的原理</strong>为CPU发出命令（如读取），通过bus传递到主存，主存执行命令，把对应数据发回给CPU。<br>   <strong>访问硬盘的原理</strong>为CPU发出命令（如读取），将要读取数据的逻辑地址传递到硬盘（这期间所有cache（包括主存）全部miss），硬盘将逻辑地址转换为物理地址，找到对应数据后将其直接发送给主存（在此传输过程（DMA）中，CPU为了充分利用资源会去干别的事），当发送完毕时，硬盘发送中断指令给CPU，通知它停止当前的活动并去主存的逻辑地址中读取对应的数据。</p>
+<blockquote>
+<p>访问硬盘的原理与CPU和主存之间的cache miss原理一致，比如CPU发出读取命令，数据在L2 cache中，L1没有。则L2把对应block传输给L1（CPU会利用这段时间干别的事），传输完成后发送中断指令给CPU，通知它可以去L1找刚才的数据了，CPU则又发送一次指令去L1中获取数据。</p>
+</blockquote>
+<h2 id="6-1-4-SSD"><a href="#6-1-4-SSD" class="headerlink" title="6.1.4 SSD"></a>6.1.4 SSD</h2><p>SSD是基于flash memory技术的</p>
+<p><img src="/images/CSAPP/CSAPP_6/3.png"><br>对SSD的读和写是以page为单位的，而<strong>每次写数据前必须保证block是全1</strong>（即为初始状态），这就导致如果要往已经存在数据的block中写入，就必须先把该block的数据复制到新的block中，再把新数据写入，这就导致了SSD的写速度相对较慢。然而它的优点也很明显，SSD不像普通的机械硬盘，它是不需要一个移动的针头来读取数据的，因此它的读取速度非常快</p>
+<h1 id="6-2-局部性原理（locality）"><a href="#6-2-局部性原理（locality）" class="headerlink" title="6.2 局部性原理（locality）"></a>6.2 局部性原理（locality）</h1><h2 id="6-2-1-Spatial-locality"><a href="#6-2-1-Spatial-locality" class="headerlink" title="6.2.1 Spatial locality"></a>6.2.1 Spatial locality</h2><p>如果多次操作的数据处在一段连续的内存空间中, 则它具备良好的spatial locality，程序总是倾向于具备这个性质。（根本原因是cache的block中总是一段<strong>连续的</strong>地址）</p>
+<h2 id="6-2-2-Temporal-locality"><a href="#6-2-2-Temporal-locality" class="headerlink" title="6.2.2 Temporal locality"></a>6.2.2 Temporal locality</h2><p>如果一个变量被反复引用，则它具有良好的temporal locality。（编译器会把它放到register file中以提升访问速度）</p>
+<h2 id="6-2-3-栗子"><a href="#6-2-3-栗子" class="headerlink" title="6.2.3 栗子"></a>6.2.3 栗子</h2><p>比如这段代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">sumvec</span><span class="params">(<span class="type">int</span> v[N])</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> i, sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;N; i++) sum += v[i];</span><br><span class="line">    <span class="keyword">return</span> sum; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sum被反复引用，说明这段程序具有良好的temporal locality。<br>v[i]中i步长为1，又因为数组在内存中是连续存储的，因此这段程序具有良好的spatial locality。</p>
+<p>二维数组中spatial locality会比较明显。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;M; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;N; j++) sum += a[i][j];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们知道二维数组实际上就相当于下行首接上行尾拼接的一维数组（因此它在内存中是连续存储的），上述代码是按行访问的，因此它具有良好的spatial locality。</p>
+<p>而</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;N; j++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;M; i++) sum += a[i][j];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>按列访问则相当于内部循环每次迭代都要跨越N个内存地址去访问元素，它的spatial locality较差。</p>
+<hr>
+<blockquote>
+<p>这两种locality只要具备其一，就可以称这段程序具有良好的locality</p>
+</blockquote>
+<h1 id="6-3-cache"><a href="#6-3-cache" class="headerlink" title="6.3 cache"></a>6.3 cache</h1><p>我们都听说过CPU与memory之间有一个cache，它的作用是存储最近CPU访问过的内存数据，以提升之后访问的速度。为什么这样就能提升访问速度？这与我们上一段讨论的locality有关：程序会倾向于反复的访问小范围的内存，甚至是反复访问同一个地址，而cache的运作方式正符合这个性质。</p>
+<p>cache是一个广泛的概念，它并不只存在于CPU和memory之间。可以说任意两个存储结构（一个离CPU近，快；另一个远，慢），前者是后者的cache。</p>
+<p><img src="/images/CSAPP/CSAPP_6/4.png"></p>
+<p>当程序想要取一个元素4，在指令走到k时发现它的cache中已经缓存了4，就直接从k中把4取走了，这对k来说是<strong>cache hit</strong>。相反如果想取6，就必须等待k去把k+1中的6取到自己的cache中（如果cache满了就会发生覆盖），程序再从k中取走6，这对k来说是<strong>cache miss</strong>。</p>
+<h2 id="6-3-1-三种cache-miss"><a href="#6-3-1-三种cache-miss" class="headerlink" title="6.3.1 三种cache miss"></a>6.3.1 三种cache miss</h2><ol>
+<li><p>一种机制是从k+1取回的每一个值x会被固定存到k的cache中(x%4)的位置。这种机制的缺点也很明显，假设一段程序访问0之后又访问8（两个都要被存到k层cache的0位置），这叫<strong>conflict miss</strong>。进而如果反复的访问0，8，0，8…，就称之为<strong>thrashing</strong>。</p>
+</li>
+<li><p>另外一种情况，假如循环内所有变量占的空间大于k的cache容量，<br>则每次访问超出那部分的数据必然miss，这叫<strong>capacity miss</strong></p>
+</li>
+<li><p>如果一个cache本身就是空的，第一次访问必定miss，这叫<strong>compulsory misses or cold misses</strong></p>
+</li>
+</ol>
+<p>随着科技的进步，CPU和主存之间的性能差异越来越大（加1个cache已经远远不够了），为了配合CPU日益进步的性能，设计者在CPU和主存之间存在N级缓存。</p>
+<h2 id="6-3-2-cache-hit原理"><a href="#6-3-2-cache-hit原理" class="headerlink" title="6.3.2 cache hit原理"></a>6.3.2 cache hit原理</h2><p>先来看看<strong>普通cache</strong>的构造</p>
+<p><img src="/images/CSAPP/CSAPP_6/5.png"></p>
+<p>它从逻辑上把cache的空间分为了S个sets，每个set中有E行（E≥0），每行有一个block和一些描述信息，即：<br>$$<br>Line &#x3D; block + informationOfBlock<br>$$<br>所以行几乎可以被等同为block。要谨记的是，<strong>block是cache之间通信的最小单位</strong>, 且block中存放是连续的数据.</p>
+<h3 id="6-3-2-1-栗子"><a href="#6-3-2-1-栗子" class="headerlink" title="6.3.2.1 栗子"></a>6.3.2.1 栗子</h3><p>假如本级cache中只有一个block，其大小为4bytes，现有一个char[8]数组保存在下一级cache中(图中数字均为下标)</p>
+<p><img src="/images/CSAPP/CSAPP_6/flow1.png"></p>
+<p>当CPU请求char[0]时，本级cache miss，该block会把下一级cache中char[0]和char[0]之后连续的元素, char[1], char[2], char[3]全部缓存（存满block的大小4个bytes），则下次访问这些元素就都能命中，</p>
+<p><img src="/images/CSAPP/CSAPP_6/flow2.png"></p>
+<p>但如果接着访问char[4], 就会发生miss，block又会把下级cache的char[4], char[5], char[6], char[7]缓存</p>
+<p><img src="/images/CSAPP/CSAPP_6/flow3.png"></p>
+<p>再下一次如果访问char[1]，又会miss，block的数据又会被更新为char[1], char[2], char[3], char[4]。</p>
+<p><img src="/images/CSAPP/CSAPP_6/flow4.png"></p>
+<p>这些概念是后面讨论的基础，一定要理解。</p>
+<hr>
+<p>为了使cache运作，CPU访问的主存数据地址在逻辑上被分为了三个区域，依此与cache中存储的数据建立映射关系。<br>set index顾名思义，指定了数据在cache的哪个set中，选定了set后：</p>
+<p><img src="/images/CSAPP/CSAPP_6/6.png"></p>
+<p>用地址中的tag与set中每一行的tag比对，如果相同且valid&#x3D;1，就指定了行号。<br>最后block offset告诉我们数据在行中具体的位置（数据的第一个字节）。</p>
+<blockquote>
+<p>概括为3步：1. 选set 2. 匹配行（前两步决定是否命中） 3. 提取数据<br>要注意是否发生了cache-hit是在找到具体数据之前的，也就是当tag匹配且valid&#x3D;1时，就认为是cache-hit。然后才在cache-hit的基础上，根据block offset找到具体数据的第一个byte位置，也就是说cache-hit是基于行而不是基于block中的具体数据（是地址之间的匹配而不是数据之间的匹配）。</p>
+</blockquote>
+<h2 id="6-3-3-写（必须制定数据更新策略）"><a href="#6-3-3-写（必须制定数据更新策略）" class="headerlink" title="6.3.3 写（必须制定数据更新策略）"></a>6.3.3 写（必须制定数据更新策略）</h2><p>读取还好说，miss就一直往下找，一旦hit就把数据逐层取回。如果写入，就必须要想办法同步所有层该地址的数据以确保它们一致。因此在写入操作频繁发生的情况下，数据的更新策略会极大的影响整体性能。</p>
+<p><img src="/images/CSAPP/CSAPP_6/flow5.png"></p>
+<h3 id="6-3-3-1-cache-hit时的更新策略"><a href="#6-3-3-1-cache-hit时的更新策略" class="headerlink" title="6.3.3.1 cache hit时的更新策略"></a>6.3.3.1 cache hit时的更新策略</h3><p>write-through: 一旦命中，直接把命中的block更新到下一层（容易造成bus拥堵，但信息更新及时）。<br>write-back: 一旦命中，先只更新cache中的数据, 一直等到cache中的block要被替换掉时，才将该block更新到下一层（减轻了bus拥堵问题，增加了复杂度，此时对于每一行cache必须维护一个dirty bit来说明某block是否被修改过）。</p>
+<h3 id="6-3-3-2-cache-miss时的更新策略"><a href="#6-3-3-2-cache-miss时的更新策略" class="headerlink" title="6.3.3.2 cache miss时的更新策略"></a>6.3.3.2 cache miss时的更新策略</h3><p>write-allocate: 一旦miss，从下一层取回目标block到cache，在cache中更新该block。<br>no-write-allocate：一旦miss，直接把数据更新到下一层。</p>
+<blockquote>
+<p>一般情况下都采用write-back与write-allocate组合作为数据写入的策略。</p>
+</blockquote>
+<h3 id="6-3-3-3-例子"><a href="#6-3-3-3-例子" class="headerlink" title="6.3.3.3 例子"></a>6.3.3.3 例子</h3><p>假定现在要往地址a写入一个数据。走到了cache1，发现命中了，直接更新cache1中的数据，并设置这一行的dirty bit为1，指令结束。<br>又往地址b写入一个数据，走到cache2才命中，根据write-allocate要把block取回给cache1，但是cache1满了，要把a地址的数据踢掉，检测发现a的dirty bit为1，此时根据write-back先把它现在的数据更新到cache2，然后在cache1中移除掉a，将取回的b的数据放到a的位置。</p>
+<h2 id="6-3-4-cache性能"><a href="#6-3-4-cache性能" class="headerlink" title="6.3.4 cache性能"></a>6.3.4 cache性能</h2><h3 id="6-3-4-1-cache可根据其存储的数据类型分为三种"><a href="#6-3-4-1-cache可根据其存储的数据类型分为三种" class="headerlink" title="6.3.4.1 cache可根据其存储的数据类型分为三种"></a>6.3.4.1 cache可根据其存储的数据类型分为三种</h3><ol>
+<li><p>i-cache，只存储instruction  </p>
+</li>
+<li><p>d-cache，只存储数据   </p>
+</li>
+<li><p>unified-cache，混合前两种</p>
+</li>
+</ol>
+<p>  <img src="/images/CSAPP/CSAPP_6/7.png"></p>
+<p>  这样划分主要是为了提升性能，因为对它们采取不同的策略（比如i-cache为只读，所以对它的策略可以简单一些），同时减少访问指令和数据之间conflict miss。</p>
+<h3 id="6-3-4-2-决定cache性能的几个参数"><a href="#6-3-4-2-决定cache性能的几个参数" class="headerlink" title="6.3.4.2 决定cache性能的几个参数"></a>6.3.4.2 决定cache性能的几个参数</h3><ol>
+<li>miss rate：miss次数&#x2F;总reference次数</li>
+<li>miss penalty：因为miss导致的额外时间开销</li>
+<li>hit rate：hit次数&#x2F;总reference次数</li>
+<li>hit time：命中后将数据传给CPU所需要的时间（从set selection开始算）</li>
+</ol>
+<h3 id="6-3-4-3-影响cache性能的几个因素"><a href="#6-3-4-3-影响cache性能的几个因素" class="headerlink" title="6.3.4.3 影响cache性能的几个因素"></a>6.3.4.3 影响cache性能的几个因素</h3><ol>
+<li><p>cache的大小：cache越大，hit rate越高。但这并不能够提升cache的性能，因为随着cache size变大，hit time也变长了（比如set selection需要更长时间了），而这个因素对cache性能的影响要大于hit rate。这也是为什么离CPU越近的cache容量越小</p>
+</li>
+<li><p>block大小：给定cache size，block越大，意味着行数越少，行数越少命中率越低。并且block的增大还会导致miss penalty的增加（一旦miss就要替换整个block，block越大耗得时间越长）。</p>
+</li>
+<li><p>每个set有几行（关联方式）：行数（block数）增加可以降低thrashing发生的概率，增加cache hit的概率，但代价是需要维护更多的tag bit以及其他状态相关的位。</p>
+</li>
+<li><p>写入策略：离CPU越远，两个cache之间通信所需要的时间就越长，因此减少较远处caches之间的数据传输次数能提高cache的性能（较远处一般都采用write-back策略来减少通信次数）。</p>
+</li>
+</ol>
+<h1 id="6-4-利用cache原理优化代码"><a href="#6-4-利用cache原理优化代码" class="headerlink" title="6.4 利用cache原理优化代码"></a>6.4 利用cache原理优化代码</h1><p>了解了cache的原理后，对比来看，good locality其实就等于cache的高命中率。</p>
+<h2 id="6-4-1-make-the-common-case-go-fast"><a href="#6-4-1-make-the-common-case-go-fast" class="headerlink" title="6.4.1 make the common case go fast"></a>6.4.1 make the common case go fast</h2><p>程序的大部分时间都在调用几个核心的函数，而这些函数执行的大部分时间都是在调用几个核心的循环，这几个循环就是common cases，集中精力优化它们，让它们具备良好的locality，这比优化其他部分要有效的多。</p>
+<h2 id="6-4-2-根据locality进行优化"><a href="#6-4-2-根据locality进行优化" class="headerlink" title="6.4.2 根据locality进行优化"></a>6.4.2 根据locality进行优化</h2><ol>
+<li>重复多次使用某一变量</li>
+<li>对数组的操作，两次迭代的间隔尽量小（如在没有使用loop unrolling的情况下，i++优于i+&#x3D;2）</li>
+</ol>
+<h2 id="6-4-3-memory-mountain"><a href="#6-4-3-memory-mountain" class="headerlink" title="6.4.3 memory mountain"></a>6.4.3 memory mountain</h2><p><img src="/images/CSAPP/CSAPP_6/8.png"><br>该图说明cache的性能是同时受spatial locality和temporal locality制约的。<br>循环中的程序小于32K时，无论stride（两次访问元素在内存中的间隔）是多少，都跑在L1层享受最高的读取速率。因为总共就占那么点地方，cache一次就都装下了，即使stride很大近期要访问的元素也就在cache中，不会产生miss。而随着程序size的增加，当stride增加时，读取速率会断崖式的下降，原因是当stride扩大，不光每个block中都缓存了大量近期不会被访问到的元素，而且整个访问的范围超过了cache的容量，导致后续的每次访问产生miss的概率非常高，由此产生大量的miss penalty。<br>反观当stride保持在1时，即使size大量增加程序也依然跑在L1层，毕竟stride 1在spatial locality上是对cache空间的极致利用了。</p>
+<h1 id="6-5-总结"><a href="#6-5-总结" class="headerlink" title="6.5 总结"></a>6.5 总结</h1><p>降低stride，减少的局部资源声明即可契合cache的运作机制，提升程序的运行速度。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/05/26/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BLinking/" rel="next" title="《CSAPP》Linking">
+                  《CSAPP》Linking <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="《CSAPP》Exception Control Flow">
+<meta property="og:url" content="http://example.com/2020/06/17/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BException-Control-Flow/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/14.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/1.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/2.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/3.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/4.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/5.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/6.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/7.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/8.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/9.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/10.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/11.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/12.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/13.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/14.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/15.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/16.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/17.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/18.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/19.png">
+<meta property="og:image" content="http://example.com/images/CSAPP/CSAPP_8/20.png">
+<meta property="article:published_time" content="2020-06-17T08:02:53.000Z">
+<meta property="article:modified_time" content="2022-03-28T03:13:24.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/CSAPP/CSAPP_8/14.png">
+
+
+<link rel="canonical" href="http://example.com/2020/06/17/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BException-Control-Flow/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2020/06/17/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BException-Control-Flow/","path":"2020/06/17/IT/CSAPP/《CSAPP》Exception-Control-Flow/","title":"《CSAPP》Exception Control Flow"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《CSAPP》Exception Control Flow | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#8-1-Introduction"><span class="nav-text">8.1 Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-2-Exceptions"><span class="nav-text">8.2 Exceptions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-1-Exception-Handling"><span class="nav-text">8.2.1 Exception Handling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-1-1exception-handler%E4%B8%8E%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">8.2.1.1exception handler与普通函数的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-2-Classes-of-Exceptions"><span class="nav-text">8.2.2 Classes of Exceptions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-2-1-Interrupts"><span class="nav-text">8.2.2.1 Interrupts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-2-2-Traps-and-System-Calls"><span class="nav-text">8.2.2.2 Traps and System Calls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-2-3-Faults"><span class="nav-text">8.2.2.3 Faults</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-2-4-Aborts"><span class="nav-text">8.2.2.4 Aborts</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-3-x86-64%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84Exceptions"><span class="nav-text">8.2.3 x86-64系统中的Exceptions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-3-1-x86-64%E7%9A%84System-Calls"><span class="nav-text">8.2.3.1 x86-64的System Calls</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-3-1-1-%E6%A0%97%E5%AD%90"><span class="nav-text">8.2.3.1.1 栗子</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-3-Processes"><span class="nav-text">8.3 Processes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-1-Logical-Control-Flow"><span class="nav-text">8.3.1 Logical Control Flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-2-Concurrent-Flows"><span class="nav-text">8.3.2 Concurrent Flows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-3-Private-Address-Space"><span class="nav-text">8.3.3 Private Address Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-4-%E7%94%A8%E6%88%B7%E6%80%81%E4%B8%8E%E6%A0%B8%E5%BF%83%E6%80%81"><span class="nav-text">8.3.4 用户态与核心态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-5-Context-Switches"><span class="nav-text">8.3.5 Context Switches</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-4-Process-Control"><span class="nav-text">8.4 Process Control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-1-%E8%8E%B7%E5%8F%96Process-ID"><span class="nav-text">8.4.1 获取Process ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-2-%E5%88%9B%E5%BB%BA%E5%92%8C%E4%B8%AD%E6%AD%A2%E8%BF%9B%E7%A8%8B"><span class="nav-text">8.4.2 创建和中止进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-2-1-%E6%A0%97%E5%AD%90"><span class="nav-text">8.4.2.1 栗子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-3-Reaping-Child-Processes"><span class="nav-text">8.4.3 Reaping Child Processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-4-Putting-Processes-to-Sleep"><span class="nav-text">8.4.4 Putting Processes to Sleep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-5-Loading-and-Running-Programs"><span class="nav-text">8.4.5 Loading and Running Programs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-5-Signals"><span class="nav-text">8.5 Signals</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-1-%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="nav-text">8.5.1 发送信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-1-1-process-group"><span class="nav-text">8.5.1.1 process group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-1-2-%E9%80%9A%E8%BF%87%E9%94%AE%E7%9B%98%E5%8F%91%E9%80%81signals"><span class="nav-text">8.5.1.2 通过键盘发送signals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-1-3-%E9%80%9A%E8%BF%87kill%E5%87%BD%E6%95%B0%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="nav-text">8.5.1.3 通过kill函数发送信号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-2-%E6%8E%A5%E6%94%B6%E4%BF%A1%E5%8F%B7"><span class="nav-text">8.5.2 接收信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-3-%E9%98%BB%E5%A1%9E%E5%92%8C%E6%81%A2%E5%A4%8D%E4%BF%A1%E5%8F%B7"><span class="nav-text">8.5.3 阻塞和恢复信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-4-%E7%AD%89%E5%BE%85%E4%BF%A1%E5%8F%B7"><span class="nav-text">8.5.4 等待信号</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/17/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BException-Control-Flow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《CSAPP》Exception Control Flow | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《CSAPP》Exception Control Flow
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-17 16:02:53" itemprop="dateCreated datePublished" datetime="2020-06-17T16:02:53+08:00">2020-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-03-28 11:13:24" itemprop="dateModified" datetime="2022-03-28T11:13:24+08:00">2022-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/CSAPP/CSAPP_8/14.png"></p>
+<span id="more"></span>
+
+<h1 id="8-1-Introduction"><a href="#8-1-Introduction" class="headerlink" title="8.1 Introduction"></a>8.1 Introduction</h1><p>在计算机启动时，program counter（简称PC）会不断的读取内存地址中的指令并执行。PC在执行完某条指令后又跳转到另一个地址并执行其中的指令，这个过程叫做<strong>处理器的control transfer</strong>，一系列这样的过程叫做<strong>control flow</strong>。<br>最简单的一种“平滑”的control flow是PC <strong>顺序的读取连续地址中存储的指令并执行</strong> 。<br>但是因为任何程序几乎一定要用到函数或循环，平滑的control flow只是理想状态，它必然<strong>会被程序内部的jump、call或者ret等指令打断</strong>，不仅如此，<strong>它还会被程序之外的因素打断</strong>。比如从disk读取数据，在数据从disk传输到内存的过程中，CPU会利用这段时间去干其他事，等到数据完全读取到内存中后，disk会对CPU发出中断指令告诉它可以去内存中取数据了（参看《memory hierarchy》相关内容），这中间就产生了程序之外因素引起的中断，这种类型的中断（或者说“平滑”的control flow中发生的跳跃变化）被称为<strong>exception control flow</strong>（ECF）。<br>计算机系统中的每个层级都可能发生ECF，如硬件层的中断，操作系统层面kernel的context switches，应用层中进程之间的控制转换，程序中使用nonlocal jump直接跳转到别的函数中。<br>ECF是I&#x2F;O、进程和虚拟内存等技术的基础，了解它可以帮助我们理解应用程序是如何与操作系统进行交互的。</p>
+<h1 id="8-2-Exceptions"><a href="#8-2-Exceptions" class="headerlink" title="8.2 Exceptions"></a>8.2 Exceptions</h1><p>Exceptions(异常机制)是由硬件和操作系统共同实现的，因此它在不同的操作系统中的长相虽然不一样，但底层实现的逻辑其实都差不多。<br>定义：exceptions是控制流为了响应<u>处理器状态的改变(简称事件)</u>而发生的突变。</p>
+<p><img src="/images/CSAPP/CSAPP_8/1.png"></p>
+<p>事件可能直接与当前正在执行的指令相关，比如数字运算溢出、除0操作；也可能与当前正在执行的指令无关，比如I&#x2F;O请求完毕（比如读取disk数据）。</p>
+<p>总之，每当处理器捕捉到了一个事件，它就会转而去查询一个跳转表（exception table），在这张表中找到对应的专用于处理这类事件的句柄（exception handler）并调用。</p>
+<blockquote>
+<p>句柄和指针的区别：我们可以随意修改指针指向的内容。而句柄不同，它是和操作系统沟通的指针，不应该被随便修改，所以windows将它命名为handler来与普通指针相区别。</p>
+</blockquote>
+<p>当该句柄执行完毕后，根据事件的类型会发生以下三件事<strong>之一</strong>：</p>
+<ol>
+<li><p>句柄把控制交还给事件触发时正在执行的指令。</p>
+</li>
+<li><p>句柄把控制交还给事件触发时正在执行的指令的下一条指令。</p>
+</li>
+<li><p>句柄直接中止当前程序。</p>
+</li>
+</ol>
+<h2 id="8-2-1-Exception-Handling"><a href="#8-2-1-Exception-Handling" class="headerlink" title="8.2.1 Exception Handling"></a>8.2.1 Exception Handling</h2><p>现在我们来看看硬件和软件之间是如何协作来实现Exception的。<br>系统中每一个类型的Exception都由一个Exception Number（唯一，非负整数）来标识。其中一部分number是<strong>由处理器的设计者指定</strong>的，这类Exceptions与程序当前执行的指令相关（除0、违规读写内存、断点、数字运算溢出）；另一部分<strong>由内核的设计者指定</strong>，这类Exceptions与程序当前执行的指令无关（system call、或来自I&#x2F;0的信号）。</p>
+<ol>
+<li>开机<strong>启动操作系统阶段</strong><br> 操作系统会分配一块空间给exception table，并将其初始化，完成后这张表的第k个条目就是<strong>用于处理编号为k的excetpion</strong>的<strong>句柄地址</strong>。</li>
+</ol>
+<p>  <img src="/images/CSAPP/CSAPP_8/2.png"></p>
+<ol start="2">
+<li>在<strong>操作系统运行阶段</strong>（系统开始跑其他程序了）<br> 当处理器捕捉到一个事件时，它会自动判断这个事件属于哪类异常，然后把它与这类异常的标号k绑定。接着拿着这个k去查exception table，找到对应的处理异常k的句柄并调用。<blockquote>
+<p>Exception table的首地址存储在一个特别的寄存器中：exception table base register</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="/images/CSAPP/CSAPP_8/3.png">)</p>
+<h3 id="8-2-1-1exception-handler与普通函数的区别"><a href="#8-2-1-1exception-handler与普通函数的区别" class="headerlink" title="8.2.1.1exception handler与普通函数的区别"></a>8.2.1.1exception handler与普通函数的区别</h3><p><strong>普通函数</strong>执行时，它唯一的返回地址会被push到栈上。<br><strong>excetpion handler</strong>执行时，根据exception类型的不同，它的返回地址可能是事件触发时正在执行的指令地址<strong>或者</strong>事件触发时的正在执行指令地址的下一条指令地址。另外，所有的exception handler都<strong>运行在内核态</strong>（它可以使用所有的系统资源），处理器不光会将它的返回地址入栈（<strong>不是用户栈，而是内核栈</strong>），还会将一些必要的用于重启被中断的程序的参数入栈（比如x86系统将EFLAGS寄存器们入栈，这些寄存器中就存储了程序的状态信息，详细可参看的逆向篇内容《汇编基础：标志寄存器》），当exception函数运行完毕时，它会执行一个特殊的指令，该指令将处理器和数据寄存器恢复为用户态，然后把控制交还给之前被中断的程序。</p>
+<h2 id="8-2-2-Classes-of-Exceptions"><a href="#8-2-2-Classes-of-Exceptions" class="headerlink" title="8.2.2 Classes of Exceptions"></a>8.2.2 Classes of Exceptions</h2><blockquote>
+<p>Asynchronous exceptions是由非当前运行的指令引起的（如I&#x2F;O信号），Synchronous exceptions是由当前运行的指令引起的（如除0或非法读写内存）</p>
+<p><img src="/images/CSAPP/CSAPP_8/4.png"></p>
+</blockquote>
+<h3 id="8-2-2-1-Interrupts"><a href="#8-2-2-1-Interrupts" class="headerlink" title="8.2.2.1 Interrupts"></a>8.2.2.1 Interrupts</h3><p>I&#x2F;O信号引起的中断被称为Interrupts，正因为它并不是由当前执行中的指令所引起的，而是由硬件这样的外部因素引起的，因此它被归类为异步的（Asynchronous）中断。用于处理interrupts的handler被称为interrupts handler。<br><img src="/images/CSAPP/CSAPP_8/5.png"><br>一方面I&#x2F;O设备先发信号给处理器，使得处理器上的interrupt pin电位变高，然后把能够标识自己的exception number放入系统总线。另一方面，当执行完当前指令时，处理器发现自己的interrupt pin电位变高了（它就知道有interrupt发生了），就会去系统总线中读取exception number，然后调用对应的interrupts handler并执行。当handler执行完毕后，它会把控制交给<strong>引发Interrupts的指令的下一条指令</strong>，然后程序就继续从该指令开始执行了。<u>在外部看来就好像这个exception从来没有发生过一样</u>。</p>
+<h3 id="8-2-2-2-Traps-and-System-Calls"><a href="#8-2-2-2-Traps-and-System-Calls" class="headerlink" title="8.2.2.2 Traps and System Calls"></a>8.2.2.2 Traps and System Calls</h3><p>Traps是由程序内部正在执行的指令引起的，因此它是同步的（synchronized）。与interrupt handlers一样，trap handlers也会在返回时把控制交给<strong>引发Trap的指令的下一条指令</strong>。Traps最重要的作用就是<strong>给用户提供内核函数的接口</strong>，也就是<strong>system call</strong>。<br>我们写的程序中经常要用到一些内核函数，如读文件，创建新进程，结束进程等，我们不能够直接调用内核函数，需要trap handler作为中间人去帮我们调用相应的内核函数。</p>
+<p><img src="/images/CSAPP/CSAPP_8/6.png"></p>
+<p>从程序员的视角来看，sysytem call和普通的函数没啥区别，事实并非如此。普通函数在用户态运行，它能够执行的指令类型是受限制的，并且在运行中它只能访问属于自己的栈空间。而内核函数则运行在内核态，它可以运行所有类型的指令，并且可以访问任意内存空间。</p>
+<h3 id="8-2-2-3-Faults"><a href="#8-2-2-3-Faults" class="headerlink" title="8.2.2.3 Faults"></a>8.2.2.3 Faults</h3><p>引发Faults的是那些<strong>有可能被handler纠正的错误</strong>。发生Faults时，处理器把控制交给Faults handler，它开始尝试对这个错误进行纠正，<strong>如果纠正成功</strong>，则handler结束运行，把控制交还给<strong>引发Faults的指令</strong>（注意并不是它的下一条指令），从它开始继续执行。<strong>如果纠正失败</strong>，就会把控制交给内核函数abort来中止程序。</p>
+<p><img src="/images/CSAPP/CSAPP_8/7.png"></p>
+<p>一种经典的Fault就是page fault exception。当指令请求读取虚拟内存中的某个地址时，如果这个地址所属的page还没被cache到虚拟内存中，就必须要先去disk中把这个page取到虚拟内存里，再读取其中的目标地址，这就引发了Fault（为什么从disk读取数据到内存会引发中断之前已经讨论过）。Fault handler的作用之一正是去disk中把需要的page取到虚拟内存中，然后把控制返还给引发Fault的那条指令（请求读取虚拟内存中某地址），从它开始继续执行（相当于它被执行了两次），这一次当然不会引发Fault了，程序继续往下运行。（这部分具体内容在下一章详细说明）。</p>
+<h3 id="8-2-2-4-Aborts"><a href="#8-2-2-4-Aborts" class="headerlink" title="8.2.2.4 Aborts"></a>8.2.2.4 Aborts</h3><p>只有无法被Faults handler纠正的严重错误才会引发Aborts，Aborts handler永远不会把控制交还给程序，而是传给内核中的abort routine来让它终止程序。</p>
+<p><img src="/images/CSAPP/CSAPP_8/8.png"></p>
+<hr>
+<p>可以发现，凡是在return时会把控制交给<strong>事件发生时正在执行指令的下一条指令</strong>的exception，都不是由错误引起的，因为return到下一条指令的目的就是要让程序保持事件发生前的状态，继续正常执行，让外部看起来好像没发生过中断一样；而return到引发事件的那条指令的目的，就要做一些修正，然后重新执行当前指令。</p>
+<h2 id="8-2-3-x86-64系统中的Exceptions"><a href="#8-2-3-x86-64系统中的Exceptions" class="headerlink" title="8.2.3 x86-64系统中的Exceptions"></a>8.2.3 x86-64系统中的Exceptions</h2><p><img src="/images/CSAPP/CSAPP_8/9.png"></p>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Divide error</td>
+<td>除0时触发，无法被修复直接abort，报错提示为“Floating exceptions</td>
+</tr>
+<tr>
+<td>General protection fault</td>
+<td>引用未初始化的内存地址或者对只读区域进行写操作等都会触发，无法被修复直接abort，报错提示为”Segmentation fauls”</td>
+</tr>
+<tr>
+<td>Page fault</td>
+<td>这是一种可以被恢复的fault，前面已经介绍过</td>
+</tr>
+<tr>
+<td>Machine check</td>
+<td>因严重的硬件错误所引发，直接abort</td>
+</tr>
+</tbody></table>
+<h3 id="8-2-3-1-x86-64的System-Calls"><a href="#8-2-3-1-x86-64的System-Calls" class="headerlink" title="8.2.3.1 x86-64的System Calls"></a>8.2.3.1 x86-64的System Calls</h3><p><img src="/images/CSAPP/CSAPP_8/10.png"><br>程序员几乎不会直接调用System Call，因为那太麻烦了，还需要我们处理一系列的问题，所以各种语言几乎都会把System Calls包装好，把最顶层的接口提供给我们。</p>
+<blockquote>
+<p>在linux中，system calls的参数都是通过寄存器传递的</p>
+</blockquote>
+<h4 id="8-2-3-1-1-栗子"><a href="#8-2-3-1-1-栗子" class="headerlink" title="8.2.3.1.1 栗子"></a>8.2.3.1.1 栗子</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">write</span>(<span class="number">1</span>, <span class="string">&quot;hello, world\n&quot;</span>, <span class="number">13</span>); </span><br><span class="line">    _exit(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接用system call “write”来取代printf，第一个参数就是系统函数write的编号1，第二个参数要write的字符串，第三个参数为字符串的长度。如果要打印其他格式，还要对它进行一些包装。<br>相比之下printf(“hello, world\n”)是不是简单多了？</p>
+<h1 id="8-3-Processes"><a href="#8-3-Processes" class="headerlink" title="8.3 Processes"></a>8.3 Processes</h1><p>进程：执行中的程序实例，内核利用ECF机制抽象出了进程的概念。<br>系统中的每一个程序都是在某一个进程的上下文环境（context）中运行的，这个context包括了所有<strong>程序正常运行所需要的states</strong>（比如保存程序装载在内存中的code和data区，通用寄存器的内容等）。<br>从我们的角度来看，每一个运行中的程序就像是独占了CPU和内存一样，实际上我们知道事实绝非如此，那么这一切到底是如何实现的呢？</p>
+<h2 id="8-3-1-Logical-Control-Flow"><a href="#8-3-1-Logical-Control-Flow" class="headerlink" title="8.3.1 Logical Control Flow"></a>8.3.1 Logical Control Flow</h2><p>比如我们在系统上同时运行了三个程序A、B、C，则它们会把处理器（单核）的一个物理控制流划分为三个逻辑控制流。</p>
+<p><img src="/images/CSAPP/CSAPP_8/11.png"></p>
+<p>每个进程都会在某一段时间内独占物理控制流执行，虽然中途CPU的资源会被其他进程抢占过去，但是由于CPU的运行速度非常快，以至于程序切出又切回的这段时间我们根本感觉不到，并且每次切换都会进入到某个进程<strong>独立的上下文空间</strong>中，这样在切回某进程时它的状态还是与切出时一模一样，因此给我们带来一种单个进程独占CPU的资源的感觉。</p>
+<h2 id="8-3-2-Concurrent-Flows"><a href="#8-3-2-Concurrent-Flows" class="headerlink" title="8.3.2 Concurrent Flows"></a>8.3.2 Concurrent Flows</h2><p>逻辑控制流有许多形式：比如Exception handlers、进程、线程等。<br>当<strong>多个</strong>逻辑控制流<strong>在同一时间间隔内</strong>同时运行时，我们就称它们为Concurrent Flows，即它们是<strong>并发</strong>的。</p>
+<p><img src="/images/CSAPP/CSAPP_8/12.png"><br>如上图A与B，A与C之间都是并发的（时间线重叠），而B与C之间不是并发（分别在不同的时间段执行）。<br>可以看到，图中有单一进程被时间划分为多个小段（如A被分为两段），进程在每一个小时间段内执行一下，这些时间段被称为进程的时间片（time slice），并发的过程就是给进程划分时间片（time slicing）的过程。</p>
+<p><strong>并发这个概念与处理器是单核还是多核无关</strong>，只要两个进程运行的时间线重叠，无论它们是跑在同一个CPU上（伪同时运行），还是分别跑在两个CPU上（真同时运行），都被称为并发。<br>而我们常说的<strong>并行（parallel，真同时运行）是并发的子概念</strong>，它特指多个进程在不同CPU上同时运行。</p>
+<h2 id="8-3-3-Private-Address-Space"><a href="#8-3-3-Private-Address-Space" class="headerlink" title="8.3.3 Private Address Space"></a>8.3.3 Private Address Space</h2><p>每一个进程都有自己的私有地址空间，其他进程无法访问这段空间。私有地址空间的结构都是一样的：</p>
+<p><img src="/images/CSAPP/CSAPP_8/13.png"></p>
+<h2 id="8-3-4-用户态与核心态"><a href="#8-3-4-用户态与核心态" class="headerlink" title="8.3.4 用户态与核心态"></a>8.3.4 用户态与核心态</h2><p>为了抽象出内核的概念，处理器上必须有一系列的机制来限制普通程序可以使用的指令以及可以访问的地址空间。处理器上的一些控制寄存器会提供mode bit来表示当前进程拥有的权限。<br><strong>当mode bit为1</strong>时表示当前进程跑在内核模式， 此时它可以执行所有指令并且访问系统中的任意地址空间。<br><strong>当mode bit为0</strong>时表示当前进程跑在用户模式，该进程无法执行一些指令（比如暂停处理器，改变mode bit，直接发起I&#x2F;O操作等）。同时它也不能直接访问内核区域的地址空间，只能通过包装好的system call来间接访问。</p>
+<p><strong>任何进程最开始都是跑在用户态的</strong>，想将其改变为内核态唯一的方法就是通过exception（interrupt、fault或者system call）。当进程触发exception时，control被传递到exception handler，因为exception handler是运行在内核态的，因此进程会被转变为内核态，当它return后，处理器会把mode bit置为0，使它变回到用户态。</p>
+<blockquote>
+<p>注意handler是由于中断而被调用的，它运行时原程序处于暂停状态，因此它并不与原程序并行，而是与原程序同属于一个进程。</p>
+</blockquote>
+<h2 id="8-3-5-Context-Switches"><a href="#8-3-5-Context-Switches" class="headerlink" title="8.3.5 Context Switches"></a>8.3.5 Context Switches</h2><p>操作系统通过Context Switches来实现多进程并行，而Context Switches技术正是由8.2.2的那些技术拼接封装实现的。<br><strong>内核为每一个进程维护了一个Context</strong>。所谓Context，就是内核为了重新执行那些被抢占了的进程所需要的信息。</p>
+<table>
+<thead>
+<tr>
+<th>信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>general-purpose register</td>
+</tr>
+<tr>
+<td>floating-point register</td>
+</tr>
+<tr>
+<td>status registers</td>
+</tr>
+<tr>
+<td>PC</td>
+</tr>
+<tr>
+<td>该进程的用户栈</td>
+</tr>
+<tr>
+<td>内核栈</td>
+</tr>
+</tbody></table>
+<p>除此之外，还有一些内核的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>DS</th>
+<th>function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>page table</td>
+<td>描述地址空间</td>
+</tr>
+<tr>
+<td>process table</td>
+<td>描述当前进程</td>
+</tr>
+<tr>
+<td>file table</td>
+<td>描述当前进程打开的文件信息</td>
+</tr>
+</tbody></table>
+<p>在进程的运行期间，<strong>内核可以决定</strong>是否要暂停它，转而去执行其他进程。这些决策（scheduling）都是通过内核中的scheduler做出的。当内核schedule了一个新的进程，它就会先将当前进程的<strong>运行资源</strong>收回，然后通过context switch把控制交给其他的进程，context switch的过程如下：</p>
+<ol>
+<li>保存当前进程的context</li>
+<li>恢复将要运行进程的context</li>
+<li>将control传递给将要运行的进程</li>
+</ol>
+<p><strong>当内核执行某个用户调用的system call时，可能发生context switch</strong><br>当这个system call运行到一半需要暂停等待某个事件发生时（比如使用read从disk上读取数据），CPU会利用中途等待数据传输的时间，进行context switch执行其他进程。<br><strong>interrupt也会引起context switch</strong><br>系统一般都要让进程周期性的被interrupt，这样做的原因是避免算法的缺陷导致某个进程长期拿不到CPU资源，用户就会觉得很卡。每隔一小段时间中断一下，然后看看当前进程是不是已经执行了足够长的时间，决定要不要换其他的进程来执行一下以确保CPU资源合理分配。</p>
+<p><em>进程A从disk读取数据时发生的context switch</em></p>
+<p><img src="/images/CSAPP/CSAPP_8/14.png"></p>
+<blockquote>
+<p>context switch是由kernel完成的</p>
+</blockquote>
+<h1 id="8-4-Process-Control"><a href="#8-4-Process-Control" class="headerlink" title="8.4 Process Control"></a>8.4 Process Control</h1><p>我们可以调用一些system calls来操控程序中的进程。</p>
+<h2 id="8-4-1-获取Process-ID"><a href="#8-4-1-获取Process-ID" class="headerlink" title="8.4.1 获取Process ID"></a>8.4.1 获取Process ID</h2><p>每一个进程都由一个独一无二的PID（正整数）标识，我们可以调用系统函数获取当前进程的PID或者当前进程的父进程（调用当前进程的进程）的PID。</p>
+<h2 id="8-4-2-创建和中止进程"><a href="#8-4-2-创建和中止进程" class="headerlink" title="8.4.2 创建和中止进程"></a>8.4.2 创建和中止进程</h2><p>从程序员的视角来看，进程拥有三种状态。</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Explain</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Running</td>
+<td>进程正在运行中，或者正在等待CPU资源，且最终一定会被执行</td>
+</tr>
+<tr>
+<td>Stopped</td>
+<td>进程被暂停了，在被特定信号唤醒之前，不会被执行</td>
+</tr>
+<tr>
+<td>Terminated</td>
+<td>进程被中止了。可能是<strong>收到了停止命令</strong>，也可能是<strong>从main函数return</strong>，还可能是因为调<strong>用了exit函数</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<p>我们可以使用fork函数来基于当前进程生成一个它的子进程。<strong>子进程的虚拟地址空间是其父进程的副本</strong>，同时它还可以对父进程中打开的文件进行读和写，它们唯一的不同之处就是PID不同。<br>fork函数的特殊之处在于，它会return两次，一次在子进程中return 0，一次在父进程中return子进程的PID。要注意的是，子进程与父进程谁会先return是不确定的（并行所导致的）。</p>
+<h3 id="8-4-2-1-栗子"><a href="#8-4-2-1-栗子" class="headerlink" title="8.4.2.1 栗子"></a>8.4.2.1 栗子</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">pid_t</span> pid; </span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">    rePid = fork(); </span><br><span class="line">    <span class="keyword">if</span> (rePid == <span class="number">0</span>)</span><br><span class="line">    &#123; <span class="comment">/* Child */</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;child : x=%d\n&quot;</span>, ++x); </span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">/* Parent */</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;parent: x=%d\n&quot;</span>, --x); </span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其打印结果为：<br>parent: x&#x3D;0<br>child : x&#x3D;2</p>
+<p>fork()调用完后，main进程被分成了两个线程，<strong>它们同时从fork()下一句开始继续执行</strong>。此时可以通过rePid（即fork()的返回值）来判断当前是位于子进程中还是父进程中。(注意子进程的PID一般是父进程PID+1，其返回值是0)<br>并且这两个独立的进程运行结果都打印到了同一个console上，这也印证了子进程继承了父进程的状态，使用的是父进程中打开的stdout文件。</p>
+<p><img src="/images/CSAPP/CSAPP_8/15.png"></p>
+<p>再看一个复杂点的栗子帮助理解。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fork(); </span><br><span class="line">    fork();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello\n&quot;</span>); </span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/CSAPP/CSAPP_8/16.png"></p>
+<p>在这样的流程图表示中，任何一个拓扑排序都是一条可能的执行顺序。因为进程的调度是由内核来决定的，其算法是基于当前系统情况的，因此执行顺序是不固定的。</p>
+<h2 id="8-4-3-Reaping-Child-Processes"><a href="#8-4-3-Reaping-Child-Processes" class="headerlink" title="8.4.3 Reaping Child Processes"></a>8.4.3 Reaping Child Processes</h2><p>当一个进程被中止时，它依然还存在于系统中，处于一种<strong>僵尸的状态</strong>（已经无用了，却依然消耗系统资源）。只有当它的父进程明确要reap掉它时，内核才会真正的把它给释放掉。<br>若想要释放的进程本身就是父进程该怎么办呢？系统提供了一个<strong>PID为1的进程init</strong>（系统启动时它就被内核创建了），它是所有进程的父进程，只要系统在运行，它就一直在运行。<br>不仅如此，当某个进程被释放前它的父进程就被中止时，init也负责reap掉这些未被释放的子进程。（要注意的是，像shell这类长期运行的程序，一般都要自行reap掉僵尸进程，否则会极大的浪费系统资源）</p>
+<h2 id="8-4-4-Putting-Processes-to-Sleep"><a href="#8-4-4-Putting-Processes-to-Sleep" class="headerlink" title="8.4.4 Putting Processes to Sleep"></a>8.4.4 Putting Processes to Sleep</h2><p>调用sleep()可以让程序暂停一段时间再执行，在sleep期间可以可以被强行唤醒。<br>也可以调用pause()让程序永久暂停，直到被强行唤醒才可继续运行。</p>
+<h2 id="8-4-5-Loading-and-Running-Programs"><a href="#8-4-5-Loading-and-Running-Programs" class="headerlink" title="8.4.5 Loading and Running Programs"></a>8.4.5 Loading and Running Programs</h2><p>调用execve()函数可以将程序加载进内存并运行，它只有当发生错误（比如找不到文件名）时才会返回值，因此不同于fork()的return两次，正常时它压根就不会return。<br>它的函数原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">execve</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filename, <span class="type">const</span> <span class="type">char</span> *argv[], <span class="type">const</span> <span class="type">char</span> *envp[])</span></span>;</span><br></pre></td></tr></table></figure>
+<p>当execve成功读取了filename后，会调用一个start-up code，它将堆栈初始化并将控制传递给main函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[], <span class="type">char</span> *envp[])</span></span>;</span><br></pre></td></tr></table></figure>
+<p>它的第一个参数就是execve的argv数组中有多少个值。（观察这两个函数的异同点）<br>当一个新程序开始运行时，其用户栈是这样的：</p>
+<p><img src="/images/CSAPP/CSAPP_8/17.png"></p>
+<h1 id="8-5-Signals"><a href="#8-5-Signals" class="headerlink" title="8.5 Signals"></a>8.5 Signals</h1><p>Signal是一种软件层的exception control flow，它的作用是通知某进程，系统中有某与其相关的事件发生，这种机制使得内核或某进程可以主动中断其他进程。</p>
+<p><strong>传输signals分为两步</strong></p>
+<ol>
+<li><p>发送<br> 一般碰到如下两个情况时，内核会发送signals（实质是改变目标进程状态参数的形式），<br> · 内核检测到了一些系统事件时（比如除0，中止某进程）<br> · 某个进程调用了kill方法，明确要求内核发送信号给某进程。（进程可对自己调用kill，注意此处的kill并不是linux中的中止进程指令）</p>
+</li>
+<li><p>接收<br> 接收端进程对signal做出反应。它可以无视或中止这个signal，也可以通过调用用户层的signal handler函数来<strong>catch</strong>这个signal。</p>
+</li>
+</ol>
+<p>  <img src="/images/CSAPP/CSAPP_8/18.png"></p>
+<p>已经被发送，接收端尚未对其做出反应的叫<strong>pending signal</strong>，内核会对每一个进程维护一个pending vector（bool类型），一个队列中只能同时存在不同种类型的pending signal，如果后续收到了类型重复的signal会直接被丢弃。（内核发送signal k后，将目标进程的pending vector的第k位设为1，表示其处于pending状态，当k被目标进程接收后，队列位置k的值被重新置为0）<br>某进程可以选择<strong>block</strong>某种signal，被block的signal可以以该进程为目标发送，存入到该进程的pending vector中，但在解除block之前，它是不会被接收的，因此内核还维护了一个blocking队列来表示某signal是否被blocked。</p>
+<h2 id="8-5-1-发送信号"><a href="#8-5-1-发送信号" class="headerlink" title="8.5.1 发送信号"></a>8.5.1 发送信号</h2><p>linux有一系列的机制来给进程发送Signals，这些机制全都依赖于<strong>process group</strong>来实现。</p>
+<h3 id="8-5-1-1-process-group"><a href="#8-5-1-1-process-group" class="headerlink" title="8.5.1.1 process group"></a>8.5.1.1 process group</h3><p>每一个进程都<u>仅</u>属于一个process group，每一个process group都被一个唯一的正整数标识（process group ID）。默认情况下子进程与父进程同属于一个process group，但是进程可以修改它自己或者其他进程的process group ID。<br><strong>为什么子进程与父进程同属于一个process group</strong><br>因为一个process group（进程以及它的子进程）是属于同一类的，一类进程总体上来看是服务于一件事的（这件事被Unix shell称为<strong>job</strong>），我们一般都是对这整件事来操作，而不会对单个进程进行操作，因此就需要用一个统一ID来标识处理这整件事的所有进程，来对整件事进行操作。</p>
+<p>在任何时候一个shell前台只能有一个job，后台可以有0~多个job。<br>以下示例，shell创建了一个前台job和两个后台job，前台进程又创建了两个子进程（pid进程号，pgid进程组号）<br><img src="/images/CSAPP/CSAPP_8/19.png"><br>前台进程和它的子进程同属于一个process group。</p>
+<h3 id="8-5-1-2-通过键盘发送signals"><a href="#8-5-1-2-通过键盘发送signals" class="headerlink" title="8.5.1.2 通过键盘发送signals"></a>8.5.1.2 通过键盘发送signals</h3><p>比如linux中按【Ctrl+C】让kernel将中断信号发送给前台process group中的所有进程，将前台的job中止。</p>
+<h3 id="8-5-1-3-通过kill函数发送信号"><a href="#8-5-1-3-通过kill函数发送信号" class="headerlink" title="8.5.1.3 通过kill函数发送信号"></a>8.5.1.3 通过kill函数发送信号</h3><p>任何进程都可以通过调用kill函数来发送信号给其他进程（包括它们自己）。<br>它的函数原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">kill</span><span class="params">(<span class="type">pid_t</span> pid, <span class="type">int</span> sig)</span></span></span><br></pre></td></tr></table></figure>
+<p>当pid大于0时，它会发送编号为sig的信号给进程pid；<br>当pid等于0时，它会发送sig信号给调用它的进程<strong>所属进程组的所有进程</strong>以及调用它的进程本身；<br>当pid小于0时，他会发送sig信号给|pid|进程组中的所有进程。</p>
+<h2 id="8-5-2-接收信号"><a href="#8-5-2-接收信号" class="headerlink" title="8.5.2 接收信号"></a>8.5.2 接收信号</h2><p>当内核将一个进程p从内核态转换为用户态时（比如从system call中返回或者执行完context switch时），它会先通过（pending&amp;~blocked）的结果来检查是否还有待处理的未被阻塞的信号，如果结果为空，则它直接将控制交给逻辑控制流p的下一条指令；若结果非空，则内核就会选择一个pending的信号k，让p去接收它。当<strong>完成这个信号要求的动作</strong>后，再将控制交给p的下一条指令。<br>进程对信号做出的反映默认有以下几种：</p>
+<ol>
+<li>终止进程</li>
+<li>暂停进程，让它直到接收到特定信号才能被唤醒</li>
+<li>无视这个信号</li>
+</ol>
+<p>然而这些默认的动作大部分都可以使用signal函数修改，它的原型如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">sighandler_t</span> <span class="title">signal</span><span class="params">(<span class="type">int</span> signum, <span class="type">sighandler_t</span> handler)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>它可以改变编号为signum信号的默认动作，根据handler类型的不同，分为以下三种情况：</p>
+<table>
+<thead>
+<tr>
+<th>handler类型</th>
+<th>改变效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIG_IGN</td>
+<td>无视对应signum信号</td>
+</tr>
+<tr>
+<td>SIG_DEL</td>
+<td>将对应signum信号动作重置为其默认</td>
+</tr>
+<tr>
+<td>用户自定义函数的地址</td>
+<td>称之为<strong>signal handler</strong>，一旦某进程接收到对应的signum信号，就会去执行这个用户自定义的函数。这种自定义信号的行为叫做<strong>installing the handler</strong>，调用这种信号的handler的行为叫做<strong>catching the signal</strong>，执行这个handler叫做<strong>handling the signal</strong>。</td>
+</tr>
+</tbody></table>
+<p>signal handler执行效果如下（信号s引起中断，因为s的默认动作被修改了，因此在s动作执行的过程中还会因为调用signal handler从而引起另一个中断），同时这也说明了handler是可以被其他handler打断的。</p>
+<p><img src="/images/CSAPP/CSAPP_8/20.png"></p>
+<h2 id="8-5-3-阻塞和恢复信号"><a href="#8-5-3-阻塞和恢复信号" class="headerlink" title="8.5.3 阻塞和恢复信号"></a>8.5.3 阻塞和恢复信号</h2><p>linux中有直接和间接两种方式来阻塞信号。</p>
+<ol>
+<li>间接阻塞<br>内核会阻塞任何一个正在被处理的信号。比如某进程接收到信号k，在处理信号k的过程中又收到一个信号k，则会默认将其阻塞。</li>
+<li>直接阻塞<br>调用函数sigprocmask()明确阻塞某种信号。<br>这个函数可对block vector进行更改，他的函数原型如下：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">sigprocmask</span><span class="params">(<span class="type">int</span> how, <span class="type">const</span> <span class="type">sigset_t</span> *set, <span class="type">sigset_t</span> *oldset)</span></span>;</span><br></pre></td></tr></table></figure>
+第一个参数how决定了如何更改blocked vector：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIG_BLOCK</td>
+<td>将set中的信号阻塞，blocked&#x3D;blocked | set</td>
+</tr>
+<tr>
+<td>SIG_UNBLOCK</td>
+<td>将set中的信号恢复，blocked&#x3D;blocked &amp; ~set</td>
+</tr>
+<tr>
+<td>SIG_SETMASK</td>
+<td>blocked&#x3D;set</td>
+</tr>
+</tbody></table>
+<p>如果oldset是非空的**，它指向更改前的blocked vector。</p>
+<h2 id="8-5-4-等待信号"><a href="#8-5-4-等待信号" class="headerlink" title="8.5.4 等待信号"></a>8.5.4 等待信号</h2><p>比如shell创建了一个前台job后，shell就必须等待这个job结束且被reap掉后，才能去接收用户的下一条指令。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/05/26/IT/CSAPP/%E3%80%8ACSAPP%E3%80%8BLinking/" rel="prev" title="《CSAPP》Linking">
+                  <i class="fa fa-chevron-left"></i> 《CSAPP》Linking
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/06/24/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BIntroduction/" rel="next" title="《计网》Introduction">
+                  《计网》Introduction <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="对并查集（Disjoint Set Union）的讨论。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《并查集》专题">
+<meta property="og:url" content="http://example.com/2021/01/11/IT/datastructure_and_algorithm/%E3%80%8A%E5%B9%B6%E6%9F%A5%E9%9B%86%E3%80%8B%E4%B8%93%E9%A2%98/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:description" content="对并查集（Disjoint Set Union）的讨论。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-11T04:20:58.000Z">
+<meta property="article:modified_time" content="2021-01-15T01:07:48.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/01/11/IT/datastructure_and_algorithm/%E3%80%8A%E5%B9%B6%E6%9F%A5%E9%9B%86%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/01/11/IT/datastructure_and_algorithm/%E3%80%8A%E5%B9%B6%E6%9F%A5%E9%9B%86%E3%80%8B%E4%B8%93%E9%A2%98/","path":"2021/01/11/IT/datastructure_and_algorithm/《并查集》专题/","title":"《并查集》专题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《并查集》专题 | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%B9%B6%E6%9F%A5%E9%9B%86%E5%9F%BA%E7%A1%80"><span class="nav-text">1. 并查集基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%A8%A1%E6%9D%BF"><span class="nav-text">1.1 模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E8%B7%AF%E5%BE%84%E5%8E%8B%E7%BC%A9%E4%BC%98%E5%8C%96"><span class="nav-text">1.1.1 路径压缩优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E9%A2%9D%E5%A4%96%E7%BB%B4%E6%8A%A4%E6%9C%AC%E9%9B%86%E5%90%88%E7%9A%84size%E5%80%BC"><span class="nav-text">1.1.2 额外维护本集合的size值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-%E9%A2%9D%E5%A4%96%E7%BB%B4%E6%8A%A4%E8%8A%82%E7%82%B9%E4%B8%8E%E5%85%B6%E6%A0%B9%E7%9A%84%E8%B7%9D%E7%A6%BB-%E6%9C%AA%E5%AE%8C%E6%88%90"><span class="nav-text">1.1.3 额外维护节点与其根的距离(未完成)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="nav-text">1.2 模板题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E5%90%88%E5%B9%B6%E9%9B%86%E5%90%88"><span class="nav-text">1.2.1 合并集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E8%BF%9E%E9%80%9A%E5%9D%97%E4%B8%AD%E7%82%B9%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-text">1.2.2 连通块中点的数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E9%A3%9F%E7%89%A9%E9%93%BE-TODO"><span class="nav-text">1.2.3 食物链(TODO)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E4%BA%A4%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-text">2. 交换字符串中的元素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%86%97%E4%BD%99%E8%BF%9E%E6%8E%A5"><span class="nav-text">3. 冗余连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%9C%81%E4%BB%BD%E6%95%B0%E9%87%8F"><span class="nav-text">4. 省份数量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%89%A7%E8%A1%8C%E4%BA%A4%E6%8D%A2%E6%93%8D%E4%BD%9C%E5%90%8E%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB"><span class="nav-text">5. 执行交换操作后的最小汉明距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E7%AD%89%E5%BC%8F%E6%96%B9%E7%A8%8B%E7%9A%84%E5%8F%AF%E6%BB%A1%E8%B6%B3%E6%80%A7"><span class="nav-text">6. 等式方程的可满足性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E7%A7%BB%E9%99%A4%E6%9C%80%E5%A4%9A%E7%9A%84%E5%90%8C%E8%A1%8C%E6%88%96%E5%90%8C%E5%88%97%E7%9F%B3%E5%A4%B4"><span class="nav-text">7. 移除最多的同行或同列石头</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/11/IT/datastructure_and_algorithm/%E3%80%8A%E5%B9%B6%E6%9F%A5%E9%9B%86%E3%80%8B%E4%B8%93%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《并查集》专题 | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《并查集》专题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-11 12:20:58" itemprop="dateCreated datePublished" datetime="2021-01-11T12:20:58+08:00">2021-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-01-15 09:07:48" itemprop="dateModified" datetime="2021-01-15T09:07:48+08:00">2021-01-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>对并查集（Disjoint Set Union）的讨论。</p>
+<span id="more"></span>
+
+<h1 id="1-并查集基础"><a href="#1-并查集基础" class="headerlink" title="1. 并查集基础"></a>1. 并查集基础</h1><p>并查集用途：给定一堆集合（包括只含有一个元素的集合），快速的合并某些集合，并且能够快速的判断某元素所属的集合。</p>
+<p>思路是把每一个集合以多叉树的形式存储，<strong>每颗树的根节点</strong>都设置为能够唯一的标识它所代表的集合，树中的每个节点都维护着它父节点的信息，<strong>得到某元素所属集合的方法</strong>就是不断的回溯寻找它的父节点，直到找到根节点，它所属的集合也随之确定。<strong>合并操作</strong>则只要把其中一颗树根节点的父结点设为另一颗树的根节点即可。</p>
+<blockquote>
+<p>并查集在最开始时所有元素都各自单独为一个集合</p>
+</blockquote>
+<h2 id="1-1-模板"><a href="#1-1-模板" class="headerlink" title="1.1 模板"></a>1.1 模板</h2><h3 id="1-1-1-路径压缩优化"><a href="#1-1-1-路径压缩优化" class="headerlink" title="1.1.1 路径压缩优化"></a>1.1.1 路径压缩优化</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> p[n];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;n;i++) p[i] = i; <span class="comment">//先拿到各自为营的所有元素，假定为1，2，3，...，n</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> <span class="comment">//返回x所属的集合信息（即节点x所属多叉树的根节点），并进行路径压缩优化</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">/*p[x]存储了x的父结点，当某节点的父节点等于它自己（p[x]==x）时，它就是根节点。</span></span><br><span class="line"><span class="comment">该函数执行完后，x的父节点p[x]会直接被设置为它所属集合的根节点（路径压缩），下次再找就能在O(1)的时间内完成*/</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//如果x不是它所属集合内的根节点，那么将其父节点设置为根节点，完成路径压缩优化</span></span><br><span class="line">    <span class="keyword">if</span>(p[x]!=x) p[x] = <span class="built_in">find</span>(p[x]); </span><br><span class="line">    <span class="keyword">return</span> p[x];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span><span class="comment">//合并两个元素所属的集合</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);<span class="comment">//让a所属集合的根节点变成b所属集合根节点的儿子</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//写成类的形式</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; p;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">dsu</span>(<span class="type">int</span> length)&#123; <span class="comment">//顶点总数 </span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) p.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (val==p[val]?p[val]:p[val] = <span class="built_in">find</span>(p[val]));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="1-1-2-额外维护本集合的size值"><a href="#1-1-2-额外维护本集合的size值" class="headerlink" title="1.1.2 额外维护本集合的size值"></a>1.1.2 额外维护本集合的size值</h3><p>实现很简单，在合并时把两个集合的size相加即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> p[n], size[n];<span class="comment">//需要多维护一个size数组</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i&lt;n; i++) &#123;p[i] = i; size[i]=<span class="number">1</span>;&#125;<span class="comment">//一开始每个元素的size=1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*如果a和b不属于同一子集，使a变为b的子集*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123; </span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">find</span>(a)==<span class="built_in">find</span>(b)) <span class="keyword">return</span>; <span class="comment">//如果a和b属于同一集合，直接返回</span></span><br><span class="line">    </span><br><span class="line">    cnt[<span class="built_in">find</span>(b)] += cnt[<span class="built_in">find</span>(a)]; <span class="comment">//更新b集合的总节点数</span></span><br><span class="line">    p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b); <span class="comment">//使a变为b的子集</span></span><br><span class="line">&#125;</span><br><span class="line">find函数同上</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-3-额外维护节点与其根的距离-未完成"><a href="#1-1-3-额外维护节点与其根的距离-未完成" class="headerlink" title="1.1.3 额外维护节点与其根的距离(未完成)"></a>1.1.3 额外维护节点与其根的距离(未完成)</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> p[n], d[n];<span class="comment">//d[x]表示x到其根节点的距离</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;n;i++) &#123;p[i] = i; d[i]=<span class="number">0</span>&#125;  <span class="comment">//初始化</span></span><br><span class="line"><span class="type">int</span> <span class="built_in">find</span>(<span class="type">int</span> x)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(p[x]!=x)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> u = <span class="built_in">find</span>(p[x]);</span><br><span class="line">        d[x]+=d[p[x]];</span><br><span class="line">        p[x] = u;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p[x];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-模板题"><a href="#1-2-模板题" class="headerlink" title="1.2 模板题"></a>1.2 模板题</h2><h3 id="1-2-1-合并集合"><a href="#1-2-1-合并集合" class="headerlink" title="1.2.1 合并集合"></a>1.2.1 合并集合</h3><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/838/">https://www.acwing.com/problem/content/838/</a></p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="type">int</span> p[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p[val]!=val) p[val] = <span class="built_in">find</span>(p[val]);</span><br><span class="line">    <span class="keyword">return</span> p[val];</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(p[b]); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++) p[i] = i;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a, b;</span><br><span class="line">    <span class="type">char</span> op[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">while</span> (m--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s%d%d&quot;</span>, op, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">if</span> (op[<span class="number">0</span>] == <span class="string">&#x27;M&#x27;</span>) <span class="built_in">merge</span>(a,b);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(a) == <span class="built_in">find</span>(b)) <span class="built_in">puts</span>(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-2-连通块中点的数量"><a href="#1-2-2-连通块中点的数量" class="headerlink" title="1.2.2 连通块中点的数量"></a>1.2.2 连通块中点的数量</h3><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/839/">https://www.acwing.com/problem/content/839/</a></p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="type">int</span> p[N];</span><br><span class="line"><span class="type">int</span> cnt[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p[val]!=val) p[val] = <span class="built_in">find</span>(p[val]);</span><br><span class="line">    <span class="keyword">return</span> p[val];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123; <span class="comment">//如果a和b不属于同一子集，使a变为b的子集</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">find</span>(a)==<span class="built_in">find</span>(b)) <span class="keyword">return</span>; <span class="comment">//如果a和b属于同一集合，直接返回</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    cnt[<span class="built_in">find</span>(b)] += cnt[<span class="built_in">find</span>(a)]; <span class="comment">//更新b集合的总节点数</span></span><br><span class="line">    p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b); <span class="comment">//使a变为b的子集</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        p[i] = i;</span><br><span class="line">        cnt[i] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">char</span> op[<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        string op;</span><br><span class="line">        <span class="type">int</span> a, b;</span><br><span class="line">        cin &gt;&gt; op;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (op == <span class="string">&quot;C&quot;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">            <span class="built_in">merge</span>(a,b);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (op == <span class="string">&quot;Q1&quot;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(a) == <span class="built_in">find</span>(b)) <span class="built_in">puts</span>(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cin &gt;&gt; a;</span><br><span class="line">            cout &lt;&lt; cnt[<span class="built_in">find</span>(a)] &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-3-食物链-TODO"><a href="#1-2-3-食物链-TODO" class="headerlink" title="1.2.3 食物链(TODO)"></a>1.2.3 食物链(TODO)</h3><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/242/">https://www.acwing.com/problem/content/242/</a></p>
+<p>【ac代码】</p>
+<h1 id="2-交换字符串中的元素"><a href="#2-交换字符串中的元素" class="headerlink" title="2. 交换字符串中的元素"></a>2. 交换字符串中的元素</h1><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/smallest-string-with-swaps/">https://leetcode-cn.com/problems/smallest-string-with-swaps/</a></p>
+<p>【解析】</p>
+<p>参考了零神的答案。</p>
+<p>将字符串的每一个下标看作图中的一个顶点，那么pair数组给出某两个可以交换的下标就相当于在图中将这个两个下标对应的顶点连接起来。又因为存在这样的特性：如果pair数组中某两个下标对有交集【比如(i, j), (j, k)有交集j】，那么这两个下标对中的所有元素都可以互换位置，【如i和k可以交换】。这个特性反映到图中就是任一连通块中所有顶点代表的下标都可以互换。</p>
+<p>基于上述讨论，只要我们将pair数组中所有的下标对在图中连接起来，形成几个连通块，并将下标和字符对应起来，然后对这些连通块内部的字符进行排序，最后将排好序字符覆盖到原数组。我们用并查集来做。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; p;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">dsu</span>(<span class="type">int</span> length)&#123; <span class="comment">//顶点总数 </span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) p.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (val==p[val]?p[val]:p[val] = <span class="built_in">find</span>(p[val]));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">smallestStringWithSwaps</span><span class="params">(string s, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; pairs)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">dsu <span class="title">d</span><span class="params">(length)</span></span>; <span class="comment">//初始化并查集，一开始所有顶点各自为营</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;pairs.<span class="built_in">size</span>();i++) d.<span class="built_in">merge</span>(pairs[i][<span class="number">0</span>], pairs[i][<span class="number">1</span>]); <span class="comment">//用pair给出的可交换下标对关系形成连通块</span></span><br><span class="line">        </span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;&gt; hash; <span class="comment">//&lt;某集合的标志root，该集合中的所有元素&gt;，类似于哈希表的拉链法形式</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) hash[d.<span class="built_in">find</span>(i)].<span class="built_in">push_back</span>(s[i]);<span class="comment">//遍历字符串，将每一个字符放到它所属的集合中</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> t = hash.<span class="built_in">begin</span>(); t!=hash.<span class="built_in">end</span>(); t++) <span class="built_in">sort</span>(t-&gt;second.<span class="built_in">begin</span>(), t-&gt;second.<span class="built_in">end</span>(), <span class="built_in">greater</span>&lt;<span class="type">int</span>&gt;()); <span class="comment">//对每个集合内部从大到小排序</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123; <span class="comment">//将排好序的字符覆盖到原字符串</span></span><br><span class="line">            <span class="type">int</span> root = d.<span class="built_in">find</span>(i); <span class="comment">//找到字符s[i]所属的集合</span></span><br><span class="line">            s[i] = hash[root].<span class="built_in">back</span>(); <span class="comment">//将该集合中字典序最小的字符覆盖当前字符s[i]</span></span><br><span class="line">            hash[root].<span class="built_in">pop_back</span>();<span class="comment">//将该集合中字典序最小的字符删除</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-冗余连接"><a href="#3-冗余连接" class="headerlink" title="3. 冗余连接"></a>3. 冗余连接</h1><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/redundant-connection/">https://leetcode-cn.com/problems/redundant-connection/</a></p>
+<p>【解析】</p>
+<p>前置知识: 树是连通且无环的无向图，边数等于节点数-1 。这道题多了一条冗余的边，则边数等于节点数。</p>
+<p>在给所有节点添加边的过程中，如果该边连接的两个点已经是连通的，那么加上这条边必然形成环路，因此这条边一定是冗余的。涉及到判断两点的连通性，可以用并查集来做：每次添加边时判断这条边连接的两个点是否属于同一个集合，如果属于则这条边就是冗余的，否则连接这两个点把它们归到同一个集合中。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; p;</span><br><span class="line">    <span class="built_in">dsu</span>(<span class="type">int</span> length)&#123;</span><br><span class="line">        p.<span class="built_in">push_back</span>(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=length;i++) p.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x==p[x]?x:p[x] = <span class="built_in">find</span>(p[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">findRedundantConnection</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = edges.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">dsu <span class="title">d</span><span class="params">(length)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">            <span class="type">int</span> u = edges[i][<span class="number">0</span>];</span><br><span class="line">            <span class="type">int</span> v = edges[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(d.<span class="built_in">find</span>(u)==d.<span class="built_in">find</span>(v)) <span class="keyword">return</span> &#123;u,v&#125;;</span><br><span class="line">            d.<span class="built_in">merge</span>(u,v);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-省份数量"><a href="#4-省份数量" class="headerlink" title="4. 省份数量"></a>4. 省份数量</h1><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/number-of-provinces/">https://leetcode-cn.com/problems/number-of-provinces/</a></p>
+<p>【解析】</p>
+<p>就是在并查集的基础上额外维护一个总集合数量。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; p;</span><br><span class="line">    <span class="type">int</span> count; <span class="comment">//统计集合数量</span></span><br><span class="line">    <span class="built_in">dsu</span>(<span class="type">int</span> length)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) p.<span class="built_in">push_back</span>(i);</span><br><span class="line">        count = length;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> p[x]==x?x:p[x]=<span class="built_in">find</span>(p[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">find</span>(a)==<span class="built_in">find</span>(b)) <span class="keyword">return</span>;</span><br><span class="line">        p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">        count--; <span class="comment">//如果merge操作成功，集合数量-1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findCircleNum</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; isConnected)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = isConnected.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">dsu <span class="title">d</span><span class="params">(length)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(isConnected[i][j]==<span class="number">1</span>) d.<span class="built_in">merge</span>(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> d.count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-执行交换操作后的最小汉明距离"><a href="#5-执行交换操作后的最小汉明距离" class="headerlink" title="5. 执行交换操作后的最小汉明距离"></a>5. 执行交换操作后的最小汉明距离</h1><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimize-hamming-distance-after-swap-operations/">https://leetcode-cn.com/problems/minimize-hamming-distance-after-swap-operations/</a></p>
+<p>【解析】</p>
+<p>因为可交换的坐标对具有传递性，因此利用并查集根据allowedSwaps求出所有连通块，这些连通块中的坐标均可互相交换。然后遍历target数组，每走到一个元素，查看它所属的集合中有没有跟它相同的元素，如果没有，总汉明距离+1；如果有，总汉明距离不变，将该元素在集合中删除。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; p;</span><br><span class="line">    <span class="built_in">dsu</span>(<span class="type">int</span> length)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) p.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x==p[x]?x:p[x] = <span class="built_in">find</span>(p[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumHammingDistance</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; source, vector&lt;<span class="type">int</span>&gt;&amp; target, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; allowedSwaps)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = source.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">dsu <span class="title">d</span><span class="params">(length)</span></span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//根据allowedSwaps求出所有连通块，即得到所有下标的并查集关系</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;allowedSwaps.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            d.<span class="built_in">merge</span>(allowedSwaps[i][<span class="number">0</span>], allowedSwaps[i][<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//在下标i所属的集合中插入source[i]，因为要多次查询所以用嵌套哈希表——外层查询下标i所属的集合，内层查询属于集合i的source元素中是否存在与target当前位置相同的元素</span></span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; hash;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">            hash[d.<span class="built_in">find</span>(i)][source[i]]++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> count = <span class="number">0</span>; <span class="comment">//计算汉明距离</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">            <span class="type">int</span> root = d.<span class="built_in">find</span>(i); <span class="comment">//找到下标i所属的集合</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">//查询属于集合i的所有source元素中是否存在与target[i]相同的元素</span></span><br><span class="line">            <span class="keyword">if</span>(hash[root][target[i]]) hash[root][target[i]]--; <span class="comment">//如果有，则匹配到一位，总汉明距离不变，将该元素从集合中剔除</span></span><br><span class="line">            <span class="keyword">else</span> count++;<span class="comment">//如果没有，汉明距离+1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-等式方程的可满足性"><a href="#6-等式方程的可满足性" class="headerlink" title="6. 等式方程的可满足性"></a>6. 等式方程的可满足性</h1><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/satisfiability-of-equality-equations/">https://leetcode-cn.com/problems/satisfiability-of-equality-equations/</a></p>
+<p>【解析】</p>
+<p>如果a=&#x3D;b, b=&#x3D;c，那么a=&#x3D;c，即等式具有传递性，那么把a、b和c放到一个集合中。之后碰到不等式时，比如a!&#x3D;c，因为等号两侧的字母属于同一个集合，说明a和c应该相等，与a!&#x3D;c矛盾，因此等式方程不可满足。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; p;</span><br><span class="line">    <span class="built_in">dsu</span>()&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;<span class="number">26</span>;i++) p.<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x==p[x]?x:p[x] = <span class="built_in">find</span>(p[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">equationsPossible</span><span class="params">(vector&lt;string&gt;&amp; equations)</span> </span>&#123;</span><br><span class="line">        dsu d;</span><br><span class="line">        <span class="type">int</span> length = equations.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123; <span class="comment">//先给所有等号关系的字母对划分好集合</span></span><br><span class="line">            <span class="type">int</span> a = equations[i][<span class="number">0</span>]-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            <span class="type">int</span> b = equations[i][<span class="number">3</span>]-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span>(equations[i][<span class="number">1</span>]==<span class="string">&#x27;=&#x27;</span>) d.<span class="built_in">merge</span>(a,b);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;<span class="comment">//如果不等号关系两侧字母属于同一个集合（即这两个字母之前已经定义为等号关系），则等式方程矛盾</span></span><br><span class="line">            <span class="type">int</span> a = equations[i][<span class="number">0</span>]-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            <span class="type">int</span> b = equations[i][<span class="number">3</span>]-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span>(equations[i][<span class="number">1</span>]==<span class="string">&#x27;!&#x27;</span> &amp;&amp; d.<span class="built_in">find</span>(a)==d.<span class="built_in">find</span>(b)) <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-移除最多的同行或同列石头"><a href="#7-移除最多的同行或同列石头" class="headerlink" title="7. 移除最多的同行或同列石头"></a>7. 移除最多的同行或同列石头</h1><p>【题目】</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/most-stones-removed-with-same-row-or-column/">https://leetcode-cn.com/problems/most-stones-removed-with-same-row-or-column/</a></p>
+<p>【解析】</p>
+<p>称石头a与石头b同行或同列为【连通】。如果石头a与石头b连通，石头b与石头c连通，那么石头a和石头c间接连通（即这三个石头可以互相消除——a与c可间接的通过b来互相消除），因此把相互连通的所有石头归到一个集合中。通过画图模拟可以发现，一个包含n块石头的集合中最多可以移除n-1块石头，因此集合的数量就是移除最多的石头后剩余的石头数量。</p>
+<p>【ac代码】</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dsu</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; p;</span><br><span class="line">    <span class="type">int</span> size; <span class="comment">//维护集合数量</span></span><br><span class="line">    <span class="built_in">dsu</span>(<span class="type">int</span> length)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++) p.<span class="built_in">push_back</span>(i);</span><br><span class="line">        size = length;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x==p[x]?x:p[x] = <span class="built_in">find</span>(p[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">find</span>(a)==<span class="built_in">find</span>(b)) <span class="keyword">return</span>;</span><br><span class="line">        p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">        size--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">removeStones</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; stones)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> length = stones.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">dsu <span class="title">d</span><span class="params">(length)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">            vector&lt;<span class="type">int</span>&gt; chosen = stones[i];</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = i+<span class="number">1</span>;j&lt;length;j++)&#123;</span><br><span class="line">                <span class="comment">//将互相连通的两个石头并入一个集合中</span></span><br><span class="line">                <span class="keyword">if</span>(stones[j][<span class="number">0</span>]==chosen[<span class="number">0</span>] || stones[j][<span class="number">1</span>] == chosen[<span class="number">1</span>]) d.<span class="built_in">merge</span>(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> length-d.size; <span class="comment">//石头总数-最少剩余石头数量=移除石头的最大数量</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/08/IT/computer_network/%E3%80%8A%E8%AE%A1%E7%BD%91%E3%80%8BNetwork-Layer-ControlPlane/" rel="prev" title="《计网》Network-Layer-ControlPlane">
+                  <i class="fa fa-chevron-left"></i> 《计网》Network-Layer-ControlPlane
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/19/IT/datastructure_and_algorithm/%E3%80%8A%E6%95%B0%E5%AD%A6%E3%80%8B%E4%B8%93%E9%A2%98/" rel="next" title="《数学》专题">
+                  《数学》专题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

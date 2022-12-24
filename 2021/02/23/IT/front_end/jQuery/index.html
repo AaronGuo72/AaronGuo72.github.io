@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="jQuery就是JavaScript的一个库，它极大的简化了JS编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery">
+<meta property="og:url" content="http://example.com/2021/02/23/IT/front_end/jQuery/index.html">
+<meta property="og:site_name" content="Fun with Network">
+<meta property="og:description" content="jQuery就是JavaScript的一个库，它极大的简化了JS编程">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-23T05:46:10.000Z">
+<meta property="article:modified_time" content="2021-03-03T00:24:48.000Z">
+<meta property="article:author" content="Shucheng Guo">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/02/23/IT/front_end/jQuery/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/02/23/IT/front_end/jQuery/","path":"2021/02/23/IT/front_end/jQuery/","title":"jQuery"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>jQuery | Fun with Network</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Fun with Network</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to my lovely home :)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-dom%E5%AF%B9%E8%B1%A1%E5%92%8CjQuery%E5%AF%B9%E8%B1%A1"><span class="nav-text">1. dom对象和jQuery对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-dom%E5%AF%B9%E8%B1%A1%E8%BD%AC%E4%B8%BAjQuery%E5%AF%B9%E8%B1%A1"><span class="nav-text">1.1 dom对象转为jQuery对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-jQuery%E5%AF%B9%E8%B1%A1%E8%BD%ACdom%E5%AF%B9%E8%B1%A1"><span class="nav-text">1.2 jQuery对象转dom对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">2. 选择器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-text">3. 过滤器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E4%BA%8B%E4%BB%B6"><span class="nav-text">4. 事件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-jQuery%E5%87%BD%E6%95%B0"><span class="nav-text">5. jQuery函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-ajax"><span class="nav-text">6. ajax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-ajax%E4%BB%8B%E7%BB%8D"><span class="nav-text">6.1 ajax介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-jQuery%E4%B8%AD%E4%BD%BF%E7%94%A8ajax%E5%87%BD%E6%95%B0"><span class="nav-text">6.2 jQuery中使用ajax函数</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shucheng Guo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/23/IT/front_end/jQuery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shucheng Guo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="jQuery | Fun with Network">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jQuery
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-23 13:46:10" itemprop="dateCreated datePublished" datetime="2021-02-23T13:46:10+08:00">2021-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-03-03 08:24:48" itemprop="dateModified" datetime="2021-03-03T08:24:48+08:00">2021-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>jQuery就是JavaScript的一个库，它极大的简化了JS编程</p>
+<span id="more"></span>
+
+<p>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>()   <span class="comment">//JS</span></span><br><span class="line">$(<span class="string">&quot;#id&quot;</span>) 				  <span class="comment">//jQuery</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>() <span class="comment">//JS</span></span><br><span class="line">$(<span class="string">&quot;.class className&quot;</span>)             <span class="comment">//jQuery</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>() <span class="comment">//JS</span></span><br><span class="line">$(<span class="string">&quot;tagName&quot;</span>)                    <span class="comment">//jQuery</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>【获取jQuery】去官网，下载未压缩版jQuery库文件，将其粘贴到项目中，然后在要用到的JS文件中引入它即可。</p>
+<p>第一个小实例，jQuery实现onload函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 1. $()是一个函数，document是它的参数，$(document)将document对象变为jQuery对象</span></span><br><span class="line"><span class="comment">     * 2. ready是jQuery对象可以调用的一个函数，当页面加载完毕后会执行ready中定义的内容，相当于onload</span></span><br><span class="line"><span class="comment">     * 3. ready中定义匿名函数，该函数在页面加载完毕时会被调用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">   $(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">alert</span>(<span class="string">&quot;hi jQuery&quot;</span>)</span><br><span class="line">       &#125;</span><br><span class="line">   )</span><br><span class="line"></span><br><span class="line"><span class="comment">/*上面是标准写法，可以简写为：*/</span></span><br><span class="line">$(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="title function_">alert</span>(<span class="string">&quot;hi jQuery&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>$(document).ready()</code> 等价于 <code>$(), jQuery(), window.jQuery()</code></p>
+</blockquote>
+<h1 id="1-dom对象和jQuery对象"><a href="#1-dom对象和jQuery对象" class="headerlink" title="1. dom对象和jQuery对象"></a>1. dom对象和jQuery对象</h1><p><code>var obj = document.getElementById(&quot;id&quot;);</code>  即使用javaScript创建的对象都是dom对象</p>
+<p><code>var $obj = $(&quot;#id&quot;);</code>                                          使用jQuery语法创建的对象就是jQuery对象（<strong>jQuery对象相当于是一个容器，其中存放了多个dom对象，以及jQuery对象的方法</strong>） </p>
+<blockquote>
+<p>一般在jQuery对象名称前加$来方便区分</p>
+</blockquote>
+<h2 id="1-1-dom对象转为jQuery对象"><a href="#1-1-dom对象转为jQuery对象" class="headerlink" title="1.1 dom对象转为jQuery对象"></a>1.1 dom对象转为jQuery对象</h2><p><code>$(domObject)</code></p>
+<h2 id="1-2-jQuery对象转dom对象"><a href="#1-2-jQuery对象转dom对象" class="headerlink" title="1.2 jQuery对象转dom对象"></a>1.2 jQuery对象转dom对象</h2><p>jQuery对象是数组，每一个jQuery对象的第一个元素就是该jQuery对象对应的dom对象。</p>
+<p>例如: <code>var domObj = $(&quot;#id&quot;)[0]</code></p>
+<h1 id="2-选择器"><a href="#2-选择器" class="headerlink" title="2. 选择器"></a>2. 选择器</h1><p>jQuery利用选择器（本质是一个字符串）定位dom对象，并将它转化为jQuery对象。</p>
+<p>【id选择器】<code>$(&quot;#id&quot;)</code></p>
+<p>【class选择器】<code>$(&quot;.class className&quot;)</code></p>
+<p>【标签选择器】<code>$(&quot;tagName&quot;)</code></p>
+<p>【选取当前页面中的所有对象】<code>$(&quot;*&quot;)</code></p>
+<p>【组合选择器】<code>$(&quot;[#id], [.class className], [tagName]&quot;)</code> &#x2F;&#x2F;即一次选中多个</p>
+<p>【表单选择器】</p>
+<p><code>$(&quot;:tag&quot;)</code></p>
+<p>可以方便的选中input标签，比如文本框<code>&lt;input type=&quot;text&quot;&gt;</code>，单选框<code>&lt;input type=&quot;radio&quot;&gt;</code>等，在无<code>&lt;form&gt;</code>的情况下也可选择。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;:text&quot;</span>) <span class="comment">//选取所有单行文本框</span></span><br><span class="line">$(<span class="string">&quot;:radio&quot;</span>) <span class="comment">//选取所有单选框</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>实例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*获取&lt;input type=&quot;text&quot;&gt;对象*/</span></span><br><span class="line"><span class="keyword">var</span> $obj = $(<span class="string">&quot;:text&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> v = $obj.<span class="title function_">val</span>(); <span class="comment">//$obj.val()相当于$obj[0].value</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*获取&lt;input type=&quot;radio&quot;&gt;对象，checkbox类似*/</span></span><br><span class="line"><span class="keyword">var</span> $obj = $(<span class="string">&quot;:radio&quot;</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; $obj.<span class="property">length</span>; i++)&#123;</span><br><span class="line">	<span class="keyword">var</span> obj = $obj[i]; <span class="comment">//这里每一个obj都是个dom对象</span></span><br><span class="line">    <span class="keyword">var</span> v = obj.<span class="property">value</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-过滤器"><a href="#3-过滤器" class="headerlink" title="3. 过滤器"></a>3. 过滤器</h1><p>过滤器必须跟选择器一起使用，选择器大多时候会选择到一组dom对象，过滤器的作用就是对这一组对象进行筛选。</p>
+<p>【保留选择器选中的第一个对象】<code>$(&quot;selector:first&quot;)</code></p>
+<p>【保留选择器选中的最后一个对象】<code>$(&quot;selector:last&quot;)</code></p>
+<p>【选择选择器中中指定的对象】<code>$(&quot;selector:eq(index)&quot;)</code></p>
+<p>【选择选择器中小于指定索引的所有对象】<code>$(&quot;selector:lt(index)&quot;)</code> ，注意是LT不是IT</p>
+<p>【选择选择器中大于指定索引的所有对象】<code>$(&quot;selector:gt(index)&quot;)</code> </p>
+<p>【表单属性过滤器】根据表单(input标签对象)当前的属性值来过滤（比如复选框是否checked）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;text:enabled&quot;</span>)</span><br><span class="line">$(<span class="string">&quot;checkbox:checked&quot;</span>)</span><br><span class="line">$(<span class="string">&quot;select&gt;option:selected&quot;</span>)  <span class="comment">//下拉框过滤与其他不一样</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-事件"><a href="#4-事件" class="headerlink" title="4. 事件"></a>4. 事件</h1><p>使用jQuery给dom对象绑定事件。</p>
+<p><code>$(selector).eventName( eventFunction )</code></p>
+<p>其中eventName就是js中事件去掉on，比如onclick变为click。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#1&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="comment">//点击id=1的dom对象变成红色5</span></span><br><span class="line">            <span class="title function_">alert</span>(<span class="string">&quot;clicked&quot;</span>);</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>还有一种更加灵活的方式——使用on关键字：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;:button&quot;</span>).<span class="title function_">on</span>(&#123;</span><br><span class="line">    <span class="attr">mouseenter</span>:<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        $.<span class="title function_">each</span>($(<span class="string">&quot;div&quot;</span>),<span class="keyword">function</span> (<span class="params">index, element</span>) &#123;</span><br><span class="line">            element.<span class="property">innerHTML</span> = <span class="string">&quot;changed&quot;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">mouseleave</span>:<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        $.<span class="title function_">each</span>($(<span class="string">&quot;div&quot;</span>),<span class="keyword">function</span> (<span class="params">index, element</span>) &#123;</span><br><span class="line">            element.<span class="property">innerHTML</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-jQuery函数"><a href="#5-jQuery函数" class="headerlink" title="5. jQuery函数"></a>5. jQuery函数</h1><p>【val()】</p>
+<p>无参，读取第一个dom对象的值</p>
+<p>有参，对数组中所有dom对象value进行统一赋值</p>
+<p>【text()】</p>
+<p>无参，读取数组中所有dom对象的文本内容，以字符串拼接的方式返回</p>
+<p>有参，对数组中所有dom对象的文本内容统一赋值</p>
+<p>【attr()】</p>
+<p>对dom对象value之外的属性进行操作。</p>
+<p>attr(“attributeName”)，获取数组第一个dom对象的属性值</p>
+<p>attr(“attributeName”, “value”)，给数组中所有dom对象的属性赋值</p>
+<p>比如<code>&lt;input type=&quot;button&quot; id=&quot;1&quot;&gt;</code> ，那么<code>$(&quot;#1&quot;).attr(&quot;type&quot;)</code> 将会返回字符串”button”</p>
+<p>【remove】</p>
+<p>将数组中所有dom对象及其子对象删除。</p>
+<p>【empty】</p>
+<p>将数组中所有dom对象的子对象删除。</p>
+<p>【append】</p>
+<p>为数组中的所有dom对象添加子对象</p>
+<p>【html】</p>
+<p>无参，获取dom数第一个元素的innerHTML</p>
+<p>有参，设置dom数组中所有元素的innerHTML</p>
+<p>【each】</p>
+<p>该函数可用于遍历:</p>
+<ol>
+<li><p>dom数组。</p>
+</li>
+<li><p>普通数组。</p>
+</li>
+<li><p>json</p>
+</li>
+</ol>
+<p>对每一个遍历到的成员都会调用内部定义的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">each</span>(<span class="title class_">ObjectToTraverse</span>,<span class="keyword">function</span>(<span class="params">index, element</span>) &#123;...&#125;) <span class="comment">//index代表当前遍历到的下标，element代表当前下标位置上的元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*1. 遍历普通数组*/</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">$.<span class="title function_">each</span>(arr,<span class="keyword">function</span> (<span class="params">index, element</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(element);</span><br><span class="line">&#125;)</span><br><span class="line">                                                  </span><br><span class="line"><span class="comment">/*2. 遍历json*/</span></span><br><span class="line"><span class="keyword">var</span> json = &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;tom&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">18</span>&#125;;</span><br><span class="line">$.<span class="title function_">each</span>(json,<span class="keyword">function</span> (<span class="params">index, element</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(index+<span class="string">&quot; &quot;</span>+element);</span><br><span class="line">&#125;)          </span><br><span class="line">                                                  </span><br><span class="line"><span class="comment">/*3. 遍历jQuery对象（dom数组）*/</span></span><br><span class="line">$.<span class="title function_">each</span>($(<span class="string">&quot;div&quot;</span>),<span class="keyword">function</span> (<span class="params">index, element</span>) &#123; <span class="comment">//这里获取到的element是dom对象</span></span><br><span class="line">    element.<span class="property">innerHTML</span> = <span class="string">&quot;changed&quot;</span></span><br><span class="line">&#125;)                      </span><br><span class="line">                                                  </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-ajax"><a href="#6-ajax" class="headerlink" title="6. ajax"></a>6. ajax</h1><h2 id="6-1-ajax介绍"><a href="#6-1-ajax介绍" class="headerlink" title="6.1 ajax介绍"></a>6.1 ajax介绍</h2><p>一些时候用户点击了网页上某个部件后只需要更新一小部分页面内容，其余内容不变，这时如果使用全局刷新就会让用户感受到明显的延迟，降低用户体验。这时就可以采用AJAX来实现页面的局部刷新，也就是异步刷新。</p>
+<p>AJAX(Asynchronous JavaScript and XML)技术实现异步刷新的原理：一个浏览器中可以生成多个 <strong>异步对象（XMLHttpRequest）</strong>，当用户在页面上触发某个事件只涉及到页面局部内容改变时，就可以相应地生成一个异步对象，每一个异步对象都可以独立的向服务器发出页面请求，然后服务器将结果通过JS写入到当前页面，实现局部刷新。</p>
+<p>JS在ajax中负责创建异步对象，发送HttpRequest；xml是ajax中的数据传输的格式，现在已经被JSON替代。</p>
+<p>【JavaScript中使用ajax】</p>
+<ol>
+<li><p>通过JS创建异步对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xmlHttp = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给异步对象绑定事件（当异步对象的状态发生改变时，就会触发onreadystatechange事件）</p>
+<p>异步对象的【状态】（readyState）有5种，分别用1个整数表示：</p>
+<p>0：创建异步对象 <code>var xmlHttp = new XMLHttpRequest();</code></p>
+<p>1：初始化异步请求对象 <code>xmlHttp.open(requestMethod, requestUrl, true)</code></p>
+<p>2：异步对象向服务器发出请求 <code>xmlHttp.send()</code></p>
+<p>3：异步对象接收到服务器发来的数据，并在XMLHttpRequest内部自动开始解析</p>
+<p>4：异步对象将服务器发来的数据解析完毕。这时才可以开始读取数据，并用这些数据更新当前页面</p>
+<p>异步对象的【属性】（status），表示网络请求状况，200（HTTP状态码）代表请求成功</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xmlHttp.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(xmlHttp.<span class="property">readState</span> == <span class="number">4</span> &amp;&amp; xmlHttp.<span class="property">status</span> == <span class="number">200</span>) <span class="comment">//如果异步对象xmlHttp已经获取到服务器的响应数据，且解析完毕，并且响应数据中状态码表示此次请求数据成功。现在用这些数据来更新当前页面了。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化异步请求对象</p>
+<p><code>xmlHttp.open(请求方式get|post, url, true异步(默认)|false同步)</code></p>
+<p>比如<code>xmlHttp.open(&quot;post&quot;, &quot;loginServlet?name=tom&amp;pwd=123&quot;, true);</code></p>
+<blockquote>
+<p>异步相当于不需要等当前请求执行完毕（接收到服务器结果），就可以再次向服务器发送本请求。</p>
+<p>同步则要求当前请求完毕接收到服务器的响应数据后才能再次向服务器发送本请求。</p>
+</blockquote>
+</li>
+<li><p>使用异步对象向服务器发送请求</p>
+<p><code>xmlHttp.send();</code></p>
+</li>
+<li><p>异步对象接收服务器的响应数据（在第二步的基础上）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xmlHttp.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(xmlHttp.<span class="property">readState</span> == <span class="number">4</span> &amp;&amp; xmlHttp.<span class="property">status</span> == <span class="number">200</span>) &#123;</span><br><span class="line">    	<span class="keyword">var</span> data = xmlHttp.<span class="property">responseText</span>; <span class="comment">//请求成功并拿到数据后，异步对象的responseText中保存了服务器的响应数据</span></span><br><span class="line">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;name&quot;</span>).<span class="property">value</span> = data; <span class="comment">//将数据更新到当前页面</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>超过3步一般就要封装，上述步骤在jQuery中将被简化。</p>
+<p>然后后端处理前端发来的请求，将请求结果以JSON字符串的格式响应给前端即可。</p>
+<h2 id="6-2-jQuery中使用ajax函数"><a href="#6-2-jQuery中使用ajax函数" class="headerlink" title="6.2 jQuery中使用ajax函数"></a>6.2 jQuery中使用ajax函数</h2><p><code>$.ajax()</code> 的参数类似于json，是以键值对的形式传入的。</p>
+<p>参数列表如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>async</td>
+<td>为true（默认）表示异步处理</td>
+</tr>
+<tr>
+<td>contentType</td>
+<td>发送给服务器的数据类型，例如application&#x2F;json</td>
+</tr>
+<tr>
+<td>data</td>
+<td>要发送的数据</td>
+</tr>
+<tr>
+<td>dataType</td>
+<td>期望从服务器接收的数据类型</td>
+</tr>
+<tr>
+<td>error()</td>
+<td>请求失败时运行的函数</td>
+</tr>
+<tr>
+<td>success(data)</td>
+<td>请求成功时运行的函数，相当于老方法中的当<code>if(xmlHttp.readState == 4 &amp;&amp; xmlHttp.status == 200)</code>时，执行if块里面的语句。其参数data是服务器端返回的已经被解析完毕的数据</td>
+</tr>
+<tr>
+<td>type</td>
+<td>post&#x2F;get，默认为get</td>
+</tr>
+<tr>
+<td>url</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">        <span class="attr">async</span>:<span class="literal">true</span>,</span><br><span class="line">        <span class="attr">contentType</span>:<span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">        <span class="attr">data</span>:&#123;<span class="attr">name</span>:<span class="string">&quot;tom&quot;</span>,<span class="attr">age</span>:<span class="number">20</span>&#125;,</span><br><span class="line">        <span class="attr">dataType</span>:<span class="string">&quot;json&quot;</span>,</span><br><span class="line">        <span class="attr">error</span>:<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">//execute codes here if failed to send ajax request or receive correct data</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">success</span>:<span class="keyword">function</span> (<span class="params">responseText</span>) &#123;</span><br><span class="line">            <span class="comment">//successfully received and parsed data would be stored in responseText</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">url</span>:<span class="string">&quot;www.google.com&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>:<span class="string">&quot;get&quot;</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>另外还有单独的<code>$.get()</code>和<code>$.post()</code>方法可以更方便的发起ajax请求。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="Shucheng Guo WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Shucheng Guo Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/23/misc/maven/" rel="prev" title="maven">
+                  <i class="fa fa-chevron-left"></i> maven
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/23/IT/java/JDBC/" rel="next" title="JDBC">
+                  JDBC <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shucheng Guo</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
